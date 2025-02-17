@@ -1,12 +1,12 @@
 En archivo ../proyectos_para_analisar\reth-main\crates\cli\commands\src\db\tui.rs: 
-unsafe { std::mem::transmute_copy(&app.list_state) } 
+unsafe { std::mem::transmute_copy(&app.list_state) } #! creacion de listas
  
 En archivo ../proyectos_para_analisar\reth-main\crates\cli\util\src\sigsegv_handler.rs: 
-unsafe { backtrace_symbols_fd(buffer.as_ptr(), size, libc::STDERR_FILENO) } 
+unsafe { backtrace_symbols_fd(buffer.as_ptr(), size, libc::STDERR_FILENO) } #! lectura deachivos (asignacion de punteros)
  
 En archivo ../proyectos_para_analisar\reth-main\crates\cli\util\src\sigsegv_handler.rs: 
-unsafe { libc::write(libc::STDERR_FILENO, s.as_ptr().cast(), s.len()) } 
- 
+unsafe { libc::write(libc::STDERR_FILENO, s.as_ptr().cast(), s.len()) } #! escritura de archivos
+
 En archivo ../proyectos_para_analisar\reth-main\crates\cli\util\src\sigsegv_handler.rs: 
 unsafe {
         // Collect return addresses
@@ -15,7 +15,7 @@ unsafe {
             return
         }
         &stack_trace[0..depth as usize]
-    } 
+    } #! llamada a referencias mutables de una libreria
  
 En archivo ../proyectos_para_analisar\reth-main\crates\cli\util\src\sigsegv_handler.rs: 
 unsafe {
@@ -30,10 +30,12 @@ unsafe {
         sa.sa_flags = libc::SA_NODEFER | libc::SA_RESETHAND | libc::SA_ONSTACK;
         libc::sigemptyset(&mut sa.sa_mask);
         libc::sigaction(libc::SIGSEGV, &sa, ptr::null_mut());
-    } 
+    } #! llamada a metodos que devuelven una referencia
+      #! pasaje de parametros por referencias mutables
+      #! pasaje de parametros por referencias fijas que recuperan su referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\cli\util\src\sigsegv_handler.rs: 
-unsafe { libc::getauxval(AT_MINSIGSTKSZ) } 
+unsafe { libc::getauxval(AT_MINSIGSTKSZ) } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\net\network\src\session\conn.rs: 
 unsafe {
@@ -41,7 +43,7 @@ unsafe {
                 Self::EthOnly(l) => Pin::new_unchecked(l).$method($($args),+),
                 Self::Satellite(r) => Pin::new_unchecked(r).$method($($args),+),
             }
-        } 
+        } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\primitives-traits\src\account.rs: 
 unsafe {
@@ -50,10 +52,10 @@ unsafe {
                     buf.read_u64::<byteorder::BigEndian>().unwrap() as usize,
                     revm_primitives::JumpTable::from_slice(buf),
                 )
-            } 
+            } #! pasaje de parametros con resultado que se convierte en referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\db-api\src\scale.rs: 
-unsafe { std::mem::transmute(buf) } 
+unsafe { std::mem::transmute(buf) } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\benches\cursor.rs: 
 unsafe {
@@ -72,7 +74,8 @@ unsafe {
                 mdbx_cursor_close(cursor);
             })
             .unwrap();
-        } 
+        }  #! pasaje de parametros por referencias fijas que recuperan su referencia
+           #! uso de datos en una db
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\benches\transaction.rs: 
 unsafe {
@@ -89,7 +92,8 @@ unsafe {
                 black_box(i);
             })
             .unwrap();
-        } 
+        } #! llamada a metodos que devuelven una referencia
+          #! pasaje de parametros por referencias fijas que recuperan su referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\benches\transaction.rs: 
 unsafe {
@@ -109,14 +113,16 @@ unsafe {
                 assert_eq!(0, i);
                 mdbx_txn_abort(txn);
             });
-        } 
+        } #! llamada a metodos que devuelven una referencia
+          #! pasaje de parametros por referencias mutables
+          #! pasaje de parametros por referencias fijas que recuperan su referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\cursor.rs: 
 unsafe {
             txn.txn_execute(|txn_ptr| {
                 mdbx_result(ffi::mdbx_cursor_open(txn_ptr, dbi, &mut cursor))
             })??;
-        } 
+        } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\cursor.rs: 
 unsafe {
@@ -129,32 +135,39 @@ unsafe {
             mdbx_result(res)?;
 
             Ok(s)
-        } 
+        } #! asignacion de punteros a variables
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\cursor.rs: 
 unsafe {
             self.txn.txn_execute(|_| {
                 ffi::mdbx_cursor_put(self.cursor, &key_val, &mut data_val, flags.bits())
             })?
-        } 
+        } #! llamada a metodos que devuelven una referencia
+          #! pasaje de parametros por referencias mutables
+          #! pasaje de parametros por referencias fijas que recuperan su referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\cursor.rs: 
 unsafe {
             self.txn.txn_execute(|_| ffi::mdbx_cursor_del(self.cursor, flags.bits()))?
-        } 
+        } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\cursor.rs: 
-unsafe { ffi::mdbx_cursor_close(self.cursor) } 
+unsafe { ffi::mdbx_cursor_close(self.cursor) } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\cursor.rs: 
 unsafe { ffi::mdbx_cursor_get(cursor.cursor(), &mut key, &mut data, op) } 
- 
+#! llamada a metodos que devuelven una referencia
+#! pasaje de parametros por referencias mutables
+
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\database.rs: 
 unsafe { ffi::mdbx_dbi_open(txn_ptr, name_ptr, flags, &mut dbi) } 
- 
+#! llamada a metodos que devuelven una referencia
+#! pasaje de parametros por referencias mutables
+
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\environment.rs: 
 unsafe { ffi::mdbx_env_sync_ex(self.env_ptr(), force, false) } 
- 
+#! llamada a metodos que devuelven una referencia
+
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\environment.rs: 
 unsafe {
             let mut stat = Stat::new();
@@ -165,7 +178,7 @@ unsafe {
                 size_of::<Stat>(),
             ))?;
             Ok(stat)
-        } 
+        } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\environment.rs: 
 unsafe {
@@ -177,18 +190,19 @@ unsafe {
                 size_of::<Info>(),
             ))?;
             Ok(info)
-        } 
+        } #! llamada a metodos que devuelven una referencia
+          #! llamada a referencias mutables de una libreria
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\environment.rs: 
 unsafe {
             ffi::mdbx_env_close_ex(self.env, false);
-        } 
+        } #! pasaje de parametros por referencias
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\environment.rs: 
-unsafe { Self(mem::zeroed()) } 
+unsafe { Self(mem::zeroed()) } #! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\environment.rs: 
-unsafe { std::mem::transmute(callback) } 
+unsafe { std::mem::transmute(callback) } #! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\transaction.rs: 
 unsafe {
@@ -200,10 +214,11 @@ unsafe {
                 ptr::null_mut(),
             ))?;
             Ok(Self::new_from_ptr(env, txn))
-        } 
+        } #! llamada a metodos que devuelven una referencia
+          #! creacion de estructuras con punteros
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\transaction.rs: 
-unsafe { ffi::mdbx_txn_id(txn) } 
+unsafe { ffi::mdbx_txn_id(txn) } #! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\transaction.rs: 
 unsafe {
@@ -212,19 +227,24 @@ unsafe {
                 ffi::MDBX_NOTFOUND => Ok(None),
                 err_code => Err(Error::from_err_code(err_code)),
             }
-        } 
- 
+        } #! llamada a funciones de una libreria que usen punteros
+          #! pasaje de parametros por referencias mutables
+          #! pasaje de parametros por referencias fijas que recuperan su referencia
+
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\transaction.rs: 
 unsafe {
                         ffi::mdbx_txn_commit_ex(txn, latency.mdb_commit_latency())
-                    } 
+                    } #! llamada a funciones de una libreria que usen punteros
+                      #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\transaction.rs: 
 unsafe {
             self.txn_execute(|txn| {
                 mdbx_result(ffi::mdbx_dbi_flags_ex(txn, db.dbi(), &mut flags, ptr::null_mut()))
             })??;
-        } 
+        } #! llamada a funciones de una libreria que usen punteros
+          #! llamada a metodos que devuelven una referencia
+          #! pasaje de parametros por referencias mutables
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\transaction.rs: 
 unsafe {
@@ -233,17 +253,21 @@ unsafe {
                 mdbx_result(ffi::mdbx_dbi_stat(txn, dbi, stat.mdb_stat(), size_of::<Stat>()))
             })??;
             Ok(stat)
-        } 
+        } #! llamada a funciones de una libreria que usen punteros
+          #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\transaction.rs: 
 unsafe {
                             ffi::mdbx_txn_abort(txn);
-                        } 
+                        } #! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\transaction.rs: 
 unsafe {
             ffi::mdbx_put(txn, dbi, &key_val, &mut data_val, flags.bits())
-        } 
+        } #! llamada a funciones de una libreria que usen punteros
+          #! llamada a metodos que devuelven una referencia
+          #! pasaje de parametros por referencias mutables
+          #! pasaje de parametros por referencias fijas que recuperan su referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\transaction.rs: 
 unsafe {
@@ -257,22 +281,32 @@ unsafe {
                 )
             })?)?;
             Ok(slice::from_raw_parts_mut(data_val.iov_base as *mut u8, data_val.iov_len))
-        } 
+        } #! pasaje de parametros por referencias fijas que recuperan su referencia
+          #! llamada a funciones de una libreria que usen punteros
+          #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\transaction.rs: 
-unsafe { ffi::mdbx_del(txn, dbi, &key_val, &d) } 
+unsafe { ffi::mdbx_del(txn, dbi, &key_val, &d) }
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros por referencias fijas que recuperan su referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\transaction.rs: 
 unsafe { ffi::mdbx_del(txn, dbi, &key_val, ptr::null()) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros por referencias fijas que recuperan su referencia
+#! pasaje de un parametro tipo puntero null
+
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\transaction.rs: 
 unsafe { ffi::mdbx_drop(txn, dbi, false) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\transaction.rs: 
 unsafe { mdbx_txn_renew(self.txn) } 
- 
+#! llamada a metodos que devuelven una referencia
+
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\transaction.rs: 
 unsafe { Self(std::mem::zeroed()) } 
+#! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\txn_manager.rs: 
 unsafe {
@@ -283,138 +317,152 @@ unsafe {
                                     &mut txn,
                                     ptr::null_mut(),
                                 )
-                            } 
+                            } #! llamada a funciones de una libreria que usen punteros
+                              #! pasaje de parametros por referencias fijas que recuperan su referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\txn_manager.rs: 
-unsafe { ffi::mdbx_txn_abort(tx.0) } 
+unsafe { ffi::mdbx_txn_abort(tx.0) } #! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\txn_manager.rs: 
 unsafe {
                                         ffi::mdbx_txn_commit_ex(tx.0, latency.mdb_commit_latency())
-                                    } 
+                                    } #! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\src\txn_manager.rs: 
-unsafe { ffi::mdbx_txn_reset(txn_ptr) } 
+unsafe { ffi::mdbx_txn_reset(txn_ptr) } #! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\libmdbx-rs\tests\transaction.rs: 
 unsafe {
                 txn.drop_db(db).unwrap();
-            } 
+            } #! llamada a metodos que devuelven una referencia
+              #! uso de datos en una db
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\nippy-jar\src\lib.rs: 
 unsafe { Mmap::map(&data_file)? } 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros por referencias mutables
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\nippy-jar\src\lib.rs: 
 unsafe { Mmap::map(&offset_file)? } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros por referencias mutables
+
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\nippy-jar\src\compression\lz4.rs: 
 unsafe {
             dest.set_len(dest.capacity());
-        } 
- 
+        } #! llamada a metodos que devuelven una referencia
+
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\nippy-jar\src\compression\lz4.rs: 
 unsafe {
                     dest.set_len(previous_length + written);
-                } 
+                } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\nippy-jar\src\compression\lz4.rs: 
 unsafe {
                     dest.set_len(previous_length);
-                } 
+                } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\nippy-jar\src\compression\lz4.rs: 
 unsafe {
             dest.set_len(dest.capacity());
-        } 
+        } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\nippy-jar\src\compression\lz4.rs: 
 unsafe {
                     dest.set_len(previous_length + written);
-                } 
+                } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\nippy-jar\src\compression\lz4.rs: 
 unsafe {
                     dest.set_len(previous_length);
-                } 
+                } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\nippy-jar\src\compression\zstd.rs: 
 unsafe {
             output.set_len(output.capacity());
-        } 
+        } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\nippy-jar\src\compression\zstd.rs: 
 unsafe {
                     output.set_len(previous_length + written);
-                } 
+                } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\reth-main\crates\storage\nippy-jar\src\compression\zstd.rs: 
 unsafe {
                     output.set_len(previous_length);
-                } 
+                } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\benches\signal.rs: 
 unsafe {
         assert_eq!(kill(getpid(), signal), 0);
-    } 
+    } #! llamada a metodos que devuelven una referencia
+      #! llamada a metodos de test con valores de referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\examples\tinyhttp.rs: 
 unsafe { String::from_utf8_unchecked(Vec::from(s.as_ref())) } 
+#! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\fs\file.rs: 
 unsafe {
             std::os::unix::io::BorrowedFd::borrow_raw(std::os::unix::io::AsRawFd::as_raw_fd(self))
-        } 
+        } #! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\fs\file.rs: 
 unsafe {
                 BorrowedHandle::borrow_raw(
                     AsRawHandle::as_raw_handle(self),
                 )
-            } 
+            } #! pasaje de parametros por referencias fijas que recuperan su referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\future\maybe_done.rs: 
 unsafe {
                 *self.get_unchecked_mut().thing += ", world";
-            } 
+            } #! modificacion de referencia tipo puntero (*)
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\future\maybe_done.rs: 
 unsafe { Pin::new_unchecked(&mut fut) } 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros por referencias mutables
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\async_fd.rs: 
 unsafe { std::os::unix::io::BorrowedFd::borrow_raw(self.as_raw_fd()) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! llamada a metodos que devuelven una referencia 
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\blocking.rs: 
 unsafe {
             self.buf.set_len(len);
-        } 
+        } #! llamada a metodos que devuelven una referencia 
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\read_buf.rs: 
-unsafe { slice_to_uninit_mut(buf) } 
+unsafe { slice_to_uninit_mut(buf) } #! llamada a metodos que devuelven una referencia 
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\read_buf.rs: 
-unsafe { slice_assume_init(slice) } 
+unsafe { slice_assume_init(slice) } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\read_buf.rs: 
-unsafe { slice_assume_init_mut(slice) } 
+unsafe { slice_assume_init_mut(slice) } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\read_buf.rs: 
 unsafe { ReadBuf::uninit(&mut self.unfilled_mut()[..max]) } 
+#! llamada a metodos que devuelven una referencia
+#! pasaje de parametros por referencias mutables
+
+En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\read_buf.rs: 
+unsafe { slice_assume_init(slice) } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\read_buf.rs: 
-unsafe { slice_assume_init(slice) } 
- 
-En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\read_buf.rs: 
-unsafe { slice_assume_init_mut(slice) } 
+unsafe { slice_assume_init_mut(slice) } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\read_buf.rs: 
 unsafe {
                 self.buf[self.initialized..end]
                     .as_mut_ptr()
                     .write_bytes(0, end - self.initialized);
-            } 
+            } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\read_buf.rs: 
-unsafe { slice_assume_init_mut(slice) } 
+unsafe { slice_assume_init_mut(slice) } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\read_buf.rs: 
 unsafe {
@@ -422,34 +470,45 @@ unsafe {
                 .as_mut_ptr()
                 .cast::<u8>()
                 .copy_from_nonoverlapping(buf.as_ptr(), amt);
-        } 
+        } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\read_buf.rs: 
-unsafe { self.unfilled_mut() } 
+unsafe { self.unfilled_mut() } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\read_buf.rs: 
 unsafe { bytes::buf::UninitSlice::from_raw_parts_mut(ptr, len) } 
+#! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\split.rs: 
 unsafe { Pin::new_unchecked(&mut *guard) } 
+#! llamada a metodos que devuelven una referencia
+#! pasaje de parametros por referencias mutables
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\stderr.rs: 
 unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) } 
+#! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\stderr.rs: 
 unsafe { BorrowedHandle::borrow_raw(self.as_raw_handle()) } 
+#! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\stdin.rs: 
 unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\stdin.rs: 
 unsafe { BorrowedHandle::borrow_raw(self.as_raw_handle()) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! llamada a metodos que devuelven una referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\stdout.rs: 
 unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) } 
+#! llamada a funciones de una libreria que usen punteros
+#! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\stdout.rs: 
-unsafe { BorrowedHandle::borrow_raw(self.as_raw_handle()) } 
+unsafe { BorrowedHandle::borrow_raw(self.as_raw_handle()) }
+#! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\util\fill_buf.rs: 
 unsafe {
@@ -464,305 +523,428 @@ unsafe {
                 // returned immutable reference still exists.
                 let slice = std::mem::transmute::<&[u8], &'a [u8]>(slice);
                 Poll::Ready(Ok(slice))
-            } 
+            } #! llamada a metodos que devuelven una referencia
+              #! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\util\read_buf.rs: 
 unsafe { &mut *(dst as *mut _ as *mut [MaybeUninit<u8>]) } 
- 
+#! llamada a metodos que devuelven una referencia
+#! pasaje de parametros por referencias mutables
+#! referencias directas a punteros
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\util\read_buf.rs: 
 unsafe {
-            me.buf.advance_mut(n);
-        } 
+    me.buf.advance_mut(n);
+} #! referencias directas a punteros
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\util\take.rs: 
 unsafe {
             buf.assume_init(n);
-        } 
+        } #! referencias directas a punteros
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\util\vec_with_initialized.rs: 
 unsafe { std::slice::from_raw_parts_mut::<'a, MaybeUninit<u8>>(ptr, cap) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros por referencias fijas que recuperan su referencia 
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\util\vec_with_initialized.rs: 
 unsafe {
-            read_buf.assume_init(num_initialized);
-        } 
+    read_buf.assume_init(num_initialized);
+} #! pasaje de parametros por referencias fijas que recuperan su referencia
+  #! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\io\util\vec_with_initialized.rs: 
 unsafe {
             self.num_initialized = parts.initialized;
             vec.set_len(parts.len);
-        } 
+        } #! pasaje de parametros por referencias fijas que recuperan su referencia
+          #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\loom\std\atomic_u16.rs: 
-unsafe { &*self.inner.get() } 
+unsafe { &*self.inner.get() }#! modificacion de referencia tipo puntero (*) 
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\loom\std\atomic_u32.rs: 
-unsafe { &*self.inner.get() } 
+unsafe { &*self.inner.get() } #! modificacion de referencia tipo puntero (*)
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\loom\std\atomic_usize.rs: 
-unsafe { (*self.inner.get()).get_mut() } 
+unsafe { (*self.inner.get()).get_mut() } #! modificacion de referencia tipo puntero (*)
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\loom\std\atomic_usize.rs: 
-unsafe { &*self.inner.get() } 
+unsafe { &*self.inner.get() } #! modificacion de referencia tipo puntero (*)
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\loom\std\atomic_usize.rs: 
-unsafe { &mut *self.inner.get() } 
+unsafe { &mut *self.inner.get() } #! modificacion de referencia tipo puntero (*)
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\macros\join.rs: 
-unsafe { Pin::new_unchecked(fut) } 
+unsafe { Pin::new_unchecked(fut) } #! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\macros\join.rs: 
-unsafe { Pin::new_unchecked(fut) } 
+unsafe { Pin::new_unchecked(fut) } #! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\macros\pin.rs: 
 unsafe {
             $crate::macros::support::Pin::new_unchecked(&mut $x)
-        } 
+        } #! llamada a funciones de una libreria que usen punteros
+          #! pasaje de parametros por referencias mutables
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\macros\select.rs: 
-unsafe { Pin::new_unchecked(fut) } 
+unsafe { Pin::new_unchecked(fut) } #! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\macros\try_join.rs: 
-unsafe { Pin::new_unchecked(fut) } 
+unsafe { Pin::new_unchecked(fut) } #! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\macros\try_join.rs: 
-unsafe { Pin::new_unchecked(fut) } 
+unsafe { Pin::new_unchecked(fut) } #! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
-unsafe { std::net::UdpSocket::from_raw_fd(raw_fd) } 
+unsafe { std::net::UdpSocket::from_raw_fd(raw_fd) } #! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
-unsafe { std::net::UdpSocket::from_raw_socket(raw_socket) } 
- 
-En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
-unsafe {
-                &mut *(buf.unfilled_mut() as *mut [std::mem::MaybeUninit<u8>] as *mut [u8])
-            } 
- 
-En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
-unsafe {
-            buf.assume_init(n);
-        } 
- 
-En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
-unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit<u8>] as *mut [u8]) } 
- 
-En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
-unsafe {
-                    buf.advance_mut(n);
-                } 
- 
-En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
-unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit<u8>] as *mut [u8]) } 
- 
-En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
-unsafe {
-                    buf.advance_mut(n);
-                } 
- 
-En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
-unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit<u8>] as *mut [u8]) } 
- 
-En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
-unsafe {
-                    buf.advance_mut(n);
-                } 
- 
-En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
-unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit<u8>] as *mut [u8]) } 
- 
-En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
-unsafe {
-                    buf.advance_mut(n);
-                } 
+unsafe { std::net::UdpSocket::from_raw_socket(raw_socket) } #! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
 unsafe {
                 &mut *(buf.unfilled_mut() as *mut [std::mem::MaybeUninit<u8>] as *mut [u8])
-            } 
+            } #! referencias directas a punteros
+              #! llamada a referencias mutables de una libreria
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
 unsafe {
             buf.assume_init(n);
-        } 
+        } #! llamada a funciones de una libreria que usen punteros
+ 
+En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
+unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit<u8>] as *mut [u8]) } 
+#! referencias directas a punteros
+#! llamada a referencias mutables de una libreria
+#! modificacion de referencia tipo puntero (*)
+ 
+En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
+unsafe {
+                    buf.advance_mut(n);
+                } #! llamada a funciones de una libreria que usen punteros
+ 
+En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
+unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit<u8>] as *mut [u8]) } 
+#! referencias directas a punteros
+#! llamada a referencias mutables de una libreria
+#! modificacion de referencia tipo puntero (*)
+
+En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
+unsafe {
+    buf.advance_mut(n);
+} #! llamada a funciones de una libreria que usen punteros
+
+En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
+unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit<u8>] as *mut [u8]) } 
+#! referencias directas a punteros
+#! llamada a referencias mutables de una libreria
+#! modificacion de referencia tipo puntero (*)
+ 
+En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
+unsafe {
+                    buf.advance_mut(n);
+                } #! llamada a funciones de una libreria que usen punteros
+ 
+En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
+unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit<u8>] as *mut [u8]) } 
+#! referencias directas a punteros
+#! llamada a referencias mutables de una libreria
+#! modificacion de referencia tipo puntero (*)
+
+En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
+unsafe {
+                    buf.advance_mut(n);
+                } #! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
 unsafe {
                 &mut *(buf.unfilled_mut() as *mut [std::mem::MaybeUninit<u8>] as *mut [u8])
-            } 
+            } #! referencias directas a punteros
+              #! llamada a referencias mutables de una libreria
+              #! modificacion de referencia tipo puntero (*)
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
 unsafe {
             buf.assume_init(n);
-        } 
+        } #! llamada a funciones de una libreria que usen punteros
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
-unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) } 
+unsafe {
+                &mut *(buf.unfilled_mut() as *mut [std::mem::MaybeUninit<u8>] as *mut [u8])
+            } #! referencias directas a punteros
+              #! llamada a referencias mutables de una libreria
+              #! modificacion de referencia tipo puntero (*)
  
+En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
+unsafe {
+            buf.assume_init(n);
+        } #! llamada a funciones de una libreria que usen punteros
+ 
+En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
+unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) }
+#! llamada a funciones de una libreria que usen punteros 
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\udp.rs: 
 unsafe { BorrowedSocket::borrow_raw(self.as_raw_socket()) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\listener.rs: 
 unsafe { std::net::TcpListener::from_raw_fd(raw_fd) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros por referencias fijas que recuperan su referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\listener.rs: 
 unsafe { std::net::TcpListener::from_raw_socket(raw_socket) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros por referencias fijas que recuperan su referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\listener.rs: 
 unsafe { std::net::TcpListener::from_raw_fd(raw_fd) } 
+#! llamada a funciones de una libreria que usen punteros
+
+En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\listener.rs: 
+unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) } 
+#! pasaje de parametros con resultado que se convierte en referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\listener.rs: 
 unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) } 
- 
-En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\listener.rs: 
-unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) } 
- 
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\listener.rs: 
 unsafe { BorrowedSocket::borrow_raw(self.as_raw_socket()) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\socket.rs: 
 unsafe { mio::net::TcpStream::from_raw_fd(raw_fd) } 
- 
+ #! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros por referencias fijas que recuperan su referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\socket.rs: 
 unsafe { mio::net::TcpStream::from_raw_socket(raw_socket) } 
- 
+ #! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros por referencias fijas que recuperan su referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\socket.rs: 
 unsafe { mio::net::TcpListener::from_raw_fd(raw_fd) } 
- 
+ #! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros por referencias fijas que recuperan su referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\socket.rs: 
 unsafe { mio::net::TcpListener::from_raw_socket(raw_socket) } 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros por referencias fijas que recuperan su referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\socket.rs: 
 unsafe { TcpSocket::from_raw_fd(raw_fd) } 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros por referencias fijas que recuperan su referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\socket.rs: 
 unsafe { TcpSocket::from_raw_socket(raw_socket) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros por referencias fijas que recuperan su referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\socket.rs: 
 unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\socket.rs: 
 unsafe { BorrowedSocket::borrow_raw(self.as_raw_socket()) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\stream.rs: 
 unsafe { std::net::TcpStream::from_raw_fd(raw_fd) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros por referencias fijas que recuperan su referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\stream.rs: 
 unsafe { std::net::TcpStream::from_raw_socket(raw_socket) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros por referencias fijas que recuperan su referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\stream.rs: 
 unsafe { std::net::TcpStream::from_raw_fd(raw_fd) } 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros por referencias fijas que recuperan su referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\stream.rs: 
 unsafe {
                 &mut *(buf.unfilled_mut() as *mut [std::mem::MaybeUninit<u8>] as *mut [u8])
-            } 
+            } #! referencias directas a punteros
+              #! llamada a referencias mutables de una libreria
+              #! modificacion de referencia tipo puntero (*)
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\stream.rs: 
 unsafe { buf.assume_init(ret) } 
+#! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\stream.rs: 
 unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit<u8>] as *mut [u8]) } 
+#! referencias directas a punteros
+#! llamada a referencias mutables de una libreria
+#! modificacion de referencia tipo puntero (*)
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\stream.rs: 
 unsafe {
                     buf.advance_mut(n);
-                } 
+                } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\stream.rs: 
 unsafe { self.io.poll_read(cx, buf) } 
- 
+#! llamada a metodos que devuelven una referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\stream.rs: 
 unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! llamada a metodos que devuelven una referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\stream.rs: 
 unsafe { BorrowedSocket::borrow_raw(self.as_raw_socket()) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\tcp\stream.rs: 
 unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\listener.rs: 
 unsafe { net::UnixListener::from_raw_fd(raw_fd) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\listener.rs: 
 unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\pipe.rs: 
 unsafe { mio_pipe::Sender::from_raw_fd(owned_fd.into_raw_fd()) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\pipe.rs: 
 unsafe { OwnedFd::from_raw_fd(mio_pipe.into_raw_fd()) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\pipe.rs: 
 unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\pipe.rs: 
 unsafe { mio_pipe::Receiver::from_raw_fd(owned_fd.into_raw_fd()) } 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\pipe.rs: 
 unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit<u8>] as *mut [u8]) } 
- 
+#! referencias directas a punteros
+#! llamada a referencias mutables de una libreria
+#! modificacion de referencia tipo puntero (*)
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\pipe.rs: 
 unsafe {
                     buf.advance_mut(n);
-                } 
+                } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\pipe.rs: 
 unsafe { OwnedFd::from_raw_fd(mio_pipe.into_raw_fd()) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\pipe.rs: 
 unsafe { self.io.poll_read(cx, buf) } 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\pipe.rs: 
 unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) } 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\pipe.rs: 
 unsafe { std::mem::zeroed() } 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\pipe.rs: 
 unsafe { libc::fstat(fd.as_raw_fd(), &mut stat) } 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\pipe.rs: 
 unsafe { libc::fcntl(fd.as_raw_fd(), libc::F_GETFL) } 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\pipe.rs: 
 unsafe { libc::fcntl(fd.as_raw_fd(), libc::F_SETFL, flags) } 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\pipe.rs: 
 unsafe { libc::fcntl(fd.as_raw_fd(), libc::F_GETFL) } 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\pipe.rs: 
 unsafe { libc::fcntl(fd.as_raw_fd(), libc::F_SETFL, new) } 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\socket.rs: 
 unsafe { mio::net::UnixListener::from_raw_fd(raw_fd) } 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\socket.rs: 
 unsafe { mio::net::UnixStream::from_raw_fd(raw_fd) } 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\socket.rs: 
 unsafe { mio::net::UnixDatagram::from_raw_fd(raw_fd) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\socket.rs: 
 unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) } 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\stream.rs: 
 unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit<u8>] as *mut [u8]) } 
+#! referencias directas a punteros
+#! llamada a referencias mutables de una libreria
+#! modificacion de referencia tipo puntero (*)
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\stream.rs: 
 unsafe {
                     buf.advance_mut(n);
-                } 
+                } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\stream.rs: 
 unsafe { std::os::unix::net::UnixStream::from_raw_fd(raw_fd) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\stream.rs: 
 unsafe { self.io.poll_read(cx, buf) } 
- 
+#! llamada a metodos que devuelven una referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\stream.rs: 
 unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\ucred.rs: 
 unsafe {
             let raw_fd = sock.as_raw_fd();
@@ -828,7 +1010,7 @@ unsafe {
             } else {
                 Err(io::Error::last_os_error())
             }
-        } 
+        } #! aglomeracion de instrucciones 
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\ucred.rs: 
 unsafe {
@@ -848,7 +1030,8 @@ unsafe {
             } else {
                 Err(io::Error::last_os_error())
             }
-        } 
+        } #! aglomeracion de instrucciones 
+          #! manejo de errores 
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\ucred.rs: 
 unsafe {
@@ -883,7 +1066,8 @@ unsafe {
             } else {
                 Err(io::Error::last_os_error())
             }
-        } 
+        } #! aglomeracion de instrucciones 
+          #! manejo de errores 
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\ucred.rs: 
 unsafe {
@@ -907,7 +1091,8 @@ unsafe {
             } else {
                 Err(io::Error::last_os_error())
             }
-        } 
+        } #! aglomeracion de instrucciones 
+          #! manejo de errores 
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\ucred.rs: 
 unsafe {
@@ -927,100 +1112,142 @@ unsafe {
             } else {
                 Err(io::Error::last_os_error())
             }
-        } 
+        } #! aglomeracion de instrucciones 
+          #! manejo de errores 
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\datagram\socket.rs: 
 unsafe { std::os::unix::net::UnixDatagram::from_raw_fd(raw_fd) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\datagram\socket.rs: 
 unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit<u8>] as *mut [u8]) } 
- 
+#! referencias directas a punteros
+#! llamada a referencias mutables de una libreria
+#! modificacion de referencia tipo puntero (*)
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\datagram\socket.rs: 
 unsafe {
                     buf.advance_mut(n);
-                } 
+                } #! llamada a metodos que devuelven una referencia
+
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\datagram\socket.rs: 
 unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit<u8>] as *mut [u8]) } 
- 
+#! referencias directas a punteros
+#! llamada a referencias mutables de una libreria
+#! modificacion de referencia tipo puntero (*)
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\datagram\socket.rs: 
 unsafe {
                     buf.advance_mut(n);
-                } 
+                } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\datagram\socket.rs: 
 unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit<u8>] as *mut [u8]) } 
- 
+#! referencias directas a punteros
+#! llamada a referencias mutables de una libreria
+#! modificacion de referencia tipo puntero (*)
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\datagram\socket.rs: 
 unsafe {
                     buf.advance_mut(n);
-                } 
+                } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\datagram\socket.rs: 
 unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit<u8>] as *mut [u8]) } 
- 
+#! referencias directas a punteros
+#! llamada a referencias mutables de una libreria
+#! modificacion de referencia tipo puntero (*)
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\datagram\socket.rs: 
 unsafe {
                     buf.advance_mut(n);
-                } 
+                } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\datagram\socket.rs: 
 unsafe {
                 &mut *(buf.unfilled_mut() as *mut [std::mem::MaybeUninit<u8>] as *mut [u8])
-            } 
+            } #! referencias directas a punteros
+            #! llamada a referencias mutables de una libreria
+            #! modificacion de referencia tipo puntero (*)
+            #! llamada a metodos que devuelven una referencia            
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\datagram\socket.rs: 
 unsafe {
             buf.assume_init(n);
-        } 
+        } #! llamadas a metodo que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\datagram\socket.rs: 
 unsafe {
                 &mut *(buf.unfilled_mut() as *mut [std::mem::MaybeUninit<u8>] as *mut [u8])
-            } 
+            } #! referencias directas a punteros
+            #! llamada a referencias mutables de una libreria
+            #! modificacion de referencia tipo puntero (*)
+            #! llamada a metodos que devuelven una referencia 
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\datagram\socket.rs: 
 unsafe {
             buf.assume_init(n);
-        } 
+        } #! llamadas a metodo que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\unix\datagram\socket.rs: 
 unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) } 
- 
+#! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\windows\named_pipe.rs: 
 unsafe { named_pipe_info(self.io.as_raw_handle()) } 
- 
+ #! llamada a metodos que devuelven una referencia
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\windows\named_pipe.rs: 
 unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit<u8>] as *mut [u8]) } 
- 
+#! referencias directas a punteros
+#! llamada a referencias mutables de una libreria
+#! modificacion de referencia tipo puntero (*)
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\windows\named_pipe.rs: 
 unsafe {
                     buf.advance_mut(n);
-                } 
+                } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\windows\named_pipe.rs: 
 unsafe { self.io.poll_read(cx, buf) } 
- 
+ #! llamada a metodos que devuelven una referencia
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\windows\named_pipe.rs: 
 unsafe { BorrowedHandle::borrow_raw(self.as_raw_handle()) } 
- 
+  #! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\windows\named_pipe.rs: 
 unsafe { named_pipe_info(self.io.as_raw_handle()) } 
- 
+  #! llamada a metodos que devuelven una referencia
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\windows\named_pipe.rs: 
 unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit<u8>] as *mut [u8]) } 
- 
+#! referencias directas a punteros
+#! llamada a referencias mutables de una libreria
+#! modificacion de referencia tipo puntero (*)
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\windows\named_pipe.rs: 
 unsafe {
                     buf.advance_mut(n);
-                } 
+                } #! llamada a metodos que devuelven una referencia
  
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\windows\named_pipe.rs: 
 unsafe { self.io.poll_read(cx, buf) } 
- 
+#! llamada a metodos que devuelven una referencia
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\windows\named_pipe.rs: 
 unsafe { BorrowedHandle::borrow_raw(self.as_raw_handle()) } 
- 
+  #! llamada a funciones de una libreria que usen punteros
+#! pasaje de parametros con resultado que se convierte en referencia
+
 En archivo ../proyectos_para_analisar\tokio-master\tokio\src\net\windows\named_pipe.rs: 
 unsafe {
     ///     assert_eq!(

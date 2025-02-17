@@ -17,16 +17,20 @@
 ## Librerias encontradas que trabajan con unsafe
 1. ffi
 2. mem
-3. libc
+3. libc::fcntl
 4. std::os::unix::io::RawFd
 5. std::os::unix::io::RawHandle
-6) Pin
+6. Pin
+7. mio::net::UnixListener::from_raw_fd
+8. mio::net::UnixStream::from_raw_fd
+9. mio::net::UnixDatagram::from_raw_fd
+10. BrorrowedFd::brorrow_raw
+
 
 ## Casos de uso de codigo unsafe
 [22/12/2024] empezado
 
 1) creacion de listas uso de libreria mem : 
-    unsafe { std::mem::transmute_copy(&app.list_state) };
     unsafe { Self(mem::zeroed()) }
 
 2) extraccion de buffer como puntero : 
@@ -502,4 +506,29 @@ unsafe impl Sync for TxnPtr {}
     }
 
 
-split.rs tokio-master...
+
+
+
+
+---
+
+
+#! creacion de listas
+#! creacion de estructuras con punteros
+#! lectura de achivos 
+#! escritura de archivos
+#! asignacion de punteros
+#! llamada a referencias mutables de una libreria
+#! llamada a metodos que devuelven una referencia
+#! llamada a funciones de una libreria que usen punteros
+#! llamada a metodos de test con valores de referencia
+#! pasaje de parametros por referencias
+#! pasaje de parametros por referencias mutables
+#! pasaje de parametros por referencias fijas que recuperan su referencia
+#! pasaje de parametros con resultado que se convierte en referencia
+#! pasaje de un parametro tipo puntero null
+#! uso de datos en una db
+#! modificacion de referencia tipo puntero (*)
+#! referencias directas a punteros
+#! aglomeracion de instrucciones 
+#! manejo de errores 
