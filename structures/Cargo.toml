@@ -1,0 +1,15 @@
+[package]
+name = "structures"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[lib]
+name = "structures"
+path = "src/lib.rs"
+test = true
+
+[[test]]
+name = "tests"
+path = "test/tests.rs"
