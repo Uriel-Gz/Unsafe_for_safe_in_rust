@@ -16,7 +16,7 @@ impl<T: Clone> CircularQueue<T> {
     }
 
     pub fn enqueue(&mut self, item: T) {
-        if self.size == self.data.capacity() {
+        if self.data.len() == 0 || self.data.len() < self.data.capacity(){
             self.data.push(item);
             self.tail = (self.tail + 1) % self.data.capacity();
         } else {
