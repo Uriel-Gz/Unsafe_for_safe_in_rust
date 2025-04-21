@@ -1,0 +1,126 @@
+# Directorios y archivos que se ignoran
+
+# Directorio de compilación
+/target/
+
+# Archivos de depuración
+.debug/
+
+# Archivos de configuración de herramientas
+.cargo/config
+
+# Archivos de caché de Cargo
+.cargo/registry/
+
+# Archivos de caché de Rust
+.rustup/
+
+# Archivos de configuración de editores
+.vscode/
+.idea/
+
+# Archivos de configuración de otros IDEs
+.netbeans/
+.eclipse/
+
+# Archivos de configuración de otros editores
+.sublime-text/
+.atom/
+
+# Archivos de configuración de otros herramientas
+.gdbinit
+.gdb-history
+
+# Archivos de configuración de otros sistemas de control de versiones
+.svn/
+.hg/
+
+# Archivos de configuración de otros lenguajes de programación
+.node_modules/
+.yarn/
+
+# Archivos de configuración de otros frameworks y bibliotecas
+.angular/
+.vue/
+.react/
+
+# Archivos de configuración de otros sistemas operativos
+.DS_Store
+Thumbs.db
+
+# Archivos de configuración de otros sistemas de compilación
+Makefile
+makefile
+CMakeLists.txt
+
+# Archivos de configuración de otros sistemas de testing
+test/
+tests/
+
+# Archivos de configuración de otros sistemas de documentación
+doc/
+docs/
+
+# Archivos de configuración de otros sistemas de internacionalización
+i18n/
+intl/
+
+# Archivos de configuración de otros sistemas de seguridad
+security/
+sec/
+
+# Archivos de configuración de otros sistemas de monitoreo
+monitoring/
+metrics/
+
+# Archivos de configuración de otros sistemas de logging
+logging/
+logs/
+
+# Archivos de configuración de otros sistemas de caching
+cache/
+caching/
+
+# Archivos de configuración de otros sistemas de autenticación
+auth/
+authentication/
+
+# Archivos de configuración de otros sistemas de autorización
+authz/
+authorization/
+
+# Archivos de configuración de otros sistemas de gestión de errores
+error/
+errors/
+
+# Archivos de configuración de otros sistemas de gestión de excepciones
+exception/
+exceptions/
+
+# Archivos de configuración de otros sistemas de gestión de logs
+log/
+logs/
+
+# Archivos de configuración de otros sistemas de gestión de métricas
+metric/
+metrics/
+
+# Archivos de configuración de otros sistemas de gestión de monitoreo
+monitor/
+monitors/
+
+# Archivos de configuración de otros sistemas de gestión de seguridad
+security/
+sec/
+
+# Archivos de configuración de otros sistemas de gestión de testing
+test/
+tests/
+
+# Archivos de configuración de otros sistemas de gestión de versiones
+version/
+versions/
+
+# Archivos de configuración de otros sistemas de gestión de workflows
+workflow/
+workflows/
