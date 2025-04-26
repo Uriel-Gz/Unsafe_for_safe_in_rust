@@ -27,10 +27,33 @@
 10. BrorrowedFd::brorrow_raw
 
 
-## Casos de uso de codigo unsafe
+## Repositorios analisados
+- RustInterceptor-master
+- leetCode-in-rust-main
+- rust-postgres-master
+- cs561-rust-main
+- waveterm-main
+- hyper-master
+- tokio-master
+- sar-rs-main
+- rust-master
+- exa-master
+- reth-main
+- fd-master
+- warp-main
+
+
+## Cronologia
 [22/12/2024] empezado de analisis de codigo
 
-[21/04/2025] Reordenacion de ideas, analisis de morfologia del codigo.
+[21/04/2025] Reordenacion de ideas, analisis de morfologia del codigo. Se inicia la lista de casos de uso.
+
+[26/04/2025] Se continua con el analisis de codigo, a partir del enfoque de solo bsucar casos de punteros raw, la busqueda es mas rapida.
+
+
+## Casos de uso de codigo unsafe
+
+### Asiganciones
 
 - caso 1:
 
@@ -42,59 +65,56 @@
         let <variable> = <string>.add(<elemento>);
         Some(ptr::read(<variable>))
 
-- caso 2:
+- caso 3:
 
         let <variable> = <string>.add(<elemento>);
         Some(&*<variable>)
 
-- caso 3:
+- caso 4:
 
         let <elem> = Box::from_raw(<otroelem>);
         <otroelem> = <elem>.<next>;
 
-- caso 4:
+- caso 5:
 
         (*<string>).<string> = <id>;
 
-- caso 5:
+- caso 6:
 
         let <variable>: &mut <struct> = &mut *<id>;
 
-- caso 6:
+- caso 7:
 
         let <variable>: *mut <struct> = <string>;
 
-- caso 7:
+- caso 8:
 
         let <variable>: *mut <struct> = (*<nombre>).<id>;
 
-- caso 8:
+- caso 9:
 
         (*<nombre>).<attr> = Self::<funcion>((*<nombre>).<attr>);
 
-- caso 9:
+- caso 10: (maybe)
 
-        
+        *<string> += "<string>"  
 
-- caso 10:
-
-        
-        
 - caso 11:
 
+        let <name> = <string>();
+        (&<name>.<string>, &mut <name>.<string>, &<name>.<string>)
         
-        
-- caso 12:
+- caso 12: (maybe)
 
-        
+        (*<string>).<attr> = Some(<string>);
         
 - caso 13:
 
-        
+        *<name> = Some(<string>)
         
 - caso 14:
 
-        
+        let <var> = *<val>
         
 - caso 15:
 
@@ -104,22 +124,9 @@
 
         
         
-- caso 16:
-        
-
-
 - caso 17:
 
-
-
-- caso 18:
-
         
-
-- caso 19:
-
-
-
-- caso 20:
-
-
+        
+- caso 18:
+        

@@ -1,6 +1,0 @@
-.git/**
-.vs/**
-packages/**
-Test/**
-RustPacketInspector/**
-RustInterceptor.sln
