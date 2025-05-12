@@ -1,0 +1,44 @@
+[package]
+name = "lucet-wasi"
+version = "0.7.0-dev"
+description = "Fastly's runtime for the WebAssembly System Interface (WASI)"
+homepage = "https://github.com/fastly/lucet"
+repository = "https://github.com/fastly/lucet"
+license = "Apache-2.0 WITH LLVM-exception"
+categories = ["wasm"]
+authors = ["Lucet team <lucet@fastly.com>"]
+edition = "2018"
+build = "build.rs"
+
+[dependencies]
+ambient-authority = "0.0.1"
+anyhow = "1"
+cast = "0.2"
+clap = "2.23"
+human-size = "0.4"
+lucet-runtime = { path = "../lucet-runtime", version = "=0.7.0-dev"  }
+lucet-runtime-internals = { path = "../lucet-runtime/lucet-runtime-internals", version = "=0.7.0-dev" }
+lucet-module = { path = "../lucet-module", version = "=0.7.0-dev" }
+lucet-wiggle = { path = "../lucet-wiggle", version = "=0.7.0-dev" }
+lucet-wiggle-generate = { path = "../lucet-wiggle/generate", version = "=0.7.0-dev" }
+libc = "0.2.103"
+nix = "0.23"
+rand = "0.6"
+wasi-common = { version = "0.32.0", default-features = false,  features = ["wiggle_metadata"] }
+wasi-tokio = "0.32.0"
+wiggle = "0.32.0"
+witx = "0.9.1"
+tracing = "0.1.20"
+tracing-subscriber = { version = "0.3.1", features = ["env-filter"] }
+cap-std = "0.21.1"
+tokio = { version = "1", features = ["rt-multi-thread", "macros"]}
+
+[dev-dependencies]
+lucet-wasi-sdk = { path = "../lucet-wasi-sdk" }
+lucetc = { path = "../lucetc" }
+tempfile = "3.0"
+cap-tempfile = "0.21"
+
+[lib]
+name = "lucet_wasi"
+crate-type = ["lib", "staticlib", "cdylib"]

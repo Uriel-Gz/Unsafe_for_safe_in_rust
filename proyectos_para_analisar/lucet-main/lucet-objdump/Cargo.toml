@@ -1,0 +1,16 @@
+[package]
+name = "lucet-objdump"
+version = "0.7.0-dev"
+description = "Analyze object files emitted by the Lucet compiler"
+homepage = "https://github.com/fastly/lucet"
+repository = "https://github.com/fastly/lucet"
+license = "Apache-2.0 WITH LLVM-exception"
+categories = ["wasm"]
+authors = ["Lucet team <lucet@fastly.com>"]
+edition = "2018"
+
+[dependencies]
+object = "0.22"
+byteorder="1.2.1"
+colored="1.8.0"
+lucet-module = { path = "../lucet-module", version = "=0.7.0-dev" }

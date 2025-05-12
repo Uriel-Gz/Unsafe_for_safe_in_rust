@@ -66,7 +66,7 @@
         Some(ptr::read(<variable>))
 
 - caso 3:
-
+        -- obviar el match
         let <variable> = <string>.add(<elemento>);
         Some(&*<variable>)
 
@@ -85,7 +85,7 @@
 
 - caso 7:
 
-        let <variable>: *mut <struct> = <string>;
+        let <variable>: *mut <struct> = <exp>;
 
 - caso 8:
 
@@ -102,7 +102,7 @@
 - caso 11:
 
         let <name> = <string>();
-        (&<name>.<string>, &mut <name>.<string>, &<name>.<string>)
+        (&<name>.<method>, &mut <name>.<attr>, &<name>.<string>)
         
 - caso 12: (maybe)
 

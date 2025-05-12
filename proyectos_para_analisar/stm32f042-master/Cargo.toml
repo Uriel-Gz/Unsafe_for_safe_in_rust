@@ -1,0 +1,41 @@
+[package]
+authors = ["Daniel Egger <daniel@eggers-club.de>"]
+categories = ["embedded"]
+description = "Obsolete(!) peripheral access API for STM32F042 microcontrollers"
+documentation = "https://docs.rs/stm32f042"
+keywords = [
+    "no-std",
+    "arm",
+    "cortex-m",
+    "stm32",
+]
+license = "0BSD"
+name = "stm32f042"
+repository = "https://github.com/therealprof/stm32f042"
+version = "0.6.4"
+
+[dependencies]
+cortex-m = "0.5.7"
+panic-abort = "0.3.0"
+vcell = "0.1.0"
+
+[dependencies.cortex-m-rt]
+optional = true
+version = "0.6.1"
+
+[dependencies.bare-metal]
+version = "0.2.3"
+features = ["const-fn"]
+
+[features]
+default = ["rt"]
+rt = ["cortex-m-rt/device"]
+
+[profile.dev]
+codegen-units = 1
+incremental = false
+
+[profile.release]
+debug = true
+lto = true
+opt-level = "s"
