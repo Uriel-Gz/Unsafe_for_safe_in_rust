@@ -1,0 +1,569 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <style>
+        a:hover{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<pre>
+<H3>In the repository (subfolder/s) reth-main/crates/cli/commands/src/db </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/cli/commands/src/db/tui.rs','reth-main/crates/cli/commands/src/db/tui.rs-328','328')"><em>tui.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { std::mem::transmute_copy(&app.list_state) }
+</code>
+<code class="rust" id="reth-main/crates/cli/commands/src/db/tui.rs-328" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/cli/util/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/cli/util/src/sigsegv_handler.rs','reth-main/crates/cli/util/src/sigsegv_handler.rs-16','16')"><em>sigsegv_handler.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { backtrace_symbols_fd(buffer.as_ptr(), size, libc::STDERR_FILENO) }
+</code>
+<code class="rust" id="reth-main/crates/cli/util/src/sigsegv_handler.rs-16" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/cli/util/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/cli/util/src/sigsegv_handler.rs','reth-main/crates/cli/util/src/sigsegv_handler.rs-26','26')"><em>sigsegv_handler.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { libc::write(libc::STDERR_FILENO, s.as_ptr().cast(), s.len()) }
+</code>
+<code class="rust" id="reth-main/crates/cli/util/src/sigsegv_handler.rs-26" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/cli/util/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/cli/util/src/sigsegv_handler.rs','reth-main/crates/cli/util/src/sigsegv_handler.rs-48','48')"><em>sigsegv_handler.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+        // Collect return addresses
+        let depth = libc::backtrace(stack_trace.as_mut_ptr(), MAX_FRAMES as i32);
+        if depth == 0 {
+            return
+        }
+        &stack_trace[0..depth as usize]
+    }
+</code>
+<code class="rust" id="reth-main/crates/cli/util/src/sigsegv_handler.rs-48" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/cli/util/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/cli/util/src/sigsegv_handler.rs','reth-main/crates/cli/util/src/sigsegv_handler.rs-121','121')"><em>sigsegv_handler.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+        let alt_stack_size: usize = min_sigstack_size() + 64 * 1024;
+        let mut alt_stack: libc::stack_t = mem::zeroed();
+        alt_stack.ss_sp = alloc(Layout::from_size_align(alt_stack_size, 1).unwrap()).cast();
+        alt_stack.ss_size = alt_stack_size;
+        libc::sigaltstack(&alt_stack, ptr::null_mut());
+
+        let mut sa: libc::sigaction = mem::zeroed();
+        sa.sa_sigaction = print_stack_trace as libc::sighandler_t;
+        sa.sa_flags = libc::SA_NODEFER | libc::SA_RESETHAND | libc::SA_ONSTACK;
+        libc::sigemptyset(&mut sa.sa_mask);
+        libc::sigaction(libc::SIGSEGV, &sa, ptr::null_mut());
+    }
+</code>
+<code class="rust" id="reth-main/crates/cli/util/src/sigsegv_handler.rs-121" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/cli/util/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/cli/util/src/sigsegv_handler.rs','reth-main/crates/cli/util/src/sigsegv_handler.rs-140','140')"><em>sigsegv_handler.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { libc::getauxval(AT_MINSIGSTKSZ) }
+</code>
+<code class="rust" id="reth-main/crates/cli/util/src/sigsegv_handler.rs-140" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/net/network/src/session </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/net/network/src/session/conn.rs','reth-main/crates/net/network/src/session/conn.rs-105','105')"><em>conn.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            match $self.get_unchecked_mut() {
+                Self::EthOnly(l) => Pin::new_unchecked(l).$method($($args),+),
+                Self::Satellite(r) => Pin::new_unchecked(r).$method($($args),+),
+            }
+        }
+</code>
+<code class="rust" id="reth-main/crates/net/network/src/session/conn.rs-105" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/primitives-traits/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/primitives-traits/src/account.rs','reth-main/crates/primitives-traits/src/account.rs-152','152')"><em>account.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                RevmBytecode::new_analyzed(
+                    bytes,
+                    buf.read_u64::<byteorder::BigEndian>().unwrap() as usize,
+                    revm_primitives::JumpTable::from_slice(buf),
+                )
+            }
+</code>
+<code class="rust" id="reth-main/crates/primitives-traits/src/account.rs-152" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/db-api/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/db-api/src/scale.rs','reth-main/crates/storage/db-api/src/scale.rs-59','59')"><em>scale.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { std::mem::transmute(buf) }
+</code>
+<code class="rust" id="reth-main/crates/storage/db-api/src/scale.rs-59" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/benches </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/benches/cursor.rs','reth-main/crates/storage/libmdbx-rs/benches/cursor.rs-87','87')"><em>cursor.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            txn.txn_execute(|txn| {
+                mdbx_cursor_open(txn, dbi, &mut cursor);
+                let mut i = 0;
+                let mut count = 0u32;
+
+                while mdbx_cursor_get(cursor, &mut key, &mut data, MDBX_NEXT) == 0 {
+                    i += key.iov_len + data.iov_len;
+                    count += 1;
+                }
+
+                black_box(i);
+                assert_eq!(count, n);
+                mdbx_cursor_close(cursor);
+            })
+            .unwrap();
+        }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/benches/cursor.rs-87" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/benches </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/benches/transaction.rs','reth-main/crates/storage/libmdbx-rs/benches/transaction.rs-46','46')"><em>transaction.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            txn.txn_execute(|txn| {
+                let mut i = 0;
+                for key in &keys {
+                    key_val.iov_len = key.len();
+                    key_val.iov_base = key.as_bytes().as_ptr().cast_mut().cast();
+
+                    mdbx_get(txn, dbi, &key_val, &mut data_val);
+
+                    i += key_val.iov_len;
+                }
+                black_box(i);
+            })
+            .unwrap();
+        }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/benches/transaction.rs-46" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/benches </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/benches/transaction.rs','reth-main/crates/storage/libmdbx-rs/benches/transaction.rs-99','99')"><em>transaction.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            let mut txn: *mut MDBX_txn = ptr::null_mut();
+            env.with_raw_env_ptr(|env| {
+                mdbx_txn_begin_ex(env, ptr::null_mut(), 0, &mut txn, ptr::null_mut());
+
+                let mut i = 0;
+                for (key, data) in &items {
+                    key_val.iov_len = key.len();
+                    key_val.iov_base = key.as_bytes().as_ptr().cast_mut().cast();
+                    data_val.iov_len = data.len();
+                    data_val.iov_base = data.as_bytes().as_ptr().cast_mut().cast();
+
+                    i += mdbx_put(txn, dbi, &key_val, &mut data_val, 0);
+                }
+                assert_eq!(0, i);
+                mdbx_txn_abort(txn);
+            });
+        }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/benches/transaction.rs-99" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/cursor.rs','reth-main/crates/storage/libmdbx-rs/src/cursor.rs-31','31')"><em>cursor.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            txn.txn_execute(|txn_ptr| {
+                mdbx_result(ffi::mdbx_cursor_open(txn_ptr, dbi, &mut cursor))
+            })??;
+        }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/cursor.rs-31" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/cursor.rs','reth-main/crates/storage/libmdbx-rs/src/cursor.rs-40','40')"><em>cursor.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            let cursor = ffi::mdbx_cursor_create(ptr::null_mut());
+
+            let res = ffi::mdbx_cursor_copy(other.cursor(), cursor);
+
+            let s = Self { txn: other.txn.clone(), cursor };
+
+            mdbx_result(res)?;
+
+            Ok(s)
+        }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/cursor.rs-40" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/cursor.rs','reth-main/crates/storage/libmdbx-rs/src/cursor.rs-88','88')"><em>cursor.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            self.txn.txn_execute(|_| {
+                ffi::mdbx_cursor_put(self.cursor, &key_val, &mut data_val, flags.bits())
+            })?
+        }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/cursor.rs-88" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/cursor.rs','reth-main/crates/storage/libmdbx-rs/src/cursor.rs-441','441')"><em>cursor.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            self.txn.txn_execute(|_| ffi::mdbx_cursor_del(self.cursor, flags.bits()))?
+        }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/cursor.rs-441" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/cursor.rs','reth-main/crates/storage/libmdbx-rs/src/cursor.rs-457','457')"><em>cursor.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { ffi::mdbx_cursor_close(self.cursor) }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/cursor.rs-457" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/cursor.rs','reth-main/crates/storage/libmdbx-rs/src/cursor.rs-492','492')"><em>cursor.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { ffi::mdbx_cursor_get(cursor.cursor(), &mut key, &mut data, op) }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/cursor.rs-492" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/database.rs','reth-main/crates/storage/libmdbx-rs/src/database.rs-39','39')"><em>database.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { ffi::mdbx_dbi_open(txn_ptr, name_ptr, flags, &mut dbi) }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/database.rs-39" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/environment.rs','reth-main/crates/storage/libmdbx-rs/src/environment.rs-154','154')"><em>environment.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { ffi::mdbx_env_sync_ex(self.env_ptr(), force, false) }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/environment.rs-154" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/environment.rs','reth-main/crates/storage/libmdbx-rs/src/environment.rs-159','159')"><em>environment.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            let mut stat = Stat::new();
+            mdbx_result(ffi::mdbx_env_stat_ex(
+                self.env_ptr(),
+                ptr::null(),
+                stat.mdb_stat(),
+                size_of::<Stat>(),
+            ))?;
+            Ok(stat)
+        }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/environment.rs-159" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/environment.rs','reth-main/crates/storage/libmdbx-rs/src/environment.rs-173','173')"><em>environment.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            let mut info = Info(mem::zeroed());
+            mdbx_result(ffi::mdbx_env_info_ex(
+                self.env_ptr(),
+                ptr::null(),
+                &mut info.0,
+                size_of::<Info>(),
+            ))?;
+            Ok(info)
+        }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/environment.rs-173" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/environment.rs','reth-main/crates/storage/libmdbx-rs/src/environment.rs-248','248')"><em>environment.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            ffi::mdbx_env_close_ex(self.env, false);
+        }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/environment.rs-248" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/environment.rs','reth-main/crates/storage/libmdbx-rs/src/environment.rs-311','311')"><em>environment.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { Self(mem::zeroed()) }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/environment.rs-311" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/environment.rs','reth-main/crates/storage/libmdbx-rs/src/environment.rs-625','625')"><em>environment.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { std::mem::transmute(callback) }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/environment.rs-625" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/transaction.rs','reth-main/crates/storage/libmdbx-rs/src/transaction.rs-75','75')"><em>transaction.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            mdbx_result(ffi::mdbx_txn_begin_ex(
+                env.env_ptr(),
+                ptr::null_mut(),
+                K::OPEN_FLAGS,
+                &mut txn,
+                ptr::null_mut(),
+            ))?;
+            Ok(Self::new_from_ptr(env, txn))
+        }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/transaction.rs-75" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/transaction.rs','reth-main/crates/storage/libmdbx-rs/src/transaction.rs-144','144')"><em>transaction.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { ffi::mdbx_txn_id(txn) }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/transaction.rs-144" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/transaction.rs','reth-main/crates/storage/libmdbx-rs/src/transaction.rs-163','163')"><em>transaction.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            match ffi::mdbx_get(txn, dbi, &key_val, &mut data_val) {
+                ffi::MDBX_SUCCESS => Key::decode_val::<K>(txn, data_val).map(Some),
+                ffi::MDBX_NOTFOUND => Ok(None),
+                err_code => Err(Error::from_err_code(err_code)),
+            }
+        }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/transaction.rs-163" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/transaction.rs','reth-main/crates/storage/libmdbx-rs/src/transaction.rs-192','192')"><em>transaction.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                        ffi::mdbx_txn_commit_ex(txn, latency.mdb_commit_latency())
+                    }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/transaction.rs-192" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/transaction.rs','reth-main/crates/storage/libmdbx-rs/src/transaction.rs-240','240')"><em>transaction.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            self.txn_execute(|txn| {
+                mdbx_result(ffi::mdbx_dbi_flags_ex(txn, db.dbi(), &mut flags, ptr::null_mut()))
+            })??;
+        }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/transaction.rs-240" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/transaction.rs','reth-main/crates/storage/libmdbx-rs/src/transaction.rs-258','258')"><em>transaction.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            let mut stat = Stat::new();
+            self.txn_execute(|txn| {
+                mdbx_result(ffi::mdbx_dbi_stat(txn, dbi, stat.mdb_stat(), size_of::<Stat>()))
+            })??;
+            Ok(stat)
+        }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/transaction.rs-258" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/transaction.rs','reth-main/crates/storage/libmdbx-rs/src/transaction.rs-363','363')"><em>transaction.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                            ffi::mdbx_txn_abort(txn);
+                        }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/transaction.rs-363" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/transaction.rs','reth-main/crates/storage/libmdbx-rs/src/transaction.rs-419','419')"><em>transaction.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            ffi::mdbx_put(txn, dbi, &key_val, &mut data_val, flags.bits())
+        }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/transaction.rs-419" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/transaction.rs','reth-main/crates/storage/libmdbx-rs/src/transaction.rs-441','441')"><em>transaction.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            mdbx_result(self.txn_execute(|txn| {
+                ffi::mdbx_put(
+                    txn,
+                    db.dbi(),
+                    &key_val,
+                    &mut data_val,
+                    flags.bits() | ffi::MDBX_RESERVE,
+                )
+            })?)?;
+            Ok(slice::from_raw_parts_mut(data_val.iov_base as *mut u8, data_val.iov_len))
+        }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/transaction.rs-441" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/transaction.rs','reth-main/crates/storage/libmdbx-rs/src/transaction.rs-481','481')"><em>transaction.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { ffi::mdbx_del(txn, dbi, &key_val, &d) }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/transaction.rs-481" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/transaction.rs','reth-main/crates/storage/libmdbx-rs/src/transaction.rs-483','483')"><em>transaction.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { ffi::mdbx_del(txn, dbi, &key_val, ptr::null()) }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/transaction.rs-483" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/transaction.rs','reth-main/crates/storage/libmdbx-rs/src/transaction.rs-496','496')"><em>transaction.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { ffi::mdbx_drop(txn, dbi, false) }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/transaction.rs-496" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/transaction.rs','reth-main/crates/storage/libmdbx-rs/src/transaction.rs-631','631')"><em>transaction.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { mdbx_txn_renew(self.txn) }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/transaction.rs-631" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/transaction.rs','reth-main/crates/storage/libmdbx-rs/src/transaction.rs-649','649')"><em>transaction.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { Self(std::mem::zeroed()) }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/transaction.rs-649" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/txn_manager.rs','reth-main/crates/storage/libmdbx-rs/src/txn_manager.rs-66','66')"><em>txn_manager.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                                ffi::mdbx_txn_begin_ex(
+                                    env.0,
+                                    parent.0,
+                                    flags,
+                                    &mut txn,
+                                    ptr::null_mut(),
+                                )
+                            }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/txn_manager.rs-66" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/txn_manager.rs','reth-main/crates/storage/libmdbx-rs/src/txn_manager.rs-79','79')"><em>txn_manager.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { ffi::mdbx_txn_abort(tx.0) }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/txn_manager.rs-79" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/txn_manager.rs','reth-main/crates/storage/libmdbx-rs/src/txn_manager.rs-85','85')"><em>txn_manager.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                                        ffi::mdbx_txn_commit_ex(tx.0, latency.mdb_commit_latency())
+                                    }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/txn_manager.rs-85" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/src/txn_manager.rs','reth-main/crates/storage/libmdbx-rs/src/txn_manager.rs-232','232')"><em>txn_manager.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { ffi::mdbx_txn_reset(txn_ptr) }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/src/txn_manager.rs-232" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/libmdbx-rs/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/libmdbx-rs/tests/transaction.rs','reth-main/crates/storage/libmdbx-rs/tests/transaction.rs-186','186')"><em>transaction.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                txn.drop_db(db).unwrap();
+            }
+</code>
+<code class="rust" id="reth-main/crates/storage/libmdbx-rs/tests/transaction.rs-186" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/nippy-jar/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/nippy-jar/src/lib.rs','reth-main/crates/storage/nippy-jar/src/lib.rs-339','339')"><em>lib.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { Mmap::map(&data_file)? }
+</code>
+<code class="rust" id="reth-main/crates/storage/nippy-jar/src/lib.rs-339" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/nippy-jar/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/nippy-jar/src/lib.rs','reth-main/crates/storage/nippy-jar/src/lib.rs-343','343')"><em>lib.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { Mmap::map(&offset_file)? }
+</code>
+<code class="rust" id="reth-main/crates/storage/nippy-jar/src/lib.rs-343" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/nippy-jar/src/compression </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/nippy-jar/src/compression/lz4.rs','reth-main/crates/storage/nippy-jar/src/compression/lz4.rs-14','14')"><em>lz4.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            dest.set_len(dest.capacity());
+        }
+</code>
+<code class="rust" id="reth-main/crates/storage/nippy-jar/src/compression/lz4.rs-14" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/nippy-jar/src/compression </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/nippy-jar/src/compression/lz4.rs','reth-main/crates/storage/nippy-jar/src/compression/lz4.rs-22','22')"><em>lz4.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                    dest.set_len(previous_length + written);
+                }
+</code>
+<code class="rust" id="reth-main/crates/storage/nippy-jar/src/compression/lz4.rs-22" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/nippy-jar/src/compression </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/nippy-jar/src/compression/lz4.rs','reth-main/crates/storage/nippy-jar/src/compression/lz4.rs-29','29')"><em>lz4.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                    dest.set_len(previous_length);
+                }
+</code>
+<code class="rust" id="reth-main/crates/storage/nippy-jar/src/compression/lz4.rs-29" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/nippy-jar/src/compression </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/nippy-jar/src/compression/lz4.rs','reth-main/crates/storage/nippy-jar/src/compression/lz4.rs-57','57')"><em>lz4.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            dest.set_len(dest.capacity());
+        }
+</code>
+<code class="rust" id="reth-main/crates/storage/nippy-jar/src/compression/lz4.rs-57" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/nippy-jar/src/compression </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/nippy-jar/src/compression/lz4.rs','reth-main/crates/storage/nippy-jar/src/compression/lz4.rs-65','65')"><em>lz4.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                    dest.set_len(previous_length + written);
+                }
+</code>
+<code class="rust" id="reth-main/crates/storage/nippy-jar/src/compression/lz4.rs-65" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/nippy-jar/src/compression </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/nippy-jar/src/compression/lz4.rs','reth-main/crates/storage/nippy-jar/src/compression/lz4.rs-72','72')"><em>lz4.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                    dest.set_len(previous_length);
+                }
+</code>
+<code class="rust" id="reth-main/crates/storage/nippy-jar/src/compression/lz4.rs-72" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/nippy-jar/src/compression </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/nippy-jar/src/compression/zstd.rs','reth-main/crates/storage/nippy-jar/src/compression/zstd.rs-131','131')"><em>zstd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            output.set_len(output.capacity());
+        }
+</code>
+<code class="rust" id="reth-main/crates/storage/nippy-jar/src/compression/zstd.rs-131" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/nippy-jar/src/compression </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/nippy-jar/src/compression/zstd.rs','reth-main/crates/storage/nippy-jar/src/compression/zstd.rs-139','139')"><em>zstd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                    output.set_len(previous_length + written);
+                }
+</code>
+<code class="rust" id="reth-main/crates/storage/nippy-jar/src/compression/zstd.rs-139" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) reth-main/crates/storage/nippy-jar/src/compression </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/reth-main/crates/storage/nippy-jar/src/compression/zstd.rs','reth-main/crates/storage/nippy-jar/src/compression/zstd.rs-146','146')"><em>zstd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                    output.set_len(previous_length);
+                }
+</code>
+<code class="rust" id="reth-main/crates/storage/nippy-jar/src/compression/zstd.rs-146" style="overflow: auto; height: 150px; display: none;"></code>
+
+</pre>
+    <script>
+        let f = false;
+        function cargarArchivo(archivo, id, line) {
+            if (!f) {
+                f = true;
+                fetch(archivo)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Error al cargar el archivo');
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        const bloque = document.getElementById(id);
+                        bloque.innerText = data;
+                        bloque.style.display = 'block'; // Mostrar el contenido
+                        bloque.scrollTop = parseInt(line, 10) * 15; // Mostrar el contenido
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }else{
+                    f = false;
+                    const bloque = document.getElementById(id);
+                    bloque.style.display = 'none'; // Mostrar el contenido
+                }
+            }
+    </script>
+</body>
+</html>

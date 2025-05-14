@@ -92,7 +92,6 @@ def indentify_unsafe_code_in_directory(directory):
                     lines_unsafe.append(i)
                 i += 1
 
-
             pathToFile = '/'.join(str(root).split("/")[2:])
             for j in range(len(matches)):
                 
@@ -110,6 +109,6 @@ def indentify_unsafe_code_in_directory(directory):
 
 
 # Llama a la función con la ruta del directorio
-indentify_unsafe_code_in_directory('../proyectos_para_analisar')
+indentify_unsafe_code_in_directory('../projects_to_review')
 
 

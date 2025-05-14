@@ -1,9 +1,0 @@
-target/
-*.rs.bk
-*.pyc
-/docs/book/
-
-# devenv-installed directory
-/host
-
-core.*

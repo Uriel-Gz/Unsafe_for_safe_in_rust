@@ -36,11 +36,12 @@
 - hyper-master
 - tokio-master
 - sar-rs-main
-- rust-master
 - exa-master
 - reth-main
 - fd-master
 - warp-main
+
+- rust-master           // falta verificar
 
 
 ## Cronologia
@@ -50,6 +51,7 @@
 
 [26/04/2025] Se continua con el analisis de codigo, a partir del enfoque de solo bsucar casos de punteros raw, la busqueda es mas rapida.
 
+[12/05/2025] Cambio en extracion de codigo unsafe, busqueda mas inteligente y comienzo de clasificacion. Primer tipo: desreferecniacion de punteros (asignacion, devolucion, etc.).
 
 ## Casos de uso de codigo unsafe
 

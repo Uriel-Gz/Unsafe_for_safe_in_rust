@@ -1,0 +1,2121 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <style>
+        a:hover{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<pre>
+<H3>In the repository (subfolder/s) lucet-main/benchmarks/lucet-benchmarks/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/benchmarks/lucet-benchmarks/src/context.rs','lucet-main/benchmarks/lucet-benchmarks/src/context.rs-28','28')"><em>context.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                let mut parent = ContextHandle::new();
+                Context::swap(&mut parent, &mut child);
+                stack
+            }
+</code>
+<code class="rust" id="lucet-main/benchmarks/lucet-benchmarks/src/context.rs-28" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/benchmarks/lucet-benchmarks/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/benchmarks/lucet-benchmarks/src/context.rs','lucet-main/benchmarks/lucet-benchmarks/src/context.rs-49','49')"><em>context.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { Context::swap(&mut parent, &mut child) }
+</code>
+<code class="rust" id="lucet-main/benchmarks/lucet-benchmarks/src/context.rs-49" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/benchmarks/lucet-benchmarks/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/benchmarks/lucet-benchmarks/src/context.rs','lucet-main/benchmarks/lucet-benchmarks/src/context.rs-337','337')"><em>context.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { Context::swap(&mut parent, &mut child) }
+</code>
+<code class="rust" id="lucet-main/benchmarks/lucet-benchmarks/src/context.rs-337" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/benchmarks/lucet-benchmarks/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/benchmarks/lucet-benchmarks/src/par.rs','lucet-main/benchmarks/lucet-benchmarks/src/par.rs-167','167')"><em>par.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                            libc::sigaltstack(&sigstack_raw, std::ptr::null_mut());
+                        }
+</code>
+<code class="rust" id="lucet-main/benchmarks/lucet-benchmarks/src/par.rs-167" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/benchmarks/lucet-benchmarks/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/benchmarks/lucet-benchmarks/src/seq.rs','lucet-main/benchmarks/lucet-benchmarks/src/seq.rs-43','43')"><em>seq.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { nix::libc::sync() }
+</code>
+<code class="rust" id="lucet-main/benchmarks/lucet-benchmarks/src/seq.rs-43" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-concurrency-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-concurrency-tests/src/killswitch.rs','lucet-main/lucet-concurrency-tests/src/killswitch.rs-45','45')"><em>killswitch.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            // ENTERING_GUEST is only populated if the test requires this syncpoint be checked.
+            if let Some(entering_guest) = ENTERING_GUEST.as_ref() {
+                entering_guest.check();
+            }
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-concurrency-tests/src/killswitch.rs-45" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-concurrency-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-concurrency-tests/src/killswitch.rs','lucet-main/lucet-concurrency-tests/src/killswitch.rs-54','54')"><em>killswitch.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            // ENTERING_GUEST is only populated if the test requires this syncpoint be checked.
+            if let Some(entering_guest) = ENTERING_GUEST.as_ref() {
+                entering_guest.check();
+            }
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-concurrency-tests/src/killswitch.rs-54" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-concurrency-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-concurrency-tests/src/killswitch.rs','lucet-main/lucet-concurrency-tests/src/killswitch.rs-68','68')"><em>killswitch.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            let heap_base = lucet_vmctx_get_heap(vmctx);
+
+            // Using the default limits, each instance as of this writing takes up 0x200026000 bytes
+            // worth of virtual address space. We want to access a point beyond all the instances,
+            // so that memory is unmapped. We assume no more than 16 instances are mapped
+            // concurrently. This may change as the library, test configuration, linker, phase of
+            // moon, etc change, but for now it works.
+            *heap_base.offset(0x0002_0002_6000 * 16) = 0;
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-concurrency-tests/src/killswitch.rs-68" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-concurrency-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-concurrency-tests/src/killswitch.rs','lucet-main/lucet-concurrency-tests/src/killswitch.rs-85','85')"><em>killswitch.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            let globals_base = lucet_vmctx_get_globals(vmctx);
+
+            // Using the default limits, the globals are a page; try to write just off the end
+            *globals_base.offset(0x1000) = 0;
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-concurrency-tests/src/killswitch.rs-85" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-concurrency-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-concurrency-tests/src/killswitch.rs','lucet-main/lucet-concurrency-tests/src/killswitch.rs-99','99')"><em>killswitch.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { real_hostcall(vmctx) }
+</code>
+<code class="rust" id="lucet-main/lucet-concurrency-tests/src/killswitch.rs-99" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-concurrency-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-concurrency-tests/src/killswitch.rs','lucet-main/lucet-concurrency-tests/src/killswitch.rs-106','106')"><em>killswitch.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { yielding_hostcall(vmctx) }
+</code>
+<code class="rust" id="lucet-main/lucet-concurrency-tests/src/killswitch.rs-106" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-concurrency-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-concurrency-tests/src/killswitch.rs','lucet-main/lucet-concurrency-tests/src/killswitch.rs-184','184')"><em>killswitch.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                    ENTERING_GUEST = Some(Syncpoint::new());
+                }
+</code>
+<code class="rust" id="lucet-main/lucet-concurrency-tests/src/killswitch.rs-184" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-concurrency-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-concurrency-tests/src/killswitch.rs','lucet-main/lucet-concurrency-tests/src/killswitch.rs-208','208')"><em>killswitch.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                    ENTERING_GUEST = Some(Syncpoint::new());
+                }
+</code>
+<code class="rust" id="lucet-main/lucet-concurrency-tests/src/killswitch.rs-208" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-concurrency-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-concurrency-tests/src/killswitch.rs','lucet-main/lucet-concurrency-tests/src/killswitch.rs-251','251')"><em>killswitch.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { ENTERING_GUEST.as_ref().unwrap().wait_at() }
+</code>
+<code class="rust" id="lucet-main/lucet-concurrency-tests/src/killswitch.rs-251" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-concurrency-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-concurrency-tests/src/killswitch.rs','lucet-main/lucet-concurrency-tests/src/killswitch.rs-853','853')"><em>killswitch.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { ENTERING_GUEST.as_ref().unwrap().wait_at() }
+</code>
+<code class="rust" id="lucet-main/lucet-concurrency-tests/src/killswitch.rs-853" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-module/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-module/src/functions.rs','lucet-main/lucet-module/src/functions.rs-192','192')"><em>functions.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { from_raw_parts(traps_ptr, self.traps_len as usize) }
+</code>
+<code class="rust" id="lucet-main/lucet-module/src/functions.rs-192" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-module/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-module/src/globals.rs','lucet-main/lucet-module/src/globals.rs-97','97')"><em>globals.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            writeln!(f, "  i_32: {},", self.i_32)?;
+            writeln!(f, "  i_64: {},", self.i_64)?;
+            writeln!(f, "  f_32: {},", self.f_32)?;
+            writeln!(f, "  f_64: {},", self.f_64)?;
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-module/src/globals.rs-97" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-objdump/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-objdump/src/main.rs','lucet-main/lucet-objdump/src/main.rs-150','150')"><em>main.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { std::slice::from_raw_parts(real_trap_ptr, traps_count) }
+</code>
+<code class="rust" id="lucet-main/lucet-objdump/src/main.rs-150" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-objdump/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-objdump/src/main.rs','lucet-main/lucet-objdump/src/main.rs-185','185')"><em>main.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+        std::slice::from_raw_parts(
+            function_manifest_bytes.as_ptr() as *const FunctionSpec,
+            serialized_module.function_manifest_len as usize,
+        )
+    }
+</code>
+<code class="rust" id="lucet-main/lucet-objdump/src/main.rs-185" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-objdump/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-objdump/src/main.rs','lucet-main/lucet-objdump/src/main.rs-470','470')"><em>main.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            std::slice::from_raw_parts(
+                tables_bytes.as_ptr() as *const &[TableElement],
+                serialized_module.tables_len as usize,
+            )
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-objdump/src/main.rs-470" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-objdump/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-objdump/src/main.rs','lucet-main/lucet-objdump/src/main.rs-488','488')"><em>main.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                std::slice::from_raw_parts(
+                    table_bytes.as_ptr() as *const TableElement,
+                    table.len() as usize,
+                )
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-objdump/src/main.rs-488" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-568','568')"><em>c_api.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { val.inner_val.as_u64 }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-568" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-569','569')"><em>c_api.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { val.inner_val.as_u64 }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-569" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-570','570')"><em>c_api.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { val.inner_val.as_u64 }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-570" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-571','571')"><em>c_api.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { val.inner_val.as_u64 }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-571" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-572','572')"><em>c_api.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { val.inner_val.as_u64 }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-572" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-573','573')"><em>c_api.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { val.inner_val.as_u64 }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-573" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-574','574')"><em>c_api.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { val.inner_val.as_i64 }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-574" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-575','575')"><em>c_api.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { val.inner_val.as_i64 }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-575" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-576','576')"><em>c_api.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { val.inner_val.as_i64 }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-576" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-577','577')"><em>c_api.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { val.inner_val.as_i64 }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-577" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-578','578')"><em>c_api.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { val.inner_val.as_u64 }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-578" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-579','579')"><em>c_api.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { val.inner_val.as_i64 }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-579" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-580','580')"><em>c_api.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { val.inner_val.as_u64 }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-580" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-581','581')"><em>c_api.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { val.inner_val.as_f32 }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-581" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-582','582')"><em>c_api.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { val.inner_val.as_f64 }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-582" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-682','682')"><em>c_api.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                core::arch::x86_64::_mm_storeu_ps(
+                    v.fp.as_mut().as_mut_ptr() as *mut f32,
+                    retval.fp(),
+                );
+                *(v.gp.as_mut().as_mut_ptr() as *mut u64) = retval.gp();
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs-682" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/future.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/future.rs-75','75')"><em>future.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            std::mem::transmute::<BoxFuture<'a, ResumeVal>, BoxFuture<'static, ResumeVal>>(f)
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/future.rs-75" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-85','85')"><em>instance.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.as_ref().magic }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-85" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-96','96')"><em>instance.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+        // this is wildly unsafe! you must be very careful to not let the drop impls run on the
+        // uninitialized fields; see
+        // <https://doc.rust-lang.org/std/mem/fn.forget.html#use-case-1>
+
+        // write the whole struct into place over the uninitialized page
+        ptr::write(&mut *handle, inst);
+    }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-96" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-134','134')"><em>instance.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { self.inst.as_ref() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-134" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-140','140')"><em>instance.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { self.inst.as_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-140" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-147','147')"><em>instance.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                let inst = self.inst.as_mut();
+
+                // The `inst.alloc` field manages the memory of the instance
+                // itself. Note, though, that this field is in a `ManuallyDrop`
+                // so it won't get dropped automatically in `drop_in_place`.
+                // This is the point where we take over that precise drop.
+                //
+                // By using `take` here we're basically calling `ptr::read`
+                // which "duplicates" the `alloc` since the `alloc` local
+                // variable here is the exact same as `inst.alloc`. All we do
+                // with `inst`, though, is call `drop_in_place`, which
+                // invalidates every other field in `inst`.
+                let alloc: Alloc = ManuallyDrop::take(&mut inst.alloc);
+
+                // drop the actual instance
+                std::ptr::drop_in_place(inst);
+
+                // Now that we're 100% done with the instance, destructors and
+                // all, we can release the memory of the instance back to the
+                // original allocator from whence it came (be it mmap or uffd
+                // based). This will run the "official" destructor for `Alloc`
+                // which internally does the release. Note that after this
+                // operation the `inst` pointer is invalid and can no longer be
+                // used.
+                drop(alloc);
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-147" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-685','685')"><em>instance.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { self.alloc.globals_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-685" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-780','780')"><em>instance.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { self.alloc.heap() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-780" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-785','785')"><em>instance.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { self.alloc.heap_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-785" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-790','790')"><em>instance.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { self.alloc.heap_u32() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-790" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-795','795')"><em>instance.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { self.alloc.heap_u32_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-795" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-800','800')"><em>instance.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { self.alloc.globals() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-800" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-805','805')"><em>instance.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { self.alloc.globals_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-805" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-975','975')"><em>instance.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                self.terminate(termination_details);
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-975" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-1101','1101')"><em>instance.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            let implicits_ptr = (self as *const _ as *const u8)
+                .add(HOST_PAGE_SIZE_EXPECTED - mem::size_of::<InstanceRuntimeData>())
+                as *const InstanceRuntimeData;
+            mem::transmute::<*const InstanceRuntimeData, &InstanceRuntimeData>(implicits_ptr)
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-1101" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-1111','1111')"><em>instance.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            let implicits_ptr = (self as *mut _ as *mut u8)
+                .add(HOST_PAGE_SIZE_EXPECTED - mem::size_of::<InstanceRuntimeData>())
+                as *mut InstanceRuntimeData;
+            mem::transmute::<*mut InstanceRuntimeData, &mut InstanceRuntimeData>(implicits_ptr)
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-1111" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-1185','1185')"><em>instance.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { self.alloc.stack_u64_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-1185" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-1217','1217')"><em>instance.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            // Get a raw pointer to the top of the guest stack.
+            let top_of_stack = self.ctx.gpr.rsp as *mut u64;
+            // Move the guest code address to rbx, and then put the address of the activation thunk
+            // at the top of the stack, so that we will start execution at `enter_guest_region`.
+            self.ctx.gpr.rbx = *top_of_stack;
+            *top_of_stack = crate::context::lucet_context_activate as u64;
+            // Pass a pointer to our guest-side entrypoint bootstrap code in `rsi`, and then put
+            // its first argument (a raw pointer to `self`) in `rdi`.
+            self.ctx.gpr.rsi = execution::enter_guest_region as u64;
+            self.ctx.gpr.rdi = self.ctx.callback_data_ptr() as u64;
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-1217" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-1256','1256')"><em>instance.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { Context::swap(&mut *host_ctx.get(), &mut i.ctx) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-1256" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-1354','1354')"><em>instance.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { h(self as *mut Instance) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-1354" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-1391','1391')"><em>instance.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { NonNull::new_unchecked(self) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-1391" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-1395','1395')"><em>instance.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { pthread_self() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs-1395" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/val.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/val.rs-128','128')"><em>val.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { _mm_load_ps1(&v as *const f32) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/val.rs-128" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/val.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/val.rs-129','129')"><em>val.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { _mm_castpd_ps(_mm_load_pd1(&v as *const f64)) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/val.rs-129" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/val.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/val.rs-182','182')"><em>val.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { _mm_setzero_ps() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/val.rs-182" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/val.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/val.rs-279','279')"><em>val.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { _mm_setzero_ps() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/val.rs-279" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/val.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/val.rs-304','304')"><em>val.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+        _mm_storeu_ps(&mut out[0] as *mut f32, v);
+    }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/val.rs-304" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/val.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/val.rs-313','313')"><em>val.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+        let vd = _mm_castps_pd(v);
+        _mm_storeu_pd(&mut out[0] as *mut f64, vd);
+    }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/val.rs-313" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs-101','101')"><em>vmctx.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { instance_from_vmctx(self.vmctx) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs-101" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs-109','109')"><em>vmctx.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { self.instance_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs-109" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs-170','170')"><em>vmctx.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            self.reconstitute_heap_view_if_needed();
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs-170" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs-185','185')"><em>vmctx.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            self.reconstitute_heap_view_if_needed();
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs-185" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs-253','253')"><em>vmctx.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { self.instance_mut().embed_ctx.try_get_mut::<T>() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs-253" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs-277','277')"><em>vmctx.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            let instance = self.instance_mut();
+            instance.grow_memory_from_hostcall(self, additional_pages)
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs-277" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs-344','344')"><em>vmctx.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { (typed_binop)(vmctx.as_raw(), operand1, operand2) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs-344" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs-436','436')"><em>vmctx.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { self.instance_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs-436" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs-447','447')"><em>vmctx.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { Context::swap(&mut inst.ctx, &mut *host_ctx.get()) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs-447" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs-526','526')"><em>vmctx.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { Context::set(&*host_ctx.get()) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs-526" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-74','74')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.alloc_mut().heap_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-74" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-84','84')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.alloc_mut().stack_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-84" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-123','123')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.alloc_mut().heap_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-123" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-161','161')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.alloc_mut().heap_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-161" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-191','191')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.alloc_mut().heap_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-191" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-231','231')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.alloc_mut().heap_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-231" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-280','280')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.alloc_mut().heap_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-280" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-329','329')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.alloc_mut().heap_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-329" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-427','427')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.alloc_mut().heap_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-427" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-437','437')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.alloc_mut().stack_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-437" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-448','448')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.alloc_mut().globals_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-448" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-454','454')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                    assert_eq!(globals[0].i_64, 0);
+                    globals[0].i_64 = 0xFF;
+                    assert_eq!(globals[0].i_64, 0xFF);
+                }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-454" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-460','460')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                    assert_eq!(globals[globals.len() - 1].i_64, 0);
+                    globals[globals.len() - 1].i_64 = 0xFF;
+                    assert_eq!(globals[globals.len() - 1].i_64, 0xFF);
+                }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-460" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-466','466')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.alloc_mut().sigstack_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-466" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-499','499')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.alloc_mut().heap_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-499" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-519','519')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.alloc_mut().heap_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-519" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-545','545')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.alloc_mut().heap_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-545" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-577','577')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.alloc_mut().heap_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-577" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-610','610')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.alloc_mut().heap_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-610" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-620','620')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.alloc_mut().stack_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-620" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-686','686')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                    std::slice::from_raw_parts_mut(heap, CONTEXT_TEST_INITIAL_SIZE as usize)
+                }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-686" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-704','704')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                let heap_ptr = inst.alloc_mut().heap_mut().as_ptr() as *mut c_void;
+                let mut child = ContextHandle::create_and_init(
+                    inst.alloc_mut().stack_u64_mut(),
+                    heap_touching_child as usize,
+                    &[Val::CPtr(heap_ptr)],
+                )
+                .expect("context init succeeds");
+                Context::swap(&mut parent, &mut child);
+                assert_eq!(inst.alloc().heap()[0], 123);
+                assert_eq!(inst.alloc().heap()[4095], 45);
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-704" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-725','725')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                    std::slice::from_raw_parts_mut(heap, CONTEXT_TEST_INITIAL_SIZE as usize / 8)
+                }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-725" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-754','754')"><em>tests.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                let heap_ptr = inst.alloc_mut().heap_mut().as_ptr() as *mut c_void;
+                let mut child = ContextHandle::create_and_init(
+                    inst.alloc_mut().stack_u64_mut(),
+                    stack_pattern_child as usize,
+                    &[Val::CPtr(heap_ptr)],
+                )
+                .expect("context init succeeds");
+                Context::swap(&mut parent, &mut child);
+
+                let stack_pattern = inst.alloc().heap_u64()[0] as usize;
+                assert!(stack_pattern > inst.alloc().slot().stack as usize);
+                assert!(
+                    stack_pattern + STACK_PATTERN_LENGTH < inst.alloc().slot().stack_top() as usize
+                );
+                let stack_pattern =
+                    std::slice::from_raw_parts(stack_pattern as *const u8, STACK_PATTERN_LENGTH);
+                for i in 0..STACK_PATTERN_LENGTH {
+                    assert_eq!(stack_pattern[i], (i % 256) as u8);
+                }
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs-754" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs-81','81')"><em>mod.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { _mm_setzero_ps() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs-81" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs-134','134')"><em>mod.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { _mm_setzero_ps() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs-134" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs-178','178')"><em>mod.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            // create a box from the pointer so that it'll get dropped
+            // and we won't leak `Context`s
+            Box::from_raw(self.internal.as_ptr());
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs-178" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs-189','189')"><em>mod.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { self.internal.as_ref() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs-189" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs-195','195')"><em>mod.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { self.internal.as_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs-195" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs-529','529')"><em>mod.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { Context::swap(&mut parent, child); }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs-529" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs-552','552')"><em>mod.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { Context::swap(&mut parent, &mut child); }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs-552" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs-613','613')"><em>mod.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { Context::set(child); }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs-613" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs-625','625')"><em>mod.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { _mm_setzero_ps() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs-625" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/c_child.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/c_child.rs-36','36')"><em>c_child.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            parent_regs = parent;
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/c_child.rs-36" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/c_child.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/c_child.rs-44','44')"><em>c_child.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            Box::from_raw(parent_regs);
+            Box::from_raw(child_regs);
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/c_child.rs-44" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/c_child.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/c_child.rs-53','53')"><em>c_child.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            let child = Box::into_raw(Box::new(ContextHandle::create_and_init(
+                &mut *$stack,
+                $fn as usize,
+                &[$( $args ),*],
+            ).unwrap()));
+
+            child_regs = child;
+
+            Context::swap(parent_regs.as_mut().unwrap(), child_regs.as_mut().unwrap());
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/c_child.rs-53" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/c_child.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/c_child.rs-111','111')"><em>c_child.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            Context::swap(parent_regs.as_mut().unwrap(), child_regs.as_mut().unwrap());
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/c_child.rs-111" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/c_child.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/c_child.rs-292','292')"><em>c_child.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+        CStr::from_ptr(&output_string as *const c_char)
+            .to_string_lossy()
+            .into_owned()
+    }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/c_child.rs-292" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/c_child.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/c_child.rs-303','303')"><em>c_child.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+        reset_output();
+    }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/c_child.rs-303" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/mod.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/mod.rs-31','31')"><em>mod.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { slice::from_raw_parts_mut(ptr, len) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/mod.rs-31" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-39','39')"><em>rust_child.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            PARENT = Some(ContextHandle::new());
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-39" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-49','49')"><em>rust_child.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            let child = ContextHandle::create_and_init(
+                &mut *$stack,
+                $fn as usize,
+                &[$( $args ),*],
+            ).unwrap();
+            CHILD = Some(child);
+
+            Context::swap(
+                PARENT.as_mut().unwrap(),
+                CHILD.as_mut().unwrap(),
+            );
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-49" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-66','66')"><em>rust_child.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { *(arg0 as *mut c_int) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-66" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-67','67')"><em>rust_child.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { *(arg1 as *mut c_int) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-67" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-77','77')"><em>rust_child.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { Context::swap(CHILD.as_mut().unwrap(), PARENT.as_mut().unwrap()) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-77" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-80','80')"><em>rust_child.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { *(arg0 as *mut c_int) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-80" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-81','81')"><em>rust_child.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { *(arg1 as *mut c_int) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-81" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-91','91')"><em>rust_child.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { Context::swap(CHILD.as_mut().unwrap(), PARENT.as_mut().unwrap()) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-91" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-124','124')"><em>rust_child.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            Context::swap(PARENT.as_mut().unwrap(), CHILD.as_mut().unwrap());
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-124" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-141','141')"><em>rust_child.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+        Context::set(PARENT.as_ref().unwrap());
+    }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-141" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-196','196')"><em>rust_child.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            if let Some(ref child) = CHILD {
+                assert_eq!(child.get_retval_gp(0), 120);
+            } else {
+                panic!("no child context present after returning");
+            }
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-196" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-215','215')"><em>rust_child.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            assert_eq!(CHILD.as_ref().unwrap().get_retval_gp(0), 120);
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-215" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-230','230')"><em>rust_child.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            let reg = CHILD.as_ref().unwrap().get_retval_fp();
+            assert_eq!(__m128_as_f32(reg), 120.0);
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-230" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-246','246')"><em>rust_child.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            let reg = CHILD.as_ref().unwrap().get_retval_fp();
+            assert_eq!(__m128_as_f64(reg), 120.0);
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs-246" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/instance </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/execution.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/execution.rs-631','631')"><em>execution.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                        pthread_kill(thread_id, SIGALRM);
+                    }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/execution.rs-631" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/instance </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/siginfo_ext.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/siginfo_ext.rs-13','13')"><em>siginfo_ext.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { siginfo_si_addr(self as *const siginfo_t) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/siginfo_ext.rs-13" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/instance </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs-81','81')"><em>signals.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            setup_guest_signal_state(&mut ostate);
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs-81" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/instance </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs-108','108')"><em>signals.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                restore_host_signal_state(state);
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs-108" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/instance </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs-139','139')"><em>signals.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { sigaltstack(Some(guest_sigstack)) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs-139" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/instance </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs-153','153')"><em>signals.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                    let mut current_sigstack = MaybeUninit::<libc::stack_t>::uninit();
+                    libc::sigaltstack(std::ptr::null(), current_sigstack.as_mut_ptr());
+                    let current_sigstack = current_sigstack.assume_init();
+                    debug_assert!(
+                        validate_sigstack_size(current_sigstack.ss_size).is_ok(),
+                        "signal stack must be large enough"
+                    );
+                }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs-153" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/instance </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs-184','184')"><em>signals.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                // restore the host signal stack for this thread
+                if !altstack_flags()
+                    .expect("the current stack flags could be retrieved")
+                    .contains(SigStackFlags::SS_ONSTACK)
+                {
+                    sigaltstack(previous_sigstack).expect("sigaltstack restoration succeeds");
+                }
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs-184" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/instance </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs-229','229')"><em>signals.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                reraise_host_signal_in_handler(signal, signum, siginfo_ptr, ucontext_ptr);
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs-229" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/instance </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs-239','239')"><em>signals.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            current_instance
+                .as_mut()
+                .expect("current instance exists")
+                .as_mut()
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs-239" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/instance </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs-296','296')"><em>signals.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { *siginfo_ptr }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs-296" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/instance </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs-394','394')"><em>signals.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                current_instance
+                    .as_mut()
+                    .expect("current instance exists")
+                    .as_mut()
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs-394" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/instance </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/state.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/state.rs-233','233')"><em>state.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { CStr::from_ptr(strsignal(sig)).to_owned() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/state.rs-233" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/module </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs-142','142')"><em>dl.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            lib.get::<*const SerializedModule>(LUCET_MODULE_SYM.as_bytes())
+                .map_err(|e| {
+                    lucet_incorrect_module!("error loading required symbol `lucet_module`: {}", e)
+                })?
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs-142" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/module </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs-150','150')"><em>dl.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { serialized_module_ptr.as_ref().unwrap() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs-150" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/module </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs-183','183')"><em>dl.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            slice::from_raw_parts(
+                serialized_module.module_data_ptr as *const u8,
+                serialized_module.module_data_len as usize,
+            )
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs-183" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/module </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs-210','210')"><em>dl.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            from_raw_parts(
+                serialized_module.tables_ptr as *const &[TableElement],
+                serialized_module.tables_len as usize,
+            )
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs-210" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/module </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs-218','218')"><em>dl.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                from_raw_parts(
+                    serialized_module.function_manifest_ptr as *const FunctionSpec,
+                    serialized_module.function_manifest_len as usize,
+                )
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs-218" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/module </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs-327','327')"><em>dl.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { CStr::from_ptr(dli.dli_fname).to_owned().into_string()? }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs-327" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/module </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs-332','332')"><em>dl.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { CStr::from_ptr(dli.dli_sname).to_owned().into_string()? }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs-332" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/module </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs-353','353')"><em>dl.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { libc::dladdr(addr, info.as_mut_ptr()) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs-353" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/module </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs-355','355')"><em>dl.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { info.assume_init() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/module/dl.rs-355" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/module </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/module/mock.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/module/mock.rs-245','245')"><em>mock.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { std::mem::transmute(md) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/module/mock.rs-245" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/module </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/module/sparse_page_data.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/module/sparse_page_data.rs-58','58')"><em>sparse_page_data.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.alloc().heap() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/module/sparse_page_data.rs-58" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-117','117')"><em>mmap.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                mprotect(*ptr, *len, ProtFlags::PROT_READ | ProtFlags::PROT_WRITE)
+                    .expect("mprotect() call succeeds");
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-117" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-170','170')"><em>mmap.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                // MADV_DONTNEED is not guaranteed to clear pages on non-Linux systems
+                #[cfg(not(target_os = "linux"))]
+                {
+                    mprotect(*ptr, *len, ProtFlags::PROT_READ | ProtFlags::PROT_WRITE)
+                        .expect("mprotect succeeds during drop");
+                    memset(*ptr, 0, *len);
+                }
+                mprotect(*ptr, *len, ProtFlags::PROT_NONE).expect("mprotect succeeds during drop");
+                madvise(*ptr, *len, MmapAdvise::MADV_DONTNEED)
+                    .expect("madvise succeeds during drop");
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-170" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-188','188')"><em>mmap.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            mprotect(
+                (slot.heap as usize + start as usize) as *mut c_void,
+                len as usize,
+                ProtFlags::PROT_READ | ProtFlags::PROT_WRITE,
+            )?;
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-188" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-205','205')"><em>mmap.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                // `mprotect()` and `madvise()` are sufficient to zero a page on Linux,
+                // but not necessarily on all POSIX operating systems, and on macOS in particular.
+                #[cfg(not(target_os = "linux"))]
+                {
+                    mprotect(
+                        heap,
+                        alloc.heap_accessible_size,
+                        ProtFlags::PROT_READ | ProtFlags::PROT_WRITE,
+                    )?;
+                    memset(heap, 0, alloc.heap_accessible_size);
+                }
+                mprotect(heap, heap_size, ProtFlags::PROT_NONE)?;
+                madvise(heap, heap_size, MmapAdvise::MADV_DONTNEED)?;
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-205" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-229','229')"><em>mmap.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                mprotect(
+                    heap,
+                    initial_size,
+                    ProtFlags::PROT_READ | ProtFlags::PROT_WRITE,
+                )?
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-229" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-248','248')"><em>mmap.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { alloc.heap_mut() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-248" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-363','363')"><em>mmap.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                mmap(
+                    ptr::null_mut(),
+                    region.limits.total_memory_size(),
+                    ProtFlags::PROT_NONE,
+                    MapFlags::MAP_ANON | MapFlags::MAP_PRIVATE,
+                    -1,
+                    0,
+                )?
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-363" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-374','374')"><em>mmap.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                mmap_aligned(
+                    region.limits.total_memory_size(),
+                    ProtFlags::PROT_NONE,
+                    MapFlags::MAP_ANON | MapFlags::MAP_PRIVATE,
+                    region.min_heap_alignment, // requested alignment
+                    instance_heap_offset(),    // offset that must be aligned
+                )?
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-374" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-387','387')"><em>mmap.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            mprotect(
+                mem,
+                instance_heap_offset(),
+                ProtFlags::PROT_READ | ProtFlags::PROT_WRITE,
+            )?
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-387" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-425','425')"><em>mmap.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { munmap(slot.start, slot.limits.total_memory_size()) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-425" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-530','530')"><em>mmap.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                mmap_aligned(
+                    test.mem_size,
+                    ProtFlags::PROT_READ | ProtFlags::PROT_WRITE,
+                    MapFlags::MAP_ANON | MapFlags::MAP_PRIVATE,
+                    test.mem_align,
+                    test.offset,
+                )
+                .unwrap()
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-530" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-547','547')"><em>mmap.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { std::slice::from_raw_parts_mut(mem as *mut u8, test.mem_size) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-547" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-552','552')"><em>mmap.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                munmap(mem, test.mem_size).unwrap();
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/mmap.rs-552" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-67','67')"><em>uffd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+        mprotect(page_addr as _, page_size, ProtFlags::PROT_NONE)
+            .map_err(|e| Error::InternalError(e.into()))?;
+    }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-67" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-88','88')"><em>uffd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            mprotect(addr as _, len, ProtFlags::PROT_READ | ProtFlags::PROT_WRITE)
+                .map_err(|e| Error::InternalError(e.into()))?;
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-88" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-129','129')"><em>uffd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+        (inst_base as *mut Instance)
+            .as_mut()
+            .ok_or(lucet_format_err!("instance pointer is non-null"))?
+    }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-129" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-159','159')"><em>uffd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                zeropage(
+                    uffd,
+                    fault_page as *mut c_void,
+                    host_page_size(),
+                    true,
+                    config.enoent_retry_limit,
+                )
+                .map_err(|e| Error::InternalError(e.into()))?;
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-159" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-351','351')"><em>uffd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                    zeropage(&self.uffd, ptr, len, true, self.config.enoent_retry_limit)
+                        .expect("zeropage succeeds");
+                }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-351" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-369','369')"><em>uffd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                        zeropage(
+                            &self.uffd,
+                            slot.heap,
+                            initial_size,
+                            false,
+                            self.config.enoent_retry_limit,
+                        )
+                        .map_err(|e| Error::InternalError(e.into()))?;
+                    }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-369" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-385','385')"><em>uffd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                            std::slice::from_raw_parts_mut(
+                                page_addr as *mut c_void as *mut u8,
+                                host_page_size(),
+                            )
+                        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-385" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-439','439')"><em>uffd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            madvise(ptr, len, MmapAdvise::MADV_DONTNEED).expect("madvise succeeds during drop");
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-439" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-457','457')"><em>uffd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                madvise(
+                    alloc.slot().heap,
+                    alloc.heap_accessible_size,
+                    MmapAdvise::MADV_DONTNEED,
+                )?;
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-457" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-513','513')"><em>uffd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            munmap(self.start, total_region_size).expect("unmapping region");
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-513" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-559','559')"><em>uffd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            mmap(
+                ptr::null_mut(),
+                total_region_size,
+                ProtFlags::PROT_READ | ProtFlags::PROT_WRITE,
+                MapFlags::MAP_ANONYMOUS | MapFlags::MAP_PRIVATE | MapFlags::MAP_NORESERVE,
+                0,
+                0,
+            )?
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-559" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-660','660')"><em>uffd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            zeropage(
+                &region.uffd,
+                start,
+                host_page_size(),
+                true,
+                region.config.enoent_retry_limit,
+            )
+            .map_err(|e| Error::InternalError(e.into()))?;
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-660" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-742','742')"><em>uffd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            zeropage(
+                uffd,
+                fault_page as *mut c_void,
+                host_page_size(),
+                true,
+                config.enoent_retry_limit,
+            )
+            .map_err(|e| Error::InternalError(e.into()))?;
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-742" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-768','768')"><em>uffd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                copy(
+                    uffd,
+                    page.as_ptr() as *const c_void,
+                    fault_page,
+                    host_page_size(),
+                    true,
+                    config.enoent_retry_limit,
+                )
+                .map_err(|e| Error::InternalError(e.into()))?;
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-768" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-781','781')"><em>uffd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                zeropage(
+                    uffd,
+                    fault_page,
+                    host_page_size(),
+                    true,
+                    config.enoent_retry_limit,
+                )
+                .map_err(|e| Error::InternalError(e.into()))?;
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-781" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-805','805')"><em>uffd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            zeropage(
+                uffd,
+                fault_page,
+                host_page_size(),
+                true,
+                config.enoent_retry_limit,
+            )
+            .map_err(|e| Error::InternalError(e.into()))?;
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-805" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-853','853')"><em>uffd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                    copy(
+                        uffd,
+                        page.as_ptr() as *const c_void,
+                        host_page_addr as *mut c_void,
+                        host_page_size(),
+                        false,
+                        config.enoent_retry_limit,
+                    )
+                    .map_err(|e| Error::InternalError(e.into()))?;
+                }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-853" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/region </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-866','866')"><em>uffd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                    zeropage(
+                        uffd,
+                        host_page_addr as *mut c_void,
+                        host_page_size(),
+                        false,
+                        config.enoent_retry_limit,
+                    )
+                    .map_err(|e| Error::InternalError(e.into()))?;
+                }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/region/uffd.rs-866" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/freebsd.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/freebsd.rs-15','15')"><em>freebsd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { self.0.as_ref().unwrap() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/freebsd.rs-15" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/freebsd.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/freebsd.rs-21','21')"><em>freebsd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { self.0.as_mut().unwrap() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/freebsd.rs-21" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/freebsd.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/freebsd.rs-27','27')"><em>freebsd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { self.0.as_mut().unwrap() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/freebsd.rs-27" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/freebsd.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/freebsd.rs-42','42')"><em>freebsd.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { (ptr as *mut ucontext_t).as_mut().expect("non-null context") }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/freebsd.rs-42" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/linux.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/linux.rs-15','15')"><em>linux.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { self.0.as_ref().unwrap() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/linux.rs-15" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/linux.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/linux.rs-21','21')"><em>linux.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { self.0.as_mut().unwrap() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/linux.rs-21" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/linux.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/linux.rs-27','27')"><em>linux.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { self.0.as_mut().unwrap() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/linux.rs-27" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/linux.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/linux.rs-42','42')"><em>linux.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { (ptr as *mut ucontext_t).as_mut().expect("non-null context") }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/linux.rs-42" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/macos.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/macos.rs-136','136')"><em>macos.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { (*self.0).uc_mcontext.as_ref().unwrap() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/macos.rs-136" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/macos.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/macos.rs-142','142')"><em>macos.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { &mut (*self.0).uc_mcontext.as_mut().unwrap() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/macos.rs-142" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/macos.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/macos.rs-148','148')"><em>macos.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { &mut (*self.0).uc_mcontext.as_mut().unwrap() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/macos.rs-148" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/macos.rs','lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/macos.rs-162','162')"><em>macos.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { (ptr as *mut ucontext_t).as_mut().expect("non-null context") }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/macos.rs-162" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/globals.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/globals.rs-35','35')"><em>globals.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.heap_u32() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/globals.rs-35" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/globals.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/globals.rs-45','45')"><em>globals.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.heap_u32() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/globals.rs-45" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/globals.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/globals.rs-124','124')"><em>globals.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.globals()[0].i_64 }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/globals.rs-124" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/globals.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/globals.rs-125','125')"><em>globals.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { inst.globals()[1].i_64 }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/globals.rs-125" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-61','61')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                        hostcall_test(vmctx);
+                        std::hint::unreachable_unchecked();
+                    }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-61" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-72','72')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                        raise_other_panic(vmctx);
+                        std::hint::unreachable_unchecked();
+                    }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-72" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-87','87')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                        let heap_base = lucet_vmctx_get_heap(vmctx);
+
+                        // Using the default limits, each instance as of this writing takes up 0x200026000 bytes
+                        // worth of virtual address space. We want to access a point beyond all the instances,
+                        // so that memory is unmapped. We assume no more than 16 instances are mapped
+                        // concurrently. This may change as the library, test configuration, linker, phase of
+                        // moon, etc change, but for now it works.
+                        *heap_base.offset(0x0002_0002_6000 * 16) = 0;
+                    }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-87" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-104','104')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                        let globals_base = lucet_vmctx_get_globals(vmctx);
+
+                        // Using the default limits, the globals are a page; try to write just off the end
+                        *globals_base.offset(0x1000) = 0;
+                    }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-104" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-118','118')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                        *guest_recoverable_get_ptr() = '\0' as c_char;
+                    }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-118" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-460','460')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                            sigaltstack(&our_sigstack, beforestack.as_mut_ptr());
+                            beforestack.assume_init()
+                        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-460" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-489','489')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                            sigaltstack(&beforestack, afterstack.as_mut_ptr());
+                            afterstack.assume_init()
+                        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-489" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-716','716')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { recoverable_ptr_make_accessible() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-716" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-736','736')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { recoverable_ptr_setup() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-736" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-744','744')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { recoverable_ptr_teardown() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-744" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-766','766')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { fork() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-766" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-780','780')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { recoverable_ptr_setup() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-780" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-791','791')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { recoverable_ptr_teardown() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-791" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-820','820')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { recoverable_ptr_make_accessible() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-820" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-839','839')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                                sigaction(super::INVALID_PERMISSION_SIGNAL, &sa).expect("sigaction succeeds")
+                            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-839" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-851','851')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                                recoverable_ptr_setup();
+                            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-851" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-857','857')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                                *super::RECOVERABLE_PTR = 0;
+                            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-857" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-864','864')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                                recoverable_ptr_teardown();
+                                sigaction(super::INVALID_PERMISSION_SIGNAL, &before_sa)
+                                    .expect("sigaction succeeds");
+                            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-864" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-887','887')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { recoverable_ptr_make_accessible() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-887" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-907','907')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                                sigaction(super::INVALID_PERMISSION_SIGNAL, &sa).expect("sigaction succeeds")
+                            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-907" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-932','932')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                                recoverable_ptr_setup();
+                            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-932" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-938','938')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                                *super::RECOVERABLE_PTR = 0;
+                            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-938" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-947','947')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                                recoverable_ptr_teardown();
+                                // sigaltstack(&saved_sigstack).expect("sigaltstack succeeds");
+                                sigaction(super::INVALID_PERMISSION_SIGNAL, &saved_fault_sa)
+                                    .expect("sigaction succeeds");
+                            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-947" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-962','962')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { fork() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-962" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-964','964')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                                    recoverable_ptr_setup();
+                                }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-964" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-985','985')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                                    *super::RECOVERABLE_PTR = 0;
+                                }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-985" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-1014','1014')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { fork() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-1014" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-1042','1042')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { fork() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-1042" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-1085','1085')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { fork() }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-1085" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-1115','1115')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                            sigaltstack(std::ptr::null(), beforestack.as_mut_ptr());
+                            beforestack.assume_init()
+                        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-1115" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-1129','1129')"><em>guest_fault.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                            sigaltstack(std::ptr::null(), afterstack.as_mut_ptr());
+                            afterstack.assume_init()
+                        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs-1129" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/helpers.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/helpers.rs-49','49')"><em>helpers.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                let mut out = MaybeUninit::<sigaction>::uninit();
+                sigaction(*sig, std::ptr::null(), out.as_mut_ptr());
+                out.assume_init()
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/helpers.rs-49" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/host.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/host.rs-45','45')"><em>host.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { std::slice::from_raw_parts(hello as *const u8, hello_len as usize) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/host.rs-45" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/host.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/host.rs-82','82')"><em>host.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { Vmctx::from_raw(vmctx.as_raw()) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/host.rs-82" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/host.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/host.rs-86','86')"><em>host.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { Vmctx::from_raw(vmctx.as_raw()) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/host.rs-86" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/host.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/host.rs-158','158')"><em>host.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { globals[0].i_64 }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/host.rs-158" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/start.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/start.rs-216','216')"><em>start.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                            sigaltstack(&our_sigstack, beforestack.as_mut_ptr());
+                            beforestack.assume_init()
+                        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/start.rs-216" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/start.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/start.rs-256','256')"><em>start.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                            sigaltstack(&beforestack, afterstack.as_mut_ptr());
+                            afterstack.assume_init()
+                        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/start.rs-256" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/strcmp.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/strcmp.rs-11','11')"><em>strcmp.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                *oob = 'x' as c_char;
+            }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/strcmp.rs-11" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/lucet-runtime-tests/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/lucet-runtime-tests/src/strcmp.rs','lucet-main/lucet-runtime/lucet-runtime-tests/src/strcmp.rs-61','61')"><em>strcmp.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { strcmp(s1.as_ptr() as *const c_char, s2.as_ptr() as *const c_char) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/lucet-runtime-tests/src/strcmp.rs-61" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/src/c_api.rs','lucet-main/lucet-runtime/src/c_api.rs-546','546')"><em>c_api.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            assert!(lucet_runtime_test_mmap_expand_heap(
+                Arc::into_raw(dlmodule) as *mut lucet_dl_module
+            ));
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/src/c_api.rs-546" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/src/c_api.rs','lucet-main/lucet-runtime/src/c_api.rs-569','569')"><em>c_api.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            assert!(lucet_runtime_test_uffd_expand_heap(
+                Arc::into_raw(dlmodule) as *mut lucet_dl_module
+            ));
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/src/c_api.rs-569" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/src/c_api.rs','lucet-main/lucet-runtime/src/c_api.rs-593','593')"><em>c_api.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            assert!(lucet_runtime_test_yield_resume(
+                Arc::into_raw(dlmodule) as *mut lucet_dl_module
+            ));
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/src/c_api.rs-593" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/src/lib.rs','lucet-main/lucet-runtime/src/lib.rs-141','141')"><em>lib.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { Box::from_raw(foreign_ctx) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/src/lib.rs-141" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/src/lib.rs','lucet-main/lucet-runtime/src/lib.rs-181','181')"><em>lib.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+//!         hostcall_factorials(5)
+//!     }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/src/lib.rs-181" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/tests/instruction_counting.rs','lucet-main/lucet-runtime/tests/instruction_counting.rs-137','137')"><em>instruction_counting.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { Waker::from_raw(RawWaker::new(&(), &DUMMY_VTABLE)) }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/tests/instruction_counting.rs-137" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucet-runtime/tests </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucet-runtime/tests/memory.rs','lucet-main/lucet-runtime/tests/memory.rs-80','80')"><em>memory.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            mincore(
+                inst.heap_mut().as_mut_ptr() as *mut c_void,
+                HEAP_LEN,
+                result_vec.as_mut_ptr(),
+            )
+        }
+</code>
+<code class="rust" id="lucet-main/lucet-runtime/tests/memory.rs-80" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucetc/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucetc/src/compiler.rs','lucet-main/lucetc/src/compiler.rs-698','698')"><em>compiler.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            clif.emit_to_memory(
+                code.as_mut_ptr(),
+                &mut reloc_sink,
+                &mut traps,
+                &mut stack_map_sink,
+            )
+        }
+</code>
+<code class="rust" id="lucet-main/lucetc/src/compiler.rs-698" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) lucet-main/lucetc/src </H3>
+    In the file : <a onclick="cargarArchivo('../proyectos_para_analisar/lucet-main/lucetc/src/compiler.rs','lucet-main/lucetc/src/compiler.rs-886','886')"><em>compiler.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            std::slice::from_raw_parts(
+                traps.as_ptr() as *const u8,
+                traps.len() * std::mem::size_of::<lucet_module::TrapSite>(),
+            )
+        }
+</code>
+<code class="rust" id="lucet-main/lucetc/src/compiler.rs-886" style="overflow: auto; height: 150px; display: none;"></code>
+
+</pre>
+    <script>
+        let f = false;
+        function cargarArchivo(archivo, id, line) {
+            if (!f) {
+                f = true;
+                fetch(archivo)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Error al cargar el archivo');
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        const bloque = document.getElementById(id);
+                        bloque.innerText = data;
+                        bloque.style.display = 'block'; // Mostrar el contenido
+                        bloque.scrollTop = parseInt(line, 10) * 15; // Mostrar el contenido
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }else{
+                    f = false;
+                    const bloque = document.getElementById(id);
+                    bloque.style.display = 'none'; // Mostrar el contenido
+                }
+            }
+    </script>
+</body>
+</html>
