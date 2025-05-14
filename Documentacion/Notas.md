@@ -28,20 +28,28 @@
 
 
 ## Repositorios analisados
-- RustInterceptor-master
-- leetCode-in-rust-main
 - rust-postgres-master
-- cs561-rust-main
-- waveterm-main
-- hyper-master
+- mnemos-alloc-main
+- stm32f042-master
 - tokio-master
-- sar-rs-main
+- hyper-master
+- gxhash-main
+- rure-master
+- lucet-main
 - exa-master
 - reth-main
-- fd-master
 - warp-main
+- fd-master
 
 - rust-master           // falta verificar
+
+### Sin codigo unsafe
+- RustInterceptor-master
+- LeetCode-in-rust-main
+- cs561-rust-main
+- amaber-staging
+- waveterm-main
+- sat-rs-main
 
 
 ## Cronologia
