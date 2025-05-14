@@ -1,0 +1,28 @@
+[package]
+name = "lucet-runtime-tests"
+version = "0.7.0-dev"
+description = "Pure Rust runtime for Lucet WebAssembly toolchain (tests)"
+homepage = "https://github.com/fastly/lucet"
+repository = "https://github.com/fastly/lucet"
+license = "Apache-2.0 WITH LLVM-exception"
+categories = ["wasm"]
+authors = ["Lucet team <lucet@fastly.com>"]
+edition = "2018"
+
+[lib]
+# This crate only defines tests in macros, it does not contain any tests itself. This flag prevents
+# `cargo test -p lucet-runtime-tests` from trying to link an executable with undefined symbols.
+test = false
+
+[dependencies]
+anyhow = "1"
+lazy_static = "1.4"
+libc = "0.2.103"
+tempfile = "3.0"
+lucet-module = { path = "../../lucet-module", version = "=0.7.0-dev" }
+lucet-runtime-internals = { path = "../lucet-runtime-internals", version = "=0.7.0-dev" }
+lucet-wasi-sdk = { path = "../../lucet-wasi-sdk", version = "=0.7.0-dev" }
+lucetc = { path = "../../lucetc", version = "=0.7.0-dev" }
+
+[build-dependencies]
+cc = "1.0"

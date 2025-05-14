@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <style>
+        a:hover{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+        <pre>
+        <h4>hola mudo</h4>
+        in the file: <a onclick="cargarArchivo('../proyectos_para_analisar/amber-staging/src/compiler.rs','1','10') "><em>tu mama</em></aaa>    
+        <code class="rust" style="border-radius: 10px;">
+            fn fun() {
+                queso
+            }
+        </code>
+        <code class="rust" id="1" style="overflow: auto; height: 200px; display: none;"></code>
+        <h4>hola mudo</h4>
+        in the file: <a href="../proyectos_para_analisar/amber-staging/src/rules.rs"  ></t>lista</a>    
+        <code class="rust" style="border-radius: 10px;">
+            fn fun() {
+                quesito
+            }
+        </code>
+    </pre>
+    <script>
+        let f = false;
+        function cargarArchivo(archivo, id, line) {
+            if (!f) {
+                f = true;
+                fetch(archivo)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Error al cargar el archivo');
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        const bloque = document.getElementById(id);
+                        bloque.innerText = data;
+                        bloque.style.display = 'block'; // Mostrar el contenido
+                        bloque.scrollTop = parseInt(line, 10) * 15; // Mostrar el contenido
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }else{
+                    f = false;
+                    const bloque = document.getElementById(id);
+                    bloque.style.display = 'none'; // Mostrar el contenido
+                }
+            }
+    </script>
+</body>
+</html>

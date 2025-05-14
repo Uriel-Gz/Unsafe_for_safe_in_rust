@@ -1,0 +1,25 @@
+[workspace]
+members = [
+  "benchmarks/lucet-benchmarks",
+  "docs/lucet-runtime-example",
+  "lucet-concurrency-tests",
+  "lucet-module",
+  "lucet-objdump",
+  "lucet-runtime",
+  "lucet-runtime/lucet-runtime-internals",
+  "lucet-runtime/lucet-runtime-macros",
+  "lucet-runtime/lucet-runtime-tests",
+  "lucet-spectest",
+  "lucet-wasi",
+  "lucet-wasi-fuzz",
+  "lucet-wasi-sdk",
+  "lucet-wiggle",
+  "lucet-wiggle/macro",
+  "lucet-wiggle/generate",
+  "lucetc",
+  "fuzz",
+]
+exclude = ["wasmtime", "sightglass"]
+
+[profile.test]
+rpath = true

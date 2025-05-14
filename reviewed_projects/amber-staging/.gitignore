@@ -1,0 +1,19 @@
+/target
+
+# Test files
+test*.ab
+test*.sh
+test*.md
+/docs/
+src/std/docs/
+
+# Flamegraph files
+flamegraph.svg
+
+# MacOS
+**/.DS_Store
+
+# Nixos
+.direnv
+/result
+
