@@ -61,9 +61,14 @@
 
 [12/05/2025] Cambio en extracion de codigo unsafe, busqueda mas inteligente y comienzo de clasificacion. Primer tipo: desreferecniacion de punteros (asignacion, devolucion, etc.).
 
+[17/05/2025] Reanalisis de codigo en los repositorios, repasando donde y como se usan los elementos de bloque unsafe. Tomo nota de los repositorios para despues llevar mas profundo el analisis, ademas intento categorizar el tipo de contenido que se omite o que se puede usar.
+
+
 ## Casos de uso de codigo unsafe
 
 ### Asiganciones
+
+#### obviar el match
 
 - caso 1:
 
@@ -75,15 +80,19 @@
         let <variable> = <string>.add(<elemento>);
         Some(ptr::read(<variable>))
 
-- caso 3:
-        -- obviar el match
+- caso 3: hyper-master/src/rt/timer.rs
+        
         let <variable> = <string>.add(<elemento>);
         Some(&*<variable>)
 
+<!-- tengo que generalizar -->
 - caso 4:
 
         let <elem> = Box::from_raw(<otroelem>);
         <otroelem> = <elem>.<next>;
+
+
+#### pasar referencia
 
 - caso 5:
 
@@ -105,16 +114,20 @@
 
         (*<nombre>).<attr> = Self::<funcion>((*<nombre>).<attr>);
 
-- caso 10: (maybe)
+#### manejo de strings
+
+- caso 10: 
 
         *<string> += "<string>"  
+
+#### devolucion de valores
 
 - caso 11:
 
         let <name> = <string>();
         (&<name>.<method>, &mut <name>.<attr>, &<name>.<string>)
         
-- caso 12: (maybe)
+- caso 12: hyper-master/src/ffi/task.rs (parecido)
 
         (*<string>).<attr> = Some(<string>);
         
@@ -126,17 +139,113 @@
 
         let <var> = *<val>
         
-- caso 15:
+- caso 15: gxhash-main/benches/throughput_criterion.rs
 
+        let <var> = unsafe { alloc(x)};
         
-        
-- caso 16:
+- caso 16: gxhash-main/benches/throughput_criterion.rs
+           hyper-master/src/ffi/body.rs
+           hyper-master/src/proto/h1/io.rs
+           lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs
+           lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs
 
+        let <var>: <tipo>? = unsafe { <expresion> };
         
-        
-- caso 17:
+- caso 17: gxhash-main/benches/throughput_criterion.rs
 
+        unsafe { dealloc(x,y)}
         
+- caso 18: gxhash-main/src/hasher.rs
+           gxhash-main/src/gxhash/mod.rs
         
-- caso 18:
+        let <var> = &<regex> as *const <tipo> as *const <tipo>;
+        *<var>
+
+- caso 19: hyper-master/benches/support/tokiort.rs 
+           hyper-master/src/common/io/compat.rs
+           hyper-master/src/ffi/http_types.rs
+  > analisar detenidamente, puede haber uso en otra parte/ tiene matchs
+
+- caso 20: hyper-master/src/upgrade.rs
+
+        let raw: *mut dyn Io = Box::into_raw(self);
+        Ok(Box::from_raw(raw as *mut T))
+
+- caso 21: hyper-master/src/ffi/http_types.r
+
+        *unsafe { &mut *req }.0.uri_mut() = u;
         
+- caso 22: hyper-master/src/ffi/http_types.rs
+
+        let vec = &mut *(vec as *mut Vec);
+
+- caso 23: hyper-master/src/proto/h2/role.rs
+        lucet-main/lucet-runtime/lucet-runtime-internals/src/instance.rs
+        lucet-main/lucet-runtime/lucet-runtime-internals/src/vmctx.rs
+        lucet-main/lucet-runtime/lucet-runtime-internals/src/context/mod.rs
+        lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs
+        lucet-main/lucet-runtime/lucet-runtime-tests/src/globals.rs
+
+        unsafe { val };
+        <!-- generico a lo que devuelva -->
+
+- caso 24: hyper-master/src/rt/io.rs
+
+        unsafe { &mut *(raw as *mut [u8] as *mut [MaybeUninit]) }
+
+- caso 25: lucet-main/benchmarks/lucet-benchmarks/src/context.rs
+           lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/mod.rs
+
+        let mut <var> = <regex>;
+
+- caso 26: lucet-main/lucet-concurrency-tests/src/killswitch.rs
+           lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs
+           lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/c_child.rs
+        
+        llamada a funcion externa en c
+
+- caso 27: lucet-main/lucet-concurrency-tests/src/killswitch.rs
+           lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs
+
+        <identificador> = some(<x>);
+
+- caso 28: lucet-main/lucet-runtime/lucet-runtime-internals/src/c_api.rs
+
+        casos de pasaje de valores a su representacion
+
+- caso 29: mismo repo de arriba
+
+        core::arch::x86_64::_mm_storeu_ps(
+                    v.fp.as_mut().as_mut_ptr() as *mut f32,
+                    retval.fp(),
+                );
+        *(v.gp.as_mut().as_mut_ptr() as *mut u64) = retval.gp();
+
+- caso 30: lucet-main/lucet-runtime/lucet-runtime-internals/src/val.rs...
+
+        let <var> = <method>;
+        _mm_storeu_pd(&mut out[0] as *mut f64, vd);
+
+- caso 31: lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs
+           lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/rust_child.rs
+            lucet-main/lucet-runtime/lucet-runtime-tests/src/globals.rs
+
+        casos con asserts
+
+- caso 32: lucet-main/lucet-runtime/lucet-runtime-internals/src/sysdeps/freebsd.rs
+
+        &mut unsafe { self.0.as_mut().unwrap() }.uc_mcontext;
+        mcontext.mc_rip = new_ip as i64;
+
+- caso 33: lucet-main/lucet-runtime/lucet-runtime-tests/src/guest_fault.rs
+
+        *super::RECOVERABLE_PTR = 0;
+
+- caso 34: lucet-main/lucet-runtime/lucet-runtime-tests/src/helpers.rs
+        <!-- se usa como parte de una expresion -->
+
+        unsafe {
+                let mut out = MaybeUninit::::uninit();
+                sigaction(*sig, std::ptr::null(), out.as_mut_ptr());
+                out.assume_init()
+            }
