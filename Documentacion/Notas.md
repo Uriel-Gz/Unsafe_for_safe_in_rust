@@ -34,7 +34,6 @@
 - tokio-master
 - hyper-master
 - gxhash-main
-- rure-master
 - lucet-main
 - exa-master
 - reth-main
@@ -42,6 +41,7 @@
 - fd-master
 
 - rust-master           // falta verificar
+- rure-master           // no aporta por ser casos triviales
 
 ### Sin codigo unsafe
 - RustInterceptor-master
@@ -116,13 +116,13 @@
 
 #### manejo de strings
 
-- caso 10: 
+- caso 10: tokio-master/tokio/src/future/maybe_done.rs
 
         *<string> += "<string>"  
 
 #### devolucion de valores
 
-- caso 11:
+- caso 11: tokio-master/tokio/src/runtime/io/scheduled_io.rs
 
         let <name> = <string>();
         (&<name>.<method>, &mut <name>.<attr>, &<name>.<string>)
@@ -148,10 +148,12 @@
            hyper-master/src/proto/h1/io.rs
            lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs
            lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs
+           mnemos-alloc-main/src/heap.rs
 
         let <var>: <tipo>? = unsafe { <expresion> };
         
 - caso 17: gxhash-main/benches/throughput_criterion.rs
+           
 
         unsafe { dealloc(x,y)}
         
@@ -164,7 +166,9 @@
 - caso 19: hyper-master/benches/support/tokiort.rs 
            hyper-master/src/common/io/compat.rs
            hyper-master/src/ffi/http_types.rs
-  > analisar detenidamente, puede haber uso en otra parte/ tiene matchs
+           reth-main/crates/net/network/src/session/conn.rs
+
+        analisar detenidamente, puede haber uso en otra parte/ tiene matchs
 
 - caso 20: hyper-master/src/upgrade.rs
 
@@ -190,6 +194,7 @@
         <!-- generico a lo que devuelva -->
 
 - caso 24: hyper-master/src/rt/io.rs
+           tokio-master/tokio/src/io/util/read_buf.rs
 
         unsafe { &mut *(raw as *mut [u8] as *mut [MaybeUninit]) }
 
@@ -198,9 +203,12 @@
 
         let mut <var> = <regex>;
 
+#### variaciones de unsafe
+
 - caso 26: lucet-main/lucet-concurrency-tests/src/killswitch.rs
            lucet-main/lucet-runtime/lucet-runtime-internals/src/alloc/tests.rs
            lucet-main/lucet-runtime/lucet-runtime-internals/src/context/tests/c_child.rs
+           reth-main/crates/cli/util/src/sigsegv_handler.rs
         
         llamada a funcion externa en c
 
@@ -242,6 +250,9 @@
         *super::RECOVERABLE_PTR = 0;
 
 - caso 34: lucet-main/lucet-runtime/lucet-runtime-tests/src/helpers.rs
+        reth-main/crates/storage/libmdbx-rs/benches/cursor.rs
+        reth-main/crates/storage/libmdbx-rs/benches/transaction.rs
+
         <!-- se usa como parte de una expresion -->
 
         unsafe {
@@ -249,3 +260,49 @@
                 sigaction(*sig, std::ptr::null(), out.as_mut_ptr());
                 out.assume_init()
             }
+
+- caso 35: mnemos-alloc-main/src/containers.rs (clone)
+
+        unsafe {
+            let aitem_nn = Active::>::data(self.ptr);
+            aitem_nn.as_ref().refcnt.fetch_add(1, Ordering::SeqCst);
+
+            HeapArc {
+                ptr: self.ptr,
+                pd: PhantomData,
+            }
+        }
+
+
+#### casos especiales para reveer
+
+* mnemos-alloc-main/src/containers.rs
+        
+        unsafe {
+            let aiptr: *mut ArcInner = Active::>::data(self.ptr).as_ptr();
+            let dptr: *const T = addr_of!((*aiptr).data);
+            &*dptr
+        }
+---
+        unsafe {
+            let (nn_ptr, count) = ActiveArr::::data(self.ptr);
+            forget(self);
+            (nn_ptr, count)
+        }
+
+*  tokio-master/tokio/src/util/idle_notified_set.rs
+        
+        unsafe {
+                let old_my_list = *ptr;
+                *ptr = List::Neither;
+                old_my_list
+            }
+
+
+
+
+
+<> en mnemo-alloc hay mucha deref and drop
+<> en reth-main hay variedad de asserts
+<> en stm32f042 hay punteros que devuelven su referencia &*, ademas se usan mucho pasaje unsafe como parametro
+<> en tokio tambien pasa similar a stm y usa mucha libreria 
