@@ -70,23 +70,25 @@
 
 #### obviar el match
 
-- caso 1:
+- caso 1:  structures/src/stack.rs
 
         let <variable> = <string>.add(<elemento>);
         ptr::write(<variable>, <valor>);
 
-- caso 2:
+- caso 2: structures/src/queue.rs           (similar)
+          structures/src/stack.rs
 
         let <variable> = <string>.add(<elemento>);
         Some(ptr::read(<variable>))
 
 - caso 3: hyper-master/src/rt/timer.rs
+          structures/src/stack.rs
         
         let <variable> = <string>.add(<elemento>);
         Some(&*<variable>)
 
 <!-- tengo que generalizar -->
-- caso 4:
+- caso 4: structures/src/avl.rs
 
         let <elem> = Box::from_raw(<otroelem>);
         <otroelem> = <elem>.<next>;
@@ -98,19 +100,19 @@
 
         (*<string>).<string> = <id>;
 
-- caso 6:
+- caso 6: structures/src/avl.rs
 
         let <variable>: &mut <struct> = &mut *<id>;
 
-- caso 7:
+- caso 7: structures/src/avl.rs
 
         let <variable>: *mut <struct> = <exp>;
 
-- caso 8:
+- caso 8:  structures/src/avl.rs
 
         let <variable>: *mut <struct> = (*<nombre>).<id>;
 
-- caso 9:
+- caso 9:  structures/src/avl.rs
 
         (*<nombre>).<attr> = Self::<funcion>((*<nombre>).<attr>);
 
@@ -175,7 +177,8 @@
         let raw: *mut dyn Io = Box::into_raw(self);
         Ok(Box::from_raw(raw as *mut T))
 
-- caso 21: hyper-master/src/ffi/http_types.r
+- caso 21: hyper-master/src/ffi/http_types.r   
+           structures/src/avl.rs
 
         *unsafe { &mut *req }.0.uri_mut() = u;
         
@@ -306,3 +309,4 @@
 <> en reth-main hay variedad de asserts
 <> en stm32f042 hay punteros que devuelven su referencia &*, ademas se usan mucho pasaje unsafe como parametro
 <> en tokio tambien pasa similar a stm y usa mucha libreria 
+<> caso 21 y 24 sintaxis interna simmilar

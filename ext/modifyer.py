@@ -26,7 +26,7 @@ def replace_unsafe_code(origin):
             new_code.append(line)
 
     # Escribe el nuevo contenido de vuelta al archivo
-    with open(origin, 'w') as file:
+    with open(f'{origin[:-3]}_edited.rs', 'w') as file:
         file.writelines(new_code)
 
 # Llama a la función con la ruta del archivo Rust

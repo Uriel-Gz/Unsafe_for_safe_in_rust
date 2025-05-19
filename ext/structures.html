@@ -1,0 +1,468 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <style>
+        a:hover{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<pre>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/abb.rs','src/abb.rs-78','78')"><em>abb.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { (*nodo).izquierda }
+</code>
+<code class="rust" id="src/abb.rs-78" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/abb.rs','src/abb.rs-79','79')"><em>abb.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { (*nodo).derecha }
+</code>
+<code class="rust" id="src/abb.rs-79" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/abb.rs','src/abb.rs-80','80')"><em>abb.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { std::ptr::read(nodo) }
+</code>
+<code class="rust" id="src/abb.rs-80" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/abb.rs','src/abb.rs-81','81')"><em>abb.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { std::ptr::drop(nodo) }
+</code>
+<code class="rust" id="src/abb.rs-81" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/abb.rs','src/abb.rs-82','82')"><em>abb.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                std::alloc::dealloc(nodo as *mut u8, std::alloc::Layout::new::<Nodo>());
+            }
+</code>
+<code class="rust" id="src/abb.rs-82" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/avl.rs','src/avl.rs-24','24')"><em>avl.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { &mut *nodo }
+</code>
+<code class="rust" id="src/avl.rs-24" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/avl.rs','src/avl.rs-31','31')"><em>avl.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                let _ = Box::from_raw(nodo);
+            }
+</code>
+<code class="rust" id="src/avl.rs-31" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/avl.rs','src/avl.rs-42','42')"><em>avl.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                let nodo: &mut Nodo = &mut *nodo;
+                nodo.altura
+            }
+</code>
+<code class="rust" id="src/avl.rs-42" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/avl.rs','src/avl.rs-52','52')"><em>avl.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                let nodo: &mut Nodo = &mut *nodo;
+                nodo.altura = 1 + std::cmp::max(
+                    Self::obtener_altura(nodo.izquierda),
+                    Self::obtener_altura(nodo.derecha),
+                );
+            }
+</code>
+<code class="rust" id="src/avl.rs-52" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/avl.rs','src/avl.rs-65','65')"><em>avl.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                let nodo: &mut Nodo = &mut *nodo;
+                let nuevo_nodo: *mut Nodo = nodo.derecha;
+                let temp: *mut Nodo = (*nuevo_nodo).izquierda;
+                (*nuevo_nodo).izquierda = nodo;
+                (*nodo).derecha = temp;
+                Self::actualizar_altura(nodo);
+                Self::actualizar_altura(nuevo_nodo);
+                nuevo_nodo
+            }
+</code>
+<code class="rust" id="src/avl.rs-65" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/avl.rs','src/avl.rs-83','83')"><em>avl.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                let nodo: &mut Nodo = &mut *nodo;
+                let nuevo_nodo: *mut Nodo = nodo.izquierda;
+                let temp: *mut Nodo = (*nuevo_nodo).derecha;
+                (*nuevo_nodo).derecha = nodo;
+                (*nodo).izquierda = temp;
+                Self::actualizar_altura(nodo);
+                Self::actualizar_altura(nuevo_nodo);
+                nuevo_nodo
+            }
+</code>
+<code class="rust" id="src/avl.rs-83" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/avl.rs','src/avl.rs-107','107')"><em>avl.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                        let nodo: &mut Nodo = &mut *nodo;
+                        (*nodo).izquierda = Self::rotar_izquierda((*nodo).izquierda);
+                    }
+</code>
+<code class="rust" id="src/avl.rs-107" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/avl.rs','src/avl.rs-117','117')"><em>avl.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                        let nodo: &mut Nodo = &mut *nodo;
+                        (*nodo).derecha = Self::rotar_derecha((*nodo).derecha);
+                    }
+</code>
+<code class="rust" id="src/avl.rs-117" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/avl.rs','src/avl.rs-136','136')"><em>avl.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                let nodo: &mut Nodo = &mut *nodo;
+                if clave < (*nodo).clave {
+                    if !nodo.izquierda.is_null() {
+                        nodo.izquierda = Self::insertar(nodo.izquierda, clave);
+                    }
+                } else {
+                    if !nodo.derecha.is_null() {
+                        nodo.derecha = Self::insertar(nodo.derecha, clave);
+                    }
+                }
+                Self::actualizar_altura(nodo);
+                Self::balancear(nodo)
+            }
+</code>
+<code class="rust" id="src/avl.rs-136" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/avl.rs','src/avl.rs-156','156')"><em>avl.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                if !(*nodo).izquierda.is_null() {
+                    Self::imprimir_en_orden((*nodo).izquierda);
+                }
+                if !nodo.is_null() {
+                    println!("{}", (*nodo).clave);
+                }
+                if !(*nodo).derecha.is_null() {
+                    Self::imprimir_en_orden((*nodo).derecha);
+                }
+            }
+</code>
+<code class="rust" id="src/avl.rs-156" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/priority_queue.rs','src/priority_queue.rs-14','14')"><em>priority_queue.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            self.heapify_up(0);
+        }
+</code>
+<code class="rust" id="src/priority_queue.rs-14" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/priority_queue.rs','src/priority_queue.rs-28','28')"><em>priority_queue.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                self.heapify_down(0);
+            }
+</code>
+<code class="rust" id="src/priority_queue.rs-28" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/priority_queue.rs','src/priority_queue.rs-33','33')"><em>priority_queue.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+                self.heapify_up(0);
+            }
+</code>
+<code class="rust" id="src/priority_queue.rs-33" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/queue.rs','src/queue.rs-21','21')"><em>queue.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            let nuevo_nodo = Box::into_raw(Box::new(Nodo {
+                valor,
+                siguiente: std::ptr::null_mut(),
+            }));
+
+            if self.queue.is_null() {
+                self.cabeza = nuevo_nodo;
+                self.queue = nuevo_nodo;
+            } else {
+                (*self.queue).siguiente = nuevo_nodo;
+                self.queue = nuevo_nodo;
+            }
+        }
+</code>
+<code class="rust" id="src/queue.rs-21" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/queue.rs','src/queue.rs-38','38')"><em>queue.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            if self.cabeza.is_null() {
+                return None;
+            }
+
+            let cabeza_nodo = Box::from_raw(self.cabeza);
+            self.cabeza = cabeza_nodo.siguiente;
+
+            if self.cabeza.is_null() {
+                self.queue = std::ptr::null_mut();
+            }
+
+            Some(cabeza_nodo.valor)
+        }
+</code>
+<code class="rust" id="src/queue.rs-38" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/stack.rs','src/stack.rs-11','11')"><em>stack.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            let ptr = std::alloc::alloc_zeroed(std::alloc::Layout::array::<T>(capacidad).expect("REASON"));
+            if ptr.is_null() {
+                panic!("Fallo al asignar memoria");
+            }
+            ptr as *mut T
+        }
+</code>
+<code class="rust" id="src/stack.rs-11" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/stack.rs','src/stack.rs-30','30')"><em>stack.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            let direccion = self.elementos.add(self.tamano);
+            ptr::write(direccion, elemento);
+        }
+</code>
+<code class="rust" id="src/stack.rs-30" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/stack.rs','src/stack.rs-45','45')"><em>stack.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            let direccion = self.elementos.add(self.tamano - 1);
+            Some(ptr::read(direccion))
+        }
+</code>
+<code class="rust" id="src/stack.rs-45" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/stack.rs','src/stack.rs-57','57')"><em>stack.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            let direccion = self.elementos.add(self.tamano - 1);
+            Some(&*direccion)
+        }
+</code>
+<code class="rust" id="src/stack.rs-57" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) src </H3>
+    In the file : <a onclick="cargarArchivo('../structures/src/stack.rs','src/stack.rs-80','80')"><em>stack.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            for i in 0..self.tamano {
+                let direccion = self.elementos.add(i);
+                ptr::drop_in_place(direccion);
+            }
+            std::alloc::dealloc(
+                self.elementos as *mut u8,
+                std::alloc::Layout::array::<T>(self.capacidad).expect("REASON"),
+            );
+        }
+</code>
+<code class="rust" id="src/stack.rs-80" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) test </H3>
+    In the file : <a onclick="cargarArchivo('../structures/test/abb_test.rs','test/abb_test.rs-15','15')"><em>abb_test.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { arbol.insertar(5); }
+</code>
+<code class="rust" id="test/abb_test.rs-15" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) test </H3>
+    In the file : <a onclick="cargarArchivo('../structures/test/abb_test.rs','test/abb_test.rs-17','17')"><em>abb_test.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { (*arbol.raiz).valor }
+</code>
+<code class="rust" id="test/abb_test.rs-17" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) test </H3>
+    In the file : <a onclick="cargarArchivo('../structures/test/abb_test.rs','test/abb_test.rs-23','23')"><em>abb_test.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            arbol.insertar(5);
+            arbol.insertar(3);
+            arbol.insertar(7);
+            arbol.insertar(2);
+            arbol.insertar(4);
+            arbol.insertar(6);
+            arbol.insertar(8);
+        }
+</code>
+<code class="rust" id="test/abb_test.rs-23" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) test </H3>
+    In the file : <a onclick="cargarArchivo('../structures/test/abb_test.rs','test/abb_test.rs-33','33')"><em>abb_test.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { (*arbol.raiz).valor }
+</code>
+<code class="rust" id="test/abb_test.rs-33" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) test </H3>
+    In the file : <a onclick="cargarArchivo('../structures/test/abb_test.rs','test/abb_test.rs-34','34')"><em>abb_test.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { (*(*arbol.raiz).izquierda).valor }
+</code>
+<code class="rust" id="test/abb_test.rs-34" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) test </H3>
+    In the file : <a onclick="cargarArchivo('../structures/test/abb_test.rs','test/abb_test.rs-35','35')"><em>abb_test.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { (*(*arbol.raiz).derecha).valor }
+</code>
+<code class="rust" id="test/abb_test.rs-35" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) test </H3>
+    In the file : <a onclick="cargarArchivo('../structures/test/abb_test.rs','test/abb_test.rs-36','36')"><em>abb_test.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { (*(*(*arbol.raiz).izquierda).izquierda).valor }
+</code>
+<code class="rust" id="test/abb_test.rs-36" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) test </H3>
+    In the file : <a onclick="cargarArchivo('../structures/test/abb_test.rs','test/abb_test.rs-37','37')"><em>abb_test.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { (*(*(*arbol.raiz).izquierda).derecha).valor }
+</code>
+<code class="rust" id="test/abb_test.rs-37" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) test </H3>
+    In the file : <a onclick="cargarArchivo('../structures/test/abb_test.rs','test/abb_test.rs-38','38')"><em>abb_test.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { (*(*(*arbol.raiz).derecha).izquierda).valor }
+</code>
+<code class="rust" id="test/abb_test.rs-38" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) test </H3>
+    In the file : <a onclick="cargarArchivo('../structures/test/abb_test.rs','test/abb_test.rs-39','39')"><em>abb_test.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { (*(*(*arbol.raiz).derecha).derecha).valor }
+</code>
+<code class="rust" id="test/abb_test.rs-39" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) test </H3>
+    In the file : <a onclick="cargarArchivo('../structures/test/abb_test.rs','test/abb_test.rs-45','45')"><em>abb_test.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            arbol.insertar(5);
+            arbol.insertar (3);
+            arbol.insertar(7);
+        }
+</code>
+<code class="rust" id="test/abb_test.rs-45" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) test </H3>
+    In the file : <a onclick="cargarArchivo('../structures/test/abb_test.rs','test/abb_test.rs-50','50')"><em>abb_test.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { arbol.buscar(5) }
+</code>
+<code class="rust" id="test/abb_test.rs-50" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) test </H3>
+    In the file : <a onclick="cargarArchivo('../structures/test/abb_test.rs','test/abb_test.rs-51','51')"><em>abb_test.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { arbol.buscar(3) }
+</code>
+<code class="rust" id="test/abb_test.rs-51" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) test </H3>
+    In the file : <a onclick="cargarArchivo('../structures/test/abb_test.rs','test/abb_test.rs-52','52')"><em>abb_test.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { arbol.buscar(7) }
+</code>
+<code class="rust" id="test/abb_test.rs-52" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) test </H3>
+    In the file : <a onclick="cargarArchivo('../structures/test/abb_test.rs','test/abb_test.rs-58','58')"><em>abb_test.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            arbol.insertar(5);
+            arbol.insertar(3);
+            arbol.insertar(7);
+        }
+</code>
+<code class="rust" id="test/abb_test.rs-58" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) test </H3>
+    In the file : <a onclick="cargarArchivo('../structures/test/abb_test.rs','test/abb_test.rs-63','63')"><em>abb_test.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { arbol.buscar(2) }
+</code>
+<code class="rust" id="test/abb_test.rs-63" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) test </H3>
+    In the file : <a onclick="cargarArchivo('../structures/test/abb_test.rs','test/abb_test.rs-64','64')"><em>abb_test.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { arbol.buscar(4) }
+</code>
+<code class="rust" id="test/abb_test.rs-64" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) test </H3>
+    In the file : <a onclick="cargarArchivo('../structures/test/abb_test.rs','test/abb_test.rs-65','65')"><em>abb_test.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { arbol.buscar(6) }
+</code>
+<code class="rust" id="test/abb_test.rs-65" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) test </H3>
+    In the file : <a onclick="cargarArchivo('../structures/test/abb_test.rs','test/abb_test.rs-66','66')"><em>abb_test.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { arbol.buscar(8) }
+</code>
+<code class="rust" id="test/abb_test.rs-66" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) test </H3>
+    In the file : <a onclick="cargarArchivo('../structures/test/abb_test.rs','test/abb_test.rs-72','72')"><em>abb_test.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe { arbol.buscar(5) }
+</code>
+<code class="rust" id="test/abb_test.rs-72" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) test </H3>
+    In the file : <a onclick="cargarArchivo('../structures/test/priority_queue_test.rs','test/priority_queue_test.rs-63','63')"><em>priority_queue_test.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+    //         pq.heapify_up(2);
+    //     }
+</code>
+<code class="rust" id="test/priority_queue_test.rs-63" style="overflow: auto; height: 150px; display: none;"></code>
+<H3>In the repository (subfolder/s) test </H3>
+    In the file : <a onclick="cargarArchivo('../structures/test/priority_queue_test.rs','test/priority_queue_test.rs-77','77')"><em>priority_queue_test.rs</em></a>
+<code class="rust" style="border-radius: 10px;">
+unsafe {
+            pq.heapify_down(0);
+        }
+</code>
+<code class="rust" id="test/priority_queue_test.rs-77" style="overflow: auto; height: 150px; display: none;"></code>
+
+</pre>
+    <script>
+        let f = false;
+        function cargarArchivo(archivo, id, line) {
+            if (!f) {
+                f = true;
+                fetch(archivo)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Error al cargar el archivo');
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        const bloque = document.getElementById(id);
+                        bloque.innerText = data;
+                        bloque.style.display = 'block'; // Mostrar el contenido
+                        bloque.scrollTop = parseInt(line, 10) * 15; // Mostrar el contenido
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }else{
+                    f = false;
+                    const bloque = document.getElementById(id);
+                    bloque.style.display = 'none'; // Mostrar el contenido
+                }
+            }
+    </script>
+</body>
+</html>
