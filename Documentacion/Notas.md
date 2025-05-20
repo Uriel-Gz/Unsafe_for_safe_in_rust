@@ -53,15 +53,21 @@
 
 
 ## Cronologia
-[22/12/2024] empezado de analisis de codigo
+[22/12/2024] empezado de analisis de codigo, sin progreso, la idea fue cambiando mientras mas veia el codigo.
 
-[21/04/2025] Reordenacion de ideas, analisis de morfologia del codigo. Se inicia la lista de casos de uso.
+[21/04/2025] Reordenacion de ideas, analisis de morfologia del codigo. Se inicia la lista de casos de uso. Extraccion de codigo en archivos .txt (forma mas rapida, leer y escribir).
 
-[26/04/2025] Se continua con el analisis de codigo, a partir del enfoque de solo bsucar casos de punteros raw, la busqueda es mas rapida.
+[26/04/2025] Se continua con el analisis de codigo, a partir del enfoque de solo buscar casos de punteros raw, la busqueda es mas rapida. Veo la idea de desreferenciacion.
 
 [12/05/2025] Cambio en extracion de codigo unsafe, busqueda mas inteligente y comienzo de clasificacion. Primer tipo: desreferecniacion de punteros (asignacion, devolucion, etc.).
 
 [17/05/2025] Reanalisis de codigo en los repositorios, repasando donde y como se usan los elementos de bloque unsafe. Tomo nota de los repositorios para despues llevar mas profundo el analisis, ademas intento categorizar el tipo de contenido que se omite o que se puede usar.
+
+[19/05/2025] Intento extraer codigo de rust-master para analisar. El inteto con exito reducido, al ser el repositorio oficial de rust la distribucion y la cantidad de codigo que maneja le dificulta al programa terminar con su contenido, no obstante se obtienen una gran cantidad de casos diferentes, el analisis de estos es mas puntual y de mayor complejidad, pero sera importante (quiero creer) de alguna manera.
+
+[20/05/2025] Añado anotaciones (comentarios) al codigo para que sea mas legible, elimino los .txt generados en la primera etapa de analisis, deduzco que el archivo identifyer no es necesario, dado que es una reduccion del extractor.
+- Modifico archivo modifier.py para guardar una lista de patrones, los cuales podran ser aplicados en implementaciones posteriores  y destino una carpeta ``result`` para los archivos modificados.
+- Agrego archivo ``Detection_and_replace_of_unsafe_code.doc``.
 
 
 ## Casos de uso de codigo unsafe
@@ -96,7 +102,7 @@
 
 #### pasar referencia
 
-- caso 5:
+- caso 5: caso generico de uso
 
         (*<string>).<string> = <id>;
 
@@ -133,7 +139,7 @@
 
         (*<string>).<attr> = Some(<string>);
         
-- caso 13:
+- caso 13: 
 
         *<name> = Some(<string>)
         
