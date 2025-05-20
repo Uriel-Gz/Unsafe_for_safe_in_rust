@@ -5,6 +5,7 @@ import fnmatch
 
 # strings constantes para generar el html
 
+# directivas de estilo para lenguajes
 header = """
 <!DOCTYPE html>
 <html lang="en">
@@ -25,6 +26,7 @@ header = """
 <pre>
 """
 
+# comportamiendo: busqueda e insercion de código que se observa
 footer = """
 </pre>
     <script>
@@ -60,21 +62,15 @@ footer = """
 """
 
 
-def indentify_unsafe_code_in_directory(directory):
+def unsafe_code_extracter(directory):
     # simple unsafe patter block
     pattern = r'unsafe\s*\{(?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*\}'
 
     file = open('unsafe_code.html', 'w')
     file.write(header)
-    # last_rep = "/"
 
     # Recorre el directorio y sus subdirectorios
-    for root, dirs, files in os.walk(directory):
-        # repository = str(root).split("\\")[1]
-        # if str(root).split("\\")[1:] != last_rep :
-        #     file = open(f'{str(root).split("\\")[1:][:1]}.html', 'w')
-        #     file.write(header)
-        #     last_rep = str(root).split("\\")[1:]
+    for root, _, files in os.walk(directory):
 
         for filename in fnmatch.filter(files, '*.rs'):
             file_path = os.path.join(root, filename)
@@ -83,24 +79,30 @@ def indentify_unsafe_code_in_directory(directory):
             with open(file_path, 'r', encoding='utf-8') as f:
                 code = f.read()
 
+            # encuentra todo el código unsafe
             matches = re.findall(pattern, code)
 
+            # encuentra el numero de linea de todas los bloques con codigo unsafe
             i = 1
             lines_unsafe = []
             for line in code.splitlines():
-                if line.find('unsafe {') != -1:
+                for _ in range(len(re.findall('unsafe {',line))):
                     lines_unsafe.append(i)
                 i += 1
 
             pathToFile = '/'.join(str(root).split("/")[2:])
             for j in range(len(matches)):
-                
+
+                # crea un identificador unico para cada bloque
                 unsafe_id = f'{pathToFile}/{filename}-{lines_unsafe[j]}'
+
+                # bloque html con la información requerida
                 pre_content = f'<H3>In the repository (subfolder/s) {pathToFile} </H3>\n' \
                               f'    In the file : <a onclick=\"cargarArchivo(\'{root}/{filename}\',\'{unsafe_id}\',\'{lines_unsafe[j]}\')\"><em>{filename}</em></a>\n'\
                               f'<code class="rust" style="border-radius: 10px;">\n'
                 pos_content = f'</code>\n' \
                               f'<code class=\"rust\" id=\"{unsafe_id}\" style=\"overflow: auto; height: 150px; display: none;\"></code>\n'
+
                 file.write(pre_content)
                 file.write(f'{matches[j]}\n')
                 file.write(pos_content)
@@ -109,6 +111,6 @@ def indentify_unsafe_code_in_directory(directory):
 
 
 # Llama a la función con la ruta del directorio
-indentify_unsafe_code_in_directory('../projects_to_review')
+unsafe_code_extracter('../projects_to_review')
 
 
