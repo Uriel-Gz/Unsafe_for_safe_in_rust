@@ -69,6 +69,13 @@
 - Modifico archivo modifier.py para guardar una lista de patrones, los cuales podran ser aplicados en implementaciones posteriores  y destino una carpeta ``result`` para los archivos modificados.
 - Agrego archivo ``Detection_and_replace_of_unsafe_code.doc``.
 
+[09/06/2025] Trato de crear una breve gramatica para las posibles modificaciones que se pueden hacer a partir de los casos de codigo vistos, veo la descripcion de funciones en las bibliotecas de rust, distingo algunas funciones de mem y algunos casos vistos de forma puntual.
+
+[10/06/2025] Continuo con el analisis de funciones de biblioteca.
+
+[18/08/2025] Traspaso los casos de posible equivalencia desde las bibliotecas estandares hacia una tabla en la documentacion usando como referencia los casos extraidos de los repositorios analisados.
+
+[25/08/2025] - [29/08/2025] Escribimos un poco del proceso y los datos que se van recolectando en el informe final.
 
 ## Casos de uso de codigo unsafe
 
@@ -102,7 +109,7 @@
 
 #### pasar referencia
 
-- caso 5: caso generico de uso
+- caso 5: caso generico de uso, strutures.rs
 
         (*<string>).<string> = <id>;
 
@@ -316,3 +323,49 @@
 <> en stm32f042 hay punteros que devuelven su referencia &*, ademas se usan mucho pasaje unsafe como parametro
 <> en tokio tambien pasa similar a stm y usa mucha libreria 
 <> caso 21 y 24 sintaxis interna simmilar
+
+
+Clasificación de casos de código unsafe
+
+Asignaciones
+Caso 1: Asignación directa (ptr::write)
+Caso 2: Asignación con lectura (ptr::read)
+Caso 3: Asignación con referencia (&*)
+Pasar referencia
+Caso 4: Pasar referencia a una estructura (&mut *)
+Caso 5: Pasar referencia a un campo de una estructura ((*).)
+Manejo de strings
+Caso 6: Concatenación de strings (+=)
+Devolución de valores
+Caso 7: Devolución de un valor (return)
+Caso 8: Devolución de un valor con Some
+Caso 9: Devolución de un valor con *
+Variaciones de unsafe
+Caso 10: Llamada a función externa en C
+Caso 11: Pasaje de valores a su representación
+Caso 12: Uso de instrucciones de ensamblaje (_mm_storeu_ps)
+Casos especiales
+Caso 13: Uso de MaybeUninit y assume_init
+Caso 14: Uso de PhantomData y fetch_add
+
+
+Clasificación del Uso de Punteros en Rust
+
+    Dereferenciación
+        Dereferenciación Directa: Uso de * para acceder al valor apuntado por un puntero crudo (*const T o *mut T).
+        Dereferenciación de Referencias: Uso de & para acceder al valor de una referencia (&T o &mut T).
+        Dereferenciación Segura vs. Insegura:
+            Segura: Uso de referencias y punteros que garantizan la validez del acceso (ej. &T, &mut T).
+            Insegura: Uso de punteros crudos sin garantías de validez (ej. *const T, *mut T).
+
+    Acceso a Memoria
+        Acceso a Memoria Estática: Uso de punteros para acceder a datos en la memoria estática (ej. variables globales).
+        Acceso a Memoria Dinámica: Uso de punteros para acceder a datos en la memoria dinámica (ej. a través de Box<T> o Vec<T>).
+
+    Mutabilidad
+        Acceso Inmutable: Uso de punteros o referencias que no permiten modificar el valor apuntado (ej. &T).
+        Acceso Mutable: Uso de punteros o referencias que permiten modificar el valor apuntado (ej. &mut T, *mut T).
+
+    Transferencia de Propiedad
+        Propiedad Transferida: Uso de punteros que transfieren la propiedad de los datos (ej. Box<T>).
+        Propiedad Compartida: Uso de punteros que permiten compartir la propiedad sin transferirla (ej. Rc<T>, Arc<T>).
