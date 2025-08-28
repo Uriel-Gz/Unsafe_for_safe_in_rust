@@ -1,7 +1,7 @@
 # Directorios y archivos que se ignoran
 
 # Directorio de compilación
-/target/
+structures/target/
 
 # Archivos de depuración
 .debug/
