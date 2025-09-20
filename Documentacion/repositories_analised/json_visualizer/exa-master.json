@@ -1,0 +1,61 @@
+{
+  "repositorio": "exa-master",
+  "archivos": [
+    {
+      "ruta": "main.rs",
+      "ocurrencias": [
+        {
+          "linea": 53,
+          "codigo": "unsafe {\n        libc::signal(libc::SIGPIPE, libc::SIG_DFL);\n    }"
+        }
+      ]
+    },
+    {
+      "ruta": "xattr.rs",
+      "ocurrencias": [
+        {
+          "linea": 152,
+          "codigo": "unsafe { std::str::from_utf8_unchecked(input).into() }"
+        },
+        {
+          "linea": 156,
+          "codigo": "unsafe {\n                listxattr(\n                    c_path.as_ptr(),\n                    ptr::null_mut(),\n                    0,\n                    self.c_flags,\n                )\n            }"
+        },
+        {
+          "linea": 167,
+          "codigo": "unsafe {\n                listxattr(\n                    c_path.as_ptr(),\n                    buf.as_mut_ptr().cast::(),\n                    bufsize as size_t,\n                    self.c_flags,\n                )\n            }"
+        },
+        {
+          "linea": 178,
+          "codigo": "unsafe {\n                getxattr(\n                    c_path.as_ptr(),\n                    buf.as_ptr().cast::(),\n                    ptr::null_mut(),\n                    0,\n                    0,\n                    self.c_flags,\n                )\n            }"
+        },
+        {
+          "linea": 247,
+          "codigo": "unsafe {\n                listxattr(\n                    c_path.as_ptr().cast(),\n                    ptr::null_mut(),\n                    0,\n                )\n            }"
+        },
+        {
+          "linea": 262,
+          "codigo": "unsafe {\n                listxattr(\n                    c_path.as_ptr().cast(),\n                    buf.as_mut_ptr().cast(),\n                    bufsize as size_t,\n                )\n            }"
+        },
+        {
+          "linea": 277,
+          "codigo": "unsafe {\n                getxattr(\n                    c_path.as_ptr().cast(),\n                    buf.as_ptr().cast(),\n                    ptr::null_mut(),\n                    0,\n                )\n            }"
+        }
+      ]
+    },
+    {
+      "ruta": "details.rs",
+      "ocurrencias": [
+        {
+          "linea": 272,
+          "codigo": "unsafe { std::ptr::write(file_eggs.lock().unwrap()[idx].as_mut_ptr(), egg) }"
+        },
+        {
+          "linea": 278,
+          "codigo": "unsafe { std::mem::transmute::<_, Vec>>(file_eggs) }"
+        }
+      ]
+    }
+  ],
+  "total_ocurrencias": 10
+}

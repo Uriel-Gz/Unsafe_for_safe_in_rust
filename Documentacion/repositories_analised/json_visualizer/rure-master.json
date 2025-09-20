@@ -1,0 +1,45 @@
+{
+  "repositorio": "rure-master",
+  "archivos": [
+    {
+      "ruta": "max.rs",
+      "ocurrencias": [
+        {
+          "linea": 5,
+          "codigo": "unsafe {\n           *c\n        }"
+        },
+        {
+          "linea": 5,
+          "codigo": "unsafe {\n            a\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "simple_unsafe.rs",
+      "ocurrencias": [
+        {
+          "linea": 7,
+          "codigo": "unsafe {\n            return *v;\n    \t}"
+        },
+        {
+          "linea": 29,
+          "codigo": "unsafe {\n\t\t\tprintln!(\"bad\");\n\t\t}"
+        },
+        {
+          "linea": 35,
+          "codigo": "unsafe {\n\t\t\t1+1\n\t\t}"
+        }
+      ]
+    },
+    {
+      "ruta": "simple.rs",
+      "ocurrencias": [
+        {
+          "linea": 5,
+          "codigo": "unsafe {\n            *p\n        }"
+        }
+      ]
+    }
+  ],
+  "total_ocurrencias": 6
+}

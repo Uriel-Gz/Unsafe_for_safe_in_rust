@@ -1,0 +1,15 @@
+{
+  "repositorio": "fd-master",
+  "archivos": [
+    {
+      "ruta": "exit_codes.rs",
+      "ocurrencias": [
+        {
+          "linea": 35,
+          "codigo": "unsafe {\n                if signal(Signal::SIGINT, SigHandler::SigDfl).is_ok() {\n                    let _ = raise(Signal::SIGINT);\n                }\n            }"
+        }
+      ]
+    }
+  ],
+  "total_ocurrencias": 1
+}

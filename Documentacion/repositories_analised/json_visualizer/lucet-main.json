@@ -1,0 +1,1183 @@
+{
+  "repositorio": "lucet-main",
+  "archivos": [
+    {
+      "ruta": "context.rs",
+      "ocurrencias": [
+        {
+          "linea": 28,
+          "codigo": "unsafe {\n                let mut parent = ContextHandle::new();\n                Context::swap(&mut parent, &mut child);\n                stack\n            }"
+        },
+        {
+          "linea": 49,
+          "codigo": "unsafe { Context::swap(&mut parent, &mut child) }"
+        },
+        {
+          "linea": 337,
+          "codigo": "unsafe { Context::swap(&mut parent, &mut child) }"
+        }
+      ]
+    },
+    {
+      "ruta": "par.rs",
+      "ocurrencias": [
+        {
+          "linea": 167,
+          "codigo": "unsafe {\n                            libc::sigaltstack(&sigstack_raw, std::ptr::null_mut());\n                        }"
+        }
+      ]
+    },
+    {
+      "ruta": "seq.rs",
+      "ocurrencias": [
+        {
+          "linea": 43,
+          "codigo": "unsafe { nix::libc::sync() }"
+        }
+      ]
+    },
+    {
+      "ruta": "killswitch.rs",
+      "ocurrencias": [
+        {
+          "linea": 45,
+          "codigo": "unsafe {\n            // ENTERING_GUEST is only populated if the test requires this syncpoint be checked.\n            if let Some(entering_guest) = ENTERING_GUEST.as_ref() {\n                entering_guest.check();\n            }\n        }"
+        },
+        {
+          "linea": 54,
+          "codigo": "unsafe {\n            // ENTERING_GUEST is only populated if the test requires this syncpoint be checked.\n            if let Some(entering_guest) = ENTERING_GUEST.as_ref() {\n                entering_guest.check();\n            }\n        }"
+        },
+        {
+          "linea": 68,
+          "codigo": "unsafe {\n            let heap_base = lucet_vmctx_get_heap(vmctx);\n\n            // Using the default limits, each instance as of this writing takes up 0x200026000 bytes\n            // worth of virtual address space. We want to access a point beyond all the instances,\n            // so that memory is unmapped. We assume no more than 16 instances are mapped\n            // concurrently. This may change as the library, test configuration, linker, phase of\n            // moon, etc change, but for now it works.\n            *heap_base.offset(0x0002_0002_6000 * 16) = 0;\n        }"
+        },
+        {
+          "linea": 85,
+          "codigo": "unsafe {\n            let globals_base = lucet_vmctx_get_globals(vmctx);\n\n            // Using the default limits, the globals are a page; try to write just off the end\n            *globals_base.offset(0x1000) = 0;\n        }"
+        },
+        {
+          "linea": 99,
+          "codigo": "unsafe { real_hostcall(vmctx) }"
+        },
+        {
+          "linea": 106,
+          "codigo": "unsafe { yielding_hostcall(vmctx) }"
+        },
+        {
+          "linea": 184,
+          "codigo": "unsafe {\n                    ENTERING_GUEST = Some(Syncpoint::new());\n                }"
+        },
+        {
+          "linea": 208,
+          "codigo": "unsafe {\n                    ENTERING_GUEST = Some(Syncpoint::new());\n                }"
+        },
+        {
+          "linea": 251,
+          "codigo": "unsafe { ENTERING_GUEST.as_ref().unwrap().wait_at() }"
+        },
+        {
+          "linea": 853,
+          "codigo": "unsafe { ENTERING_GUEST.as_ref().unwrap().wait_at() }"
+        }
+      ]
+    },
+    {
+      "ruta": "functions.rs",
+      "ocurrencias": [
+        {
+          "linea": 192,
+          "codigo": "unsafe { from_raw_parts(traps_ptr, self.traps_len as usize) }"
+        }
+      ]
+    },
+    {
+      "ruta": "globals.rs",
+      "ocurrencias": [
+        {
+          "linea": 97,
+          "codigo": "unsafe {\n            writeln!(f, \"  i_32: {},\", self.i_32)?;\n            writeln!(f, \"  i_64: {},\", self.i_64)?;\n            writeln!(f, \"  f_32: {},\", self.f_32)?;\n            writeln!(f, \"  f_64: {},\", self.f_64)?;\n        }"
+        },
+        {
+          "linea": 35,
+          "codigo": "unsafe { inst.heap_u32() }"
+        },
+        {
+          "linea": 45,
+          "codigo": "unsafe { inst.heap_u32() }"
+        },
+        {
+          "linea": 124,
+          "codigo": "unsafe { inst.globals()[0].i_64 }"
+        },
+        {
+          "linea": 125,
+          "codigo": "unsafe { inst.globals()[1].i_64 }"
+        }
+      ]
+    },
+    {
+      "ruta": "main.rs",
+      "ocurrencias": [
+        {
+          "linea": 150,
+          "codigo": "unsafe { std::slice::from_raw_parts(real_trap_ptr, traps_count) }"
+        },
+        {
+          "linea": 185,
+          "codigo": "unsafe {\n        std::slice::from_raw_parts(\n            function_manifest_bytes.as_ptr() as *const FunctionSpec,\n            serialized_module.function_manifest_len as usize,\n        )\n    }"
+        },
+        {
+          "linea": 470,
+          "codigo": "unsafe {\n            std::slice::from_raw_parts(\n                tables_bytes.as_ptr() as *const &[TableElement],\n                serialized_module.tables_len as usize,\n            )\n        }"
+        },
+        {
+          "linea": 488,
+          "codigo": "unsafe {\n                std::slice::from_raw_parts(\n                    table_bytes.as_ptr() as *const TableElement,\n                    table.len() as usize,\n                )\n            }"
+        }
+      ]
+    },
+    {
+      "ruta": "c_api.rs",
+      "ocurrencias": [
+        {
+          "linea": 568,
+          "codigo": "unsafe { val.inner_val.as_u64 }"
+        },
+        {
+          "linea": 569,
+          "codigo": "unsafe { val.inner_val.as_u64 }"
+        },
+        {
+          "linea": 570,
+          "codigo": "unsafe { val.inner_val.as_u64 }"
+        },
+        {
+          "linea": 571,
+          "codigo": "unsafe { val.inner_val.as_u64 }"
+        },
+        {
+          "linea": 572,
+          "codigo": "unsafe { val.inner_val.as_u64 }"
+        },
+        {
+          "linea": 573,
+          "codigo": "unsafe { val.inner_val.as_u64 }"
+        },
+        {
+          "linea": 574,
+          "codigo": "unsafe { val.inner_val.as_i64 }"
+        },
+        {
+          "linea": 575,
+          "codigo": "unsafe { val.inner_val.as_i64 }"
+        },
+        {
+          "linea": 576,
+          "codigo": "unsafe { val.inner_val.as_i64 }"
+        },
+        {
+          "linea": 577,
+          "codigo": "unsafe { val.inner_val.as_i64 }"
+        },
+        {
+          "linea": 578,
+          "codigo": "unsafe { val.inner_val.as_u64 }"
+        },
+        {
+          "linea": 579,
+          "codigo": "unsafe { val.inner_val.as_i64 }"
+        },
+        {
+          "linea": 580,
+          "codigo": "unsafe { val.inner_val.as_u64 }"
+        },
+        {
+          "linea": 581,
+          "codigo": "unsafe { val.inner_val.as_f32 }"
+        },
+        {
+          "linea": 582,
+          "codigo": "unsafe { val.inner_val.as_f64 }"
+        },
+        {
+          "linea": 682,
+          "codigo": "unsafe {\n                core::arch::x86_64::_mm_storeu_ps(\n                    v.fp.as_mut().as_mut_ptr() as *mut f32,\n                    retval.fp(),\n                );\n                *(v.gp.as_mut().as_mut_ptr() as *mut u64) = retval.gp();\n            }"
+        },
+        {
+          "linea": 546,
+          "codigo": "unsafe {\n            assert!(lucet_runtime_test_mmap_expand_heap(\n                Arc::into_raw(dlmodule) as *mut lucet_dl_module\n            ));\n        }"
+        },
+        {
+          "linea": 569,
+          "codigo": "unsafe {\n            assert!(lucet_runtime_test_uffd_expand_heap(\n                Arc::into_raw(dlmodule) as *mut lucet_dl_module\n            ));\n        }"
+        },
+        {
+          "linea": 593,
+          "codigo": "unsafe {\n            assert!(lucet_runtime_test_yield_resume(\n                Arc::into_raw(dlmodule) as *mut lucet_dl_module\n            ));\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "future.rs",
+      "ocurrencias": [
+        {
+          "linea": 75,
+          "codigo": "unsafe {\n            std::mem::transmute::, BoxFuture<'static, ResumeVal>>(f)\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "instance.rs",
+      "ocurrencias": [
+        {
+          "linea": 85,
+          "codigo": "unsafe { inst.as_ref().magic }"
+        },
+        {
+          "linea": 96,
+          "codigo": "unsafe {\n        // this is wildly unsafe! you must be very careful to not let the drop impls run on the\n        // uninitialized fields; see\n        // \n\n        // write the whole struct into place over the uninitialized page\n        ptr::write(&mut *handle, inst);\n    }"
+        },
+        {
+          "linea": 134,
+          "codigo": "unsafe { self.inst.as_ref() }"
+        },
+        {
+          "linea": 140,
+          "codigo": "unsafe { self.inst.as_mut() }"
+        },
+        {
+          "linea": 147,
+          "codigo": "unsafe {\n                let inst = self.inst.as_mut();\n\n                // The `inst.alloc` field manages the memory of the instance\n                // itself. Note, though, that this field is in a `ManuallyDrop`\n                // so it won't get dropped automatically in `drop_in_place`.\n                // This is the point where we take over that precise drop.\n                //\n                // By using `take` here we're basically calling `ptr::read`\n                // which \"duplicates\" the `alloc` since the `alloc` local\n                // variable here is the exact same as `inst.alloc`. All we do\n                // with `inst`, though, is call `drop_in_place`, which\n                // invalidates every other field in `inst`.\n                let alloc: Alloc = ManuallyDrop::take(&mut inst.alloc);\n\n                // drop the actual instance\n                std::ptr::drop_in_place(inst);\n\n                // Now that we're 100% done with the instance, destructors and\n                // all, we can release the memory of the instance back to the\n                // original allocator from whence it came (be it mmap or uffd\n                // based). This will run the \"official\" destructor for `Alloc`\n                // which internally does the release. Note that after this\n                // operation the `inst` pointer is invalid and can no longer be\n                // used.\n                drop(alloc);\n            }"
+        },
+        {
+          "linea": 685,
+          "codigo": "unsafe { self.alloc.globals_mut() }"
+        },
+        {
+          "linea": 780,
+          "codigo": "unsafe { self.alloc.heap() }"
+        },
+        {
+          "linea": 785,
+          "codigo": "unsafe { self.alloc.heap_mut() }"
+        },
+        {
+          "linea": 790,
+          "codigo": "unsafe { self.alloc.heap_u32() }"
+        },
+        {
+          "linea": 795,
+          "codigo": "unsafe { self.alloc.heap_u32_mut() }"
+        },
+        {
+          "linea": 800,
+          "codigo": "unsafe { self.alloc.globals() }"
+        },
+        {
+          "linea": 805,
+          "codigo": "unsafe { self.alloc.globals_mut() }"
+        },
+        {
+          "linea": 975,
+          "codigo": "unsafe {\n                self.terminate(termination_details);\n            }"
+        },
+        {
+          "linea": 1101,
+          "codigo": "unsafe {\n            let implicits_ptr = (self as *const _ as *const u8)\n                .add(HOST_PAGE_SIZE_EXPECTED - mem::size_of::())\n                as *const InstanceRuntimeData;\n            mem::transmute::<*const InstanceRuntimeData, &InstanceRuntimeData>(implicits_ptr)\n        }"
+        },
+        {
+          "linea": 1111,
+          "codigo": "unsafe {\n            let implicits_ptr = (self as *mut _ as *mut u8)\n                .add(HOST_PAGE_SIZE_EXPECTED - mem::size_of::())\n                as *mut InstanceRuntimeData;\n            mem::transmute::<*mut InstanceRuntimeData, &mut InstanceRuntimeData>(implicits_ptr)\n        }"
+        },
+        {
+          "linea": 1185,
+          "codigo": "unsafe { self.alloc.stack_u64_mut() }"
+        },
+        {
+          "linea": 1217,
+          "codigo": "unsafe {\n            // Get a raw pointer to the top of the guest stack.\n            let top_of_stack = self.ctx.gpr.rsp as *mut u64;\n            // Move the guest code address to rbx, and then put the address of the activation thunk\n            // at the top of the stack, so that we will start execution at `enter_guest_region`.\n            self.ctx.gpr.rbx = *top_of_stack;\n            *top_of_stack = crate::context::lucet_context_activate as u64;\n            // Pass a pointer to our guest-side entrypoint bootstrap code in `rsi`, and then put\n            // its first argument (a raw pointer to `self`) in `rdi`.\n            self.ctx.gpr.rsi = execution::enter_guest_region as u64;\n            self.ctx.gpr.rdi = self.ctx.callback_data_ptr() as u64;\n        }"
+        },
+        {
+          "linea": 1256,
+          "codigo": "unsafe { Context::swap(&mut *host_ctx.get(), &mut i.ctx) }"
+        },
+        {
+          "linea": 1354,
+          "codigo": "unsafe { h(self as *mut Instance) }"
+        },
+        {
+          "linea": 1391,
+          "codigo": "unsafe { NonNull::new_unchecked(self) }"
+        },
+        {
+          "linea": 1395,
+          "codigo": "unsafe { pthread_self() }"
+        }
+      ]
+    },
+    {
+      "ruta": "val.rs",
+      "ocurrencias": [
+        {
+          "linea": 128,
+          "codigo": "unsafe { _mm_load_ps1(&v as *const f32) }"
+        },
+        {
+          "linea": 129,
+          "codigo": "unsafe { _mm_castpd_ps(_mm_load_pd1(&v as *const f64)) }"
+        },
+        {
+          "linea": 182,
+          "codigo": "unsafe { _mm_setzero_ps() }"
+        },
+        {
+          "linea": 279,
+          "codigo": "unsafe { _mm_setzero_ps() }"
+        },
+        {
+          "linea": 304,
+          "codigo": "unsafe {\n        _mm_storeu_ps(&mut out[0] as *mut f32, v);\n    }"
+        },
+        {
+          "linea": 313,
+          "codigo": "unsafe {\n        let vd = _mm_castps_pd(v);\n        _mm_storeu_pd(&mut out[0] as *mut f64, vd);\n    }"
+        }
+      ]
+    },
+    {
+      "ruta": "vmctx.rs",
+      "ocurrencias": [
+        {
+          "linea": 101,
+          "codigo": "unsafe { instance_from_vmctx(self.vmctx) }"
+        },
+        {
+          "linea": 109,
+          "codigo": "unsafe { self.instance_mut() }"
+        },
+        {
+          "linea": 170,
+          "codigo": "unsafe {\n            self.reconstitute_heap_view_if_needed();\n        }"
+        },
+        {
+          "linea": 185,
+          "codigo": "unsafe {\n            self.reconstitute_heap_view_if_needed();\n        }"
+        },
+        {
+          "linea": 253,
+          "codigo": "unsafe { self.instance_mut().embed_ctx.try_get_mut::() }"
+        },
+        {
+          "linea": 277,
+          "codigo": "unsafe {\n            let instance = self.instance_mut();\n            instance.grow_memory_from_hostcall(self, additional_pages)\n        }"
+        },
+        {
+          "linea": 344,
+          "codigo": "unsafe { (typed_binop)(vmctx.as_raw(), operand1, operand2) }"
+        },
+        {
+          "linea": 436,
+          "codigo": "unsafe { self.instance_mut() }"
+        },
+        {
+          "linea": 447,
+          "codigo": "unsafe { Context::swap(&mut inst.ctx, &mut *host_ctx.get()) }"
+        },
+        {
+          "linea": 526,
+          "codigo": "unsafe { Context::set(&*host_ctx.get()) }"
+        }
+      ]
+    },
+    {
+      "ruta": "tests.rs",
+      "ocurrencias": [
+        {
+          "linea": 74,
+          "codigo": "unsafe { inst.alloc_mut().heap_mut() }"
+        },
+        {
+          "linea": 84,
+          "codigo": "unsafe { inst.alloc_mut().stack_mut() }"
+        },
+        {
+          "linea": 123,
+          "codigo": "unsafe { inst.alloc_mut().heap_mut() }"
+        },
+        {
+          "linea": 161,
+          "codigo": "unsafe { inst.alloc_mut().heap_mut() }"
+        },
+        {
+          "linea": 191,
+          "codigo": "unsafe { inst.alloc_mut().heap_mut() }"
+        },
+        {
+          "linea": 231,
+          "codigo": "unsafe { inst.alloc_mut().heap_mut() }"
+        },
+        {
+          "linea": 280,
+          "codigo": "unsafe { inst.alloc_mut().heap_mut() }"
+        },
+        {
+          "linea": 329,
+          "codigo": "unsafe { inst.alloc_mut().heap_mut() }"
+        },
+        {
+          "linea": 427,
+          "codigo": "unsafe { inst.alloc_mut().heap_mut() }"
+        },
+        {
+          "linea": 437,
+          "codigo": "unsafe { inst.alloc_mut().stack_mut() }"
+        },
+        {
+          "linea": 448,
+          "codigo": "unsafe { inst.alloc_mut().globals_mut() }"
+        },
+        {
+          "linea": 454,
+          "codigo": "unsafe {\n                    assert_eq!(globals[0].i_64, 0);\n                    globals[0].i_64 = 0xFF;\n                    assert_eq!(globals[0].i_64, 0xFF);\n                }"
+        },
+        {
+          "linea": 460,
+          "codigo": "unsafe {\n                    assert_eq!(globals[globals.len() - 1].i_64, 0);\n                    globals[globals.len() - 1].i_64 = 0xFF;\n                    assert_eq!(globals[globals.len() - 1].i_64, 0xFF);\n                }"
+        },
+        {
+          "linea": 466,
+          "codigo": "unsafe { inst.alloc_mut().sigstack_mut() }"
+        },
+        {
+          "linea": 499,
+          "codigo": "unsafe { inst.alloc_mut().heap_mut() }"
+        },
+        {
+          "linea": 519,
+          "codigo": "unsafe { inst.alloc_mut().heap_mut() }"
+        },
+        {
+          "linea": 545,
+          "codigo": "unsafe { inst.alloc_mut().heap_mut() }"
+        },
+        {
+          "linea": 577,
+          "codigo": "unsafe { inst.alloc_mut().heap_mut() }"
+        },
+        {
+          "linea": 610,
+          "codigo": "unsafe { inst.alloc_mut().heap_mut() }"
+        },
+        {
+          "linea": 620,
+          "codigo": "unsafe { inst.alloc_mut().stack_mut() }"
+        },
+        {
+          "linea": 686,
+          "codigo": "unsafe {\n                    std::slice::from_raw_parts_mut(heap, CONTEXT_TEST_INITIAL_SIZE as usize)\n                }"
+        },
+        {
+          "linea": 704,
+          "codigo": "unsafe {\n                let heap_ptr = inst.alloc_mut().heap_mut().as_ptr() as *mut c_void;\n                let mut child = ContextHandle::create_and_init(\n                    inst.alloc_mut().stack_u64_mut(),\n                    heap_touching_child as usize,\n                    &[Val::CPtr(heap_ptr)],\n                )\n                .expect(\"context init succeeds\");\n                Context::swap(&mut parent, &mut child);\n                assert_eq!(inst.alloc().heap()[0], 123);\n                assert_eq!(inst.alloc().heap()[4095], 45);\n            }"
+        },
+        {
+          "linea": 725,
+          "codigo": "unsafe {\n                    std::slice::from_raw_parts_mut(heap, CONTEXT_TEST_INITIAL_SIZE as usize / 8)\n                }"
+        },
+        {
+          "linea": 754,
+          "codigo": "unsafe {\n                let heap_ptr = inst.alloc_mut().heap_mut().as_ptr() as *mut c_void;\n                let mut child = ContextHandle::create_and_init(\n                    inst.alloc_mut().stack_u64_mut(),\n                    stack_pattern_child as usize,\n                    &[Val::CPtr(heap_ptr)],\n                )\n                .expect(\"context init succeeds\");\n                Context::swap(&mut parent, &mut child);\n\n                let stack_pattern = inst.alloc().heap_u64()[0] as usize;\n                assert!(stack_pattern > inst.alloc().slot().stack as usize);\n                assert!(\n                    stack_pattern + STACK_PATTERN_LENGTH < inst.alloc().slot().stack_top() as usize\n                );\n                let stack_pattern =\n                    std::slice::from_raw_parts(stack_pattern as *const u8, STACK_PATTERN_LENGTH);\n                for i in 0..STACK_PATTERN_LENGTH {\n                    assert_eq!(stack_pattern[i], (i % 256) as u8);\n                }\n            }"
+        }
+      ]
+    },
+    {
+      "ruta": "mod.rs",
+      "ocurrencias": [
+        {
+          "linea": 81,
+          "codigo": "unsafe { _mm_setzero_ps() }"
+        },
+        {
+          "linea": 134,
+          "codigo": "unsafe { _mm_setzero_ps() }"
+        },
+        {
+          "linea": 178,
+          "codigo": "unsafe {\n            // create a box from the pointer so that it'll get dropped\n            // and we won't leak `Context`s\n            Box::from_raw(self.internal.as_ptr());\n        }"
+        },
+        {
+          "linea": 189,
+          "codigo": "unsafe { self.internal.as_ref() }"
+        },
+        {
+          "linea": 195,
+          "codigo": "unsafe { self.internal.as_mut() }"
+        },
+        {
+          "linea": 529,
+          "codigo": "unsafe { Context::swap(&mut parent, child); }"
+        },
+        {
+          "linea": 552,
+          "codigo": "unsafe { Context::swap(&mut parent, &mut child); }"
+        },
+        {
+          "linea": 613,
+          "codigo": "unsafe { Context::set(child); }"
+        },
+        {
+          "linea": 625,
+          "codigo": "unsafe { _mm_setzero_ps() }"
+        },
+        {
+          "linea": 31,
+          "codigo": "unsafe { slice::from_raw_parts_mut(ptr, len) }"
+        }
+      ]
+    },
+    {
+      "ruta": "c_child.rs",
+      "ocurrencias": [
+        {
+          "linea": 36,
+          "codigo": "unsafe {\n            parent_regs = parent;\n        }"
+        },
+        {
+          "linea": 44,
+          "codigo": "unsafe {\n            Box::from_raw(parent_regs);\n            Box::from_raw(child_regs);\n        }"
+        },
+        {
+          "linea": 53,
+          "codigo": "unsafe {\n            let child = Box::into_raw(Box::new(ContextHandle::create_and_init(\n                &mut *$stack,\n                $fn as usize,\n                &[$( $args ),*],\n            ).unwrap()));\n\n            child_regs = child;\n\n            Context::swap(parent_regs.as_mut().unwrap(), child_regs.as_mut().unwrap());\n        }"
+        },
+        {
+          "linea": 111,
+          "codigo": "unsafe {\n            Context::swap(parent_regs.as_mut().unwrap(), child_regs.as_mut().unwrap());\n        }"
+        },
+        {
+          "linea": 292,
+          "codigo": "unsafe {\n        CStr::from_ptr(&output_string as *const c_char)\n            .to_string_lossy()\n            .into_owned()\n    }"
+        },
+        {
+          "linea": 303,
+          "codigo": "unsafe {\n        reset_output();\n    }"
+        }
+      ]
+    },
+    {
+      "ruta": "rust_child.rs",
+      "ocurrencias": [
+        {
+          "linea": 39,
+          "codigo": "unsafe {\n            PARENT = Some(ContextHandle::new());\n        }"
+        },
+        {
+          "linea": 49,
+          "codigo": "unsafe {\n            let child = ContextHandle::create_and_init(\n                &mut *$stack,\n                $fn as usize,\n                &[$( $args ),*],\n            ).unwrap();\n            CHILD = Some(child);\n\n            Context::swap(\n                PARENT.as_mut().unwrap(),\n                CHILD.as_mut().unwrap(),\n            );\n        }"
+        },
+        {
+          "linea": 66,
+          "codigo": "unsafe { *(arg0 as *mut c_int) }"
+        },
+        {
+          "linea": 67,
+          "codigo": "unsafe { *(arg1 as *mut c_int) }"
+        },
+        {
+          "linea": 77,
+          "codigo": "unsafe { Context::swap(CHILD.as_mut().unwrap(), PARENT.as_mut().unwrap()) }"
+        },
+        {
+          "linea": 80,
+          "codigo": "unsafe { *(arg0 as *mut c_int) }"
+        },
+        {
+          "linea": 81,
+          "codigo": "unsafe { *(arg1 as *mut c_int) }"
+        },
+        {
+          "linea": 91,
+          "codigo": "unsafe { Context::swap(CHILD.as_mut().unwrap(), PARENT.as_mut().unwrap()) }"
+        },
+        {
+          "linea": 124,
+          "codigo": "unsafe {\n            Context::swap(PARENT.as_mut().unwrap(), CHILD.as_mut().unwrap());\n        }"
+        },
+        {
+          "linea": 141,
+          "codigo": "unsafe {\n        Context::set(PARENT.as_ref().unwrap());\n    }"
+        },
+        {
+          "linea": 196,
+          "codigo": "unsafe {\n            if let Some(ref child) = CHILD {\n                assert_eq!(child.get_retval_gp(0), 120);\n            } else {\n                panic!(\"no child context present after returning\");\n            }\n        }"
+        },
+        {
+          "linea": 215,
+          "codigo": "unsafe {\n            assert_eq!(CHILD.as_ref().unwrap().get_retval_gp(0), 120);\n        }"
+        },
+        {
+          "linea": 230,
+          "codigo": "unsafe {\n            let reg = CHILD.as_ref().unwrap().get_retval_fp();\n            assert_eq!(__m128_as_f32(reg), 120.0);\n        }"
+        },
+        {
+          "linea": 246,
+          "codigo": "unsafe {\n            let reg = CHILD.as_ref().unwrap().get_retval_fp();\n            assert_eq!(__m128_as_f64(reg), 120.0);\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "execution.rs",
+      "ocurrencias": [
+        {
+          "linea": 631,
+          "codigo": "unsafe {\n                        pthread_kill(thread_id, SIGALRM);\n                    }"
+        }
+      ]
+    },
+    {
+      "ruta": "siginfo_ext.rs",
+      "ocurrencias": [
+        {
+          "linea": 13,
+          "codigo": "unsafe { siginfo_si_addr(self as *const siginfo_t) }"
+        }
+      ]
+    },
+    {
+      "ruta": "signals.rs",
+      "ocurrencias": [
+        {
+          "linea": 81,
+          "codigo": "unsafe {\n            setup_guest_signal_state(&mut ostate);\n        }"
+        },
+        {
+          "linea": 108,
+          "codigo": "unsafe {\n                restore_host_signal_state(state);\n            }"
+        },
+        {
+          "linea": 139,
+          "codigo": "unsafe { sigaltstack(Some(guest_sigstack)) }"
+        },
+        {
+          "linea": 153,
+          "codigo": "unsafe {\n                    let mut current_sigstack = MaybeUninit::::uninit();\n                    libc::sigaltstack(std::ptr::null(), current_sigstack.as_mut_ptr());\n                    let current_sigstack = current_sigstack.assume_init();\n                    debug_assert!(\n                        validate_sigstack_size(current_sigstack.ss_size).is_ok(),\n                        \"signal stack must be large enough\"\n                    );\n                }"
+        },
+        {
+          "linea": 184,
+          "codigo": "unsafe {\n                // restore the host signal stack for this thread\n                if !altstack_flags()\n                    .expect(\"the current stack flags could be retrieved\")\n                    .contains(SigStackFlags::SS_ONSTACK)\n                {\n                    sigaltstack(previous_sigstack).expect(\"sigaltstack restoration succeeds\");\n                }\n            }"
+        },
+        {
+          "linea": 229,
+          "codigo": "unsafe {\n                reraise_host_signal_in_handler(signal, signum, siginfo_ptr, ucontext_ptr);\n            }"
+        },
+        {
+          "linea": 239,
+          "codigo": "unsafe {\n            current_instance\n                .as_mut()\n                .expect(\"current instance exists\")\n                .as_mut()\n        }"
+        },
+        {
+          "linea": 296,
+          "codigo": "unsafe { *siginfo_ptr }"
+        },
+        {
+          "linea": 394,
+          "codigo": "unsafe {\n                current_instance\n                    .as_mut()\n                    .expect(\"current instance exists\")\n                    .as_mut()\n            }"
+        }
+      ]
+    },
+    {
+      "ruta": "state.rs",
+      "ocurrencias": [
+        {
+          "linea": 233,
+          "codigo": "unsafe { CStr::from_ptr(strsignal(sig)).to_owned() }"
+        }
+      ]
+    },
+    {
+      "ruta": "dl.rs",
+      "ocurrencias": [
+        {
+          "linea": 142,
+          "codigo": "unsafe {\n            lib.get::<*const SerializedModule>(LUCET_MODULE_SYM.as_bytes())\n                .map_err(|e| {\n                    lucet_incorrect_module!(\"error loading required symbol `lucet_module`: {}\", e)\n                })?\n        }"
+        },
+        {
+          "linea": 150,
+          "codigo": "unsafe { serialized_module_ptr.as_ref().unwrap() }"
+        },
+        {
+          "linea": 183,
+          "codigo": "unsafe {\n            slice::from_raw_parts(\n                serialized_module.module_data_ptr as *const u8,\n                serialized_module.module_data_len as usize,\n            )\n        }"
+        },
+        {
+          "linea": 210,
+          "codigo": "unsafe {\n            from_raw_parts(\n                serialized_module.tables_ptr as *const &[TableElement],\n                serialized_module.tables_len as usize,\n            )\n        }"
+        },
+        {
+          "linea": 218,
+          "codigo": "unsafe {\n                from_raw_parts(\n                    serialized_module.function_manifest_ptr as *const FunctionSpec,\n                    serialized_module.function_manifest_len as usize,\n                )\n            }"
+        },
+        {
+          "linea": 327,
+          "codigo": "unsafe { CStr::from_ptr(dli.dli_fname).to_owned().into_string()? }"
+        },
+        {
+          "linea": 332,
+          "codigo": "unsafe { CStr::from_ptr(dli.dli_sname).to_owned().into_string()? }"
+        },
+        {
+          "linea": 353,
+          "codigo": "unsafe { libc::dladdr(addr, info.as_mut_ptr()) }"
+        },
+        {
+          "linea": 355,
+          "codigo": "unsafe { info.assume_init() }"
+        }
+      ]
+    },
+    {
+      "ruta": "mock.rs",
+      "ocurrencias": [
+        {
+          "linea": 245,
+          "codigo": "unsafe { std::mem::transmute(md) }"
+        }
+      ]
+    },
+    {
+      "ruta": "sparse_page_data.rs",
+      "ocurrencias": [
+        {
+          "linea": 58,
+          "codigo": "unsafe { inst.alloc().heap() }"
+        }
+      ]
+    },
+    {
+      "ruta": "mmap.rs",
+      "ocurrencias": [
+        {
+          "linea": 117,
+          "codigo": "unsafe {\n                mprotect(*ptr, *len, ProtFlags::PROT_READ | ProtFlags::PROT_WRITE)\n                    .expect(\"mprotect() call succeeds\");\n            }"
+        },
+        {
+          "linea": 170,
+          "codigo": "unsafe {\n                // MADV_DONTNEED is not guaranteed to clear pages on non-Linux systems\n                #[cfg(not(target_os = \"linux\"))]\n                {\n                    mprotect(*ptr, *len, ProtFlags::PROT_READ | ProtFlags::PROT_WRITE)\n                        .expect(\"mprotect succeeds during drop\");\n                    memset(*ptr, 0, *len);\n                }\n                mprotect(*ptr, *len, ProtFlags::PROT_NONE).expect(\"mprotect succeeds during drop\");\n                madvise(*ptr, *len, MmapAdvise::MADV_DONTNEED)\n                    .expect(\"madvise succeeds during drop\");\n            }"
+        },
+        {
+          "linea": 188,
+          "codigo": "unsafe {\n            mprotect(\n                (slot.heap as usize + start as usize) as *mut c_void,\n                len as usize,\n                ProtFlags::PROT_READ | ProtFlags::PROT_WRITE,\n            )?;\n        }"
+        },
+        {
+          "linea": 205,
+          "codigo": "unsafe {\n                // `mprotect()` and `madvise()` are sufficient to zero a page on Linux,\n                // but not necessarily on all POSIX operating systems, and on macOS in particular.\n                #[cfg(not(target_os = \"linux\"))]\n                {\n                    mprotect(\n                        heap,\n                        alloc.heap_accessible_size,\n                        ProtFlags::PROT_READ | ProtFlags::PROT_WRITE,\n                    )?;\n                    memset(heap, 0, alloc.heap_accessible_size);\n                }\n                mprotect(heap, heap_size, ProtFlags::PROT_NONE)?;\n                madvise(heap, heap_size, MmapAdvise::MADV_DONTNEED)?;\n            }"
+        },
+        {
+          "linea": 229,
+          "codigo": "unsafe {\n                mprotect(\n                    heap,\n                    initial_size,\n                    ProtFlags::PROT_READ | ProtFlags::PROT_WRITE,\n                )?\n            }"
+        },
+        {
+          "linea": 248,
+          "codigo": "unsafe { alloc.heap_mut() }"
+        },
+        {
+          "linea": 363,
+          "codigo": "unsafe {\n                mmap(\n                    ptr::null_mut(),\n                    region.limits.total_memory_size(),\n                    ProtFlags::PROT_NONE,\n                    MapFlags::MAP_ANON | MapFlags::MAP_PRIVATE,\n                    -1,\n                    0,\n                )?\n            }"
+        },
+        {
+          "linea": 374,
+          "codigo": "unsafe {\n                mmap_aligned(\n                    region.limits.total_memory_size(),\n                    ProtFlags::PROT_NONE,\n                    MapFlags::MAP_ANON | MapFlags::MAP_PRIVATE,\n                    region.min_heap_alignment, // requested alignment\n                    instance_heap_offset(),    // offset that must be aligned\n                )?\n            }"
+        },
+        {
+          "linea": 387,
+          "codigo": "unsafe {\n            mprotect(\n                mem,\n                instance_heap_offset(),\n                ProtFlags::PROT_READ | ProtFlags::PROT_WRITE,\n            )?\n        }"
+        },
+        {
+          "linea": 425,
+          "codigo": "unsafe { munmap(slot.start, slot.limits.total_memory_size()) }"
+        },
+        {
+          "linea": 530,
+          "codigo": "unsafe {\n                mmap_aligned(\n                    test.mem_size,\n                    ProtFlags::PROT_READ | ProtFlags::PROT_WRITE,\n                    MapFlags::MAP_ANON | MapFlags::MAP_PRIVATE,\n                    test.mem_align,\n                    test.offset,\n                )\n                .unwrap()\n            }"
+        },
+        {
+          "linea": 547,
+          "codigo": "unsafe { std::slice::from_raw_parts_mut(mem as *mut u8, test.mem_size) }"
+        },
+        {
+          "linea": 552,
+          "codigo": "unsafe {\n                munmap(mem, test.mem_size).unwrap();\n            }"
+        }
+      ]
+    },
+    {
+      "ruta": "uffd.rs",
+      "ocurrencias": [
+        {
+          "linea": 67,
+          "codigo": "unsafe {\n        mprotect(page_addr as _, page_size, ProtFlags::PROT_NONE)\n            .map_err(|e| Error::InternalError(e.into()))?;\n    }"
+        },
+        {
+          "linea": 88,
+          "codigo": "unsafe {\n            mprotect(addr as _, len, ProtFlags::PROT_READ | ProtFlags::PROT_WRITE)\n                .map_err(|e| Error::InternalError(e.into()))?;\n        }"
+        },
+        {
+          "linea": 129,
+          "codigo": "unsafe {\n        (inst_base as *mut Instance)\n            .as_mut()\n            .ok_or(lucet_format_err!(\"instance pointer is non-null\"))?\n    }"
+        },
+        {
+          "linea": 159,
+          "codigo": "unsafe {\n                zeropage(\n                    uffd,\n                    fault_page as *mut c_void,\n                    host_page_size(),\n                    true,\n                    config.enoent_retry_limit,\n                )\n                .map_err(|e| Error::InternalError(e.into()))?;\n            }"
+        },
+        {
+          "linea": 351,
+          "codigo": "unsafe {\n                    zeropage(&self.uffd, ptr, len, true, self.config.enoent_retry_limit)\n                        .expect(\"zeropage succeeds\");\n                }"
+        },
+        {
+          "linea": 369,
+          "codigo": "unsafe {\n                        zeropage(\n                            &self.uffd,\n                            slot.heap,\n                            initial_size,\n                            false,\n                            self.config.enoent_retry_limit,\n                        )\n                        .map_err(|e| Error::InternalError(e.into()))?;\n                    }"
+        },
+        {
+          "linea": 385,
+          "codigo": "unsafe {\n                            std::slice::from_raw_parts_mut(\n                                page_addr as *mut c_void as *mut u8,\n                                host_page_size(),\n                            )\n                        }"
+        },
+        {
+          "linea": 439,
+          "codigo": "unsafe {\n            madvise(ptr, len, MmapAdvise::MADV_DONTNEED).expect(\"madvise succeeds during drop\");\n        }"
+        },
+        {
+          "linea": 457,
+          "codigo": "unsafe {\n                madvise(\n                    alloc.slot().heap,\n                    alloc.heap_accessible_size,\n                    MmapAdvise::MADV_DONTNEED,\n                )?;\n            }"
+        },
+        {
+          "linea": 513,
+          "codigo": "unsafe {\n            munmap(self.start, total_region_size).expect(\"unmapping region\");\n        }"
+        },
+        {
+          "linea": 559,
+          "codigo": "unsafe {\n            mmap(\n                ptr::null_mut(),\n                total_region_size,\n                ProtFlags::PROT_READ | ProtFlags::PROT_WRITE,\n                MapFlags::MAP_ANONYMOUS | MapFlags::MAP_PRIVATE | MapFlags::MAP_NORESERVE,\n                0,\n                0,\n            )?\n        }"
+        },
+        {
+          "linea": 660,
+          "codigo": "unsafe {\n            zeropage(\n                &region.uffd,\n                start,\n                host_page_size(),\n                true,\n                region.config.enoent_retry_limit,\n            )\n            .map_err(|e| Error::InternalError(e.into()))?;\n        }"
+        },
+        {
+          "linea": 742,
+          "codigo": "unsafe {\n            zeropage(\n                uffd,\n                fault_page as *mut c_void,\n                host_page_size(),\n                true,\n                config.enoent_retry_limit,\n            )\n            .map_err(|e| Error::InternalError(e.into()))?;\n        }"
+        },
+        {
+          "linea": 768,
+          "codigo": "unsafe {\n                copy(\n                    uffd,\n                    page.as_ptr() as *const c_void,\n                    fault_page,\n                    host_page_size(),\n                    true,\n                    config.enoent_retry_limit,\n                )\n                .map_err(|e| Error::InternalError(e.into()))?;\n            }"
+        },
+        {
+          "linea": 781,
+          "codigo": "unsafe {\n                zeropage(\n                    uffd,\n                    fault_page,\n                    host_page_size(),\n                    true,\n                    config.enoent_retry_limit,\n                )\n                .map_err(|e| Error::InternalError(e.into()))?;\n            }"
+        },
+        {
+          "linea": 805,
+          "codigo": "unsafe {\n            zeropage(\n                uffd,\n                fault_page,\n                host_page_size(),\n                true,\n                config.enoent_retry_limit,\n            )\n            .map_err(|e| Error::InternalError(e.into()))?;\n        }"
+        },
+        {
+          "linea": 853,
+          "codigo": "unsafe {\n                    copy(\n                        uffd,\n                        page.as_ptr() as *const c_void,\n                        host_page_addr as *mut c_void,\n                        host_page_size(),\n                        false,\n                        config.enoent_retry_limit,\n                    )\n                    .map_err(|e| Error::InternalError(e.into()))?;\n                }"
+        },
+        {
+          "linea": 866,
+          "codigo": "unsafe {\n                    zeropage(\n                        uffd,\n                        host_page_addr as *mut c_void,\n                        host_page_size(),\n                        false,\n                        config.enoent_retry_limit,\n                    )\n                    .map_err(|e| Error::InternalError(e.into()))?;\n                }"
+        }
+      ]
+    },
+    {
+      "ruta": "freebsd.rs",
+      "ocurrencias": [
+        {
+          "linea": 15,
+          "codigo": "unsafe { self.0.as_ref().unwrap() }"
+        },
+        {
+          "linea": 21,
+          "codigo": "unsafe { self.0.as_mut().unwrap() }"
+        },
+        {
+          "linea": 27,
+          "codigo": "unsafe { self.0.as_mut().unwrap() }"
+        },
+        {
+          "linea": 42,
+          "codigo": "unsafe { (ptr as *mut ucontext_t).as_mut().expect(\"non-null context\") }"
+        }
+      ]
+    },
+    {
+      "ruta": "linux.rs",
+      "ocurrencias": [
+        {
+          "linea": 15,
+          "codigo": "unsafe { self.0.as_ref().unwrap() }"
+        },
+        {
+          "linea": 21,
+          "codigo": "unsafe { self.0.as_mut().unwrap() }"
+        },
+        {
+          "linea": 27,
+          "codigo": "unsafe { self.0.as_mut().unwrap() }"
+        },
+        {
+          "linea": 42,
+          "codigo": "unsafe { (ptr as *mut ucontext_t).as_mut().expect(\"non-null context\") }"
+        }
+      ]
+    },
+    {
+      "ruta": "macos.rs",
+      "ocurrencias": [
+        {
+          "linea": 136,
+          "codigo": "unsafe { (*self.0).uc_mcontext.as_ref().unwrap() }"
+        },
+        {
+          "linea": 142,
+          "codigo": "unsafe { &mut (*self.0).uc_mcontext.as_mut().unwrap() }"
+        },
+        {
+          "linea": 148,
+          "codigo": "unsafe { &mut (*self.0).uc_mcontext.as_mut().unwrap() }"
+        },
+        {
+          "linea": 162,
+          "codigo": "unsafe { (ptr as *mut ucontext_t).as_mut().expect(\"non-null context\") }"
+        }
+      ]
+    },
+    {
+      "ruta": "guest_fault.rs",
+      "ocurrencias": [
+        {
+          "linea": 61,
+          "codigo": "unsafe {\n                        hostcall_test(vmctx);\n                        std::hint::unreachable_unchecked();\n                    }"
+        },
+        {
+          "linea": 72,
+          "codigo": "unsafe {\n                        raise_other_panic(vmctx);\n                        std::hint::unreachable_unchecked();\n                    }"
+        },
+        {
+          "linea": 87,
+          "codigo": "unsafe {\n                        let heap_base = lucet_vmctx_get_heap(vmctx);\n\n                        // Using the default limits, each instance as of this writing takes up 0x200026000 bytes\n                        // worth of virtual address space. We want to access a point beyond all the instances,\n                        // so that memory is unmapped. We assume no more than 16 instances are mapped\n                        // concurrently. This may change as the library, test configuration, linker, phase of\n                        // moon, etc change, but for now it works.\n                        *heap_base.offset(0x0002_0002_6000 * 16) = 0;\n                    }"
+        },
+        {
+          "linea": 104,
+          "codigo": "unsafe {\n                        let globals_base = lucet_vmctx_get_globals(vmctx);\n\n                        // Using the default limits, the globals are a page; try to write just off the end\n                        *globals_base.offset(0x1000) = 0;\n                    }"
+        },
+        {
+          "linea": 118,
+          "codigo": "unsafe {\n                        *guest_recoverable_get_ptr() = '\\0' as c_char;\n                    }"
+        },
+        {
+          "linea": 460,
+          "codigo": "unsafe {\n                            sigaltstack(&our_sigstack, beforestack.as_mut_ptr());\n                            beforestack.assume_init()\n                        }"
+        },
+        {
+          "linea": 489,
+          "codigo": "unsafe {\n                            sigaltstack(&beforestack, afterstack.as_mut_ptr());\n                            afterstack.assume_init()\n                        }"
+        },
+        {
+          "linea": 716,
+          "codigo": "unsafe { recoverable_ptr_make_accessible() }"
+        },
+        {
+          "linea": 736,
+          "codigo": "unsafe { recoverable_ptr_setup() }"
+        },
+        {
+          "linea": 744,
+          "codigo": "unsafe { recoverable_ptr_teardown() }"
+        },
+        {
+          "linea": 766,
+          "codigo": "unsafe { fork() }"
+        },
+        {
+          "linea": 780,
+          "codigo": "unsafe { recoverable_ptr_setup() }"
+        },
+        {
+          "linea": 791,
+          "codigo": "unsafe { recoverable_ptr_teardown() }"
+        },
+        {
+          "linea": 820,
+          "codigo": "unsafe { recoverable_ptr_make_accessible() }"
+        },
+        {
+          "linea": 839,
+          "codigo": "unsafe {\n                                sigaction(super::INVALID_PERMISSION_SIGNAL, &sa).expect(\"sigaction succeeds\")\n                            }"
+        },
+        {
+          "linea": 851,
+          "codigo": "unsafe {\n                                recoverable_ptr_setup();\n                            }"
+        },
+        {
+          "linea": 857,
+          "codigo": "unsafe {\n                                *super::RECOVERABLE_PTR = 0;\n                            }"
+        },
+        {
+          "linea": 864,
+          "codigo": "unsafe {\n                                recoverable_ptr_teardown();\n                                sigaction(super::INVALID_PERMISSION_SIGNAL, &before_sa)\n                                    .expect(\"sigaction succeeds\");\n                            }"
+        },
+        {
+          "linea": 887,
+          "codigo": "unsafe { recoverable_ptr_make_accessible() }"
+        },
+        {
+          "linea": 907,
+          "codigo": "unsafe {\n                                sigaction(super::INVALID_PERMISSION_SIGNAL, &sa).expect(\"sigaction succeeds\")\n                            }"
+        },
+        {
+          "linea": 932,
+          "codigo": "unsafe {\n                                recoverable_ptr_setup();\n                            }"
+        },
+        {
+          "linea": 938,
+          "codigo": "unsafe {\n                                *super::RECOVERABLE_PTR = 0;\n                            }"
+        },
+        {
+          "linea": 947,
+          "codigo": "unsafe {\n                                recoverable_ptr_teardown();\n                                // sigaltstack(&saved_sigstack).expect(\"sigaltstack succeeds\");\n                                sigaction(super::INVALID_PERMISSION_SIGNAL, &saved_fault_sa)\n                                    .expect(\"sigaction succeeds\");\n                            }"
+        },
+        {
+          "linea": 962,
+          "codigo": "unsafe { fork() }"
+        },
+        {
+          "linea": 964,
+          "codigo": "unsafe {\n                                    recoverable_ptr_setup();\n                                }"
+        },
+        {
+          "linea": 985,
+          "codigo": "unsafe {\n                                    *super::RECOVERABLE_PTR = 0;\n                                }"
+        },
+        {
+          "linea": 1014,
+          "codigo": "unsafe { fork() }"
+        },
+        {
+          "linea": 1042,
+          "codigo": "unsafe { fork() }"
+        },
+        {
+          "linea": 1085,
+          "codigo": "unsafe { fork() }"
+        },
+        {
+          "linea": 1115,
+          "codigo": "unsafe {\n                            sigaltstack(std::ptr::null(), beforestack.as_mut_ptr());\n                            beforestack.assume_init()\n                        }"
+        },
+        {
+          "linea": 1129,
+          "codigo": "unsafe {\n                            sigaltstack(std::ptr::null(), afterstack.as_mut_ptr());\n                            afterstack.assume_init()\n                        }"
+        }
+      ]
+    },
+    {
+      "ruta": "helpers.rs",
+      "ocurrencias": [
+        {
+          "linea": 49,
+          "codigo": "unsafe {\n                let mut out = MaybeUninit::::uninit();\n                sigaction(*sig, std::ptr::null(), out.as_mut_ptr());\n                out.assume_init()\n            }"
+        }
+      ]
+    },
+    {
+      "ruta": "host.rs",
+      "ocurrencias": [
+        {
+          "linea": 45,
+          "codigo": "unsafe { std::slice::from_raw_parts(hello as *const u8, hello_len as usize) }"
+        },
+        {
+          "linea": 82,
+          "codigo": "unsafe { Vmctx::from_raw(vmctx.as_raw()) }"
+        },
+        {
+          "linea": 86,
+          "codigo": "unsafe { Vmctx::from_raw(vmctx.as_raw()) }"
+        },
+        {
+          "linea": 158,
+          "codigo": "unsafe { globals[0].i_64 }"
+        }
+      ]
+    },
+    {
+      "ruta": "start.rs",
+      "ocurrencias": [
+        {
+          "linea": 216,
+          "codigo": "unsafe {\n                            sigaltstack(&our_sigstack, beforestack.as_mut_ptr());\n                            beforestack.assume_init()\n                        }"
+        },
+        {
+          "linea": 256,
+          "codigo": "unsafe {\n                            sigaltstack(&beforestack, afterstack.as_mut_ptr());\n                            afterstack.assume_init()\n                        }"
+        }
+      ]
+    },
+    {
+      "ruta": "strcmp.rs",
+      "ocurrencias": [
+        {
+          "linea": 11,
+          "codigo": "unsafe {\n                *oob = 'x' as c_char;\n            }"
+        },
+        {
+          "linea": 61,
+          "codigo": "unsafe { strcmp(s1.as_ptr() as *const c_char, s2.as_ptr() as *const c_char) }"
+        }
+      ]
+    },
+    {
+      "ruta": "lib.rs",
+      "ocurrencias": [
+        {
+          "linea": 141,
+          "codigo": "unsafe { Box::from_raw(foreign_ctx) }"
+        },
+        {
+          "linea": 181,
+          "codigo": "unsafe {\n//!         hostcall_factorials(5)\n//!     }"
+        }
+      ]
+    },
+    {
+      "ruta": "instruction_counting.rs",
+      "ocurrencias": [
+        {
+          "linea": 137,
+          "codigo": "unsafe { Waker::from_raw(RawWaker::new(&(), &DUMMY_VTABLE)) }"
+        }
+      ]
+    },
+    {
+      "ruta": "memory.rs",
+      "ocurrencias": [
+        {
+          "linea": 80,
+          "codigo": "unsafe {\n            mincore(\n                inst.heap_mut().as_mut_ptr() as *mut c_void,\n                HEAP_LEN,\n                result_vec.as_mut_ptr(),\n            )\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "compiler.rs",
+      "ocurrencias": [
+        {
+          "linea": 698,
+          "codigo": "unsafe {\n            clif.emit_to_memory(\n                code.as_mut_ptr(),\n                &mut reloc_sink,\n                &mut traps,\n                &mut stack_map_sink,\n            )\n        }"
+        },
+        {
+          "linea": 886,
+          "codigo": "unsafe {\n            std::slice::from_raw_parts(\n                traps.as_ptr() as *const u8,\n                traps.len() * std::mem::size_of::(),\n            )\n        }"
+        }
+      ]
+    }
+  ],
+  "total_ocurrencias": 248
+}

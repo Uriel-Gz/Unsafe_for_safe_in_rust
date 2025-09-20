@@ -1,0 +1,206 @@
+{
+  "repositorio": "mnemos-alloc-main",
+  "archivos": [
+    {
+      "ruta": "containers.rs",
+      "ocurrencias": [
+        {
+          "linea": 52,
+          "codigo": "unsafe { &*Active::::data(self.ptr).as_ptr() }"
+        },
+        {
+          "linea": 58,
+          "codigo": "unsafe { &mut *Active::::data(self.ptr).as_ptr() }"
+        },
+        {
+          "linea": 72,
+          "codigo": "unsafe { Active::::data(self.ptr) }"
+        },
+        {
+          "linea": 80,
+          "codigo": "unsafe {\n            let item_ptr = Active::::data(self.ptr).as_ptr();\n            drop_in_place(item_ptr);\n            Active::::yeet(self.ptr);\n        }"
+        },
+        {
+          "linea": 107,
+          "codigo": "unsafe { addr_of!((*dummy_ptr).data) }"
+        },
+        {
+          "linea": 108,
+          "codigo": "unsafe { dummy_ptr.cast::().offset_from(data_ptr.cast::()) }"
+        },
+        {
+          "linea": 122,
+          "codigo": "unsafe {\n            let nn = Active::>::data(self.ptr);\n            forget(self);\n            let data_ptr = addr_of_mut!((*nn.as_ptr()).data);\n            NonNull::new_unchecked(data_ptr)\n        }"
+        },
+        {
+          "linea": 160,
+          "codigo": "unsafe {\n            let aiptr: *mut ArcInner = Active::>::data(self.ptr).as_ptr();\n            let dptr: *const T = addr_of!((*aiptr).data);\n            &*dptr\n        }"
+        },
+        {
+          "linea": 170,
+          "codigo": "unsafe {\n            let (aiptr, needs_drop) = {\n                let aitem_ptr = Active::>::data(self.ptr).as_ptr();\n                let old = (*aitem_ptr).refcnt.fetch_sub(1, Ordering::SeqCst);\n                debug_assert_ne!(old, 0);\n                (aitem_ptr, old == 1)\n            };\n\n            if needs_drop {\n                drop_in_place(aiptr);\n                Active::>::yeet(self.ptr);\n            }\n        }"
+        },
+        {
+          "linea": 188,
+          "codigo": "unsafe {\n            let aitem_nn = Active::>::data(self.ptr);\n            aitem_nn.as_ref().refcnt.fetch_add(1, Ordering::SeqCst);\n\n            HeapArc {\n                ptr: self.ptr,\n                pd: PhantomData,\n            }\n        }"
+        },
+        {
+          "linea": 230,
+          "codigo": "unsafe {\n            let (nn_ptr, count) = ActiveArr::::data(self.ptr);\n            from_raw_parts(nn_ptr.as_ptr(), count)\n        }"
+        },
+        {
+          "linea": 239,
+          "codigo": "unsafe {\n            let (nn_ptr, count) = ActiveArr::::data(self.ptr);\n            from_raw_parts_mut(nn_ptr.as_ptr(), count)\n        }"
+        },
+        {
+          "linea": 253,
+          "codigo": "unsafe {\n            let (nn_ptr, count) = ActiveArr::::data(self.ptr);\n            forget(self);\n            (nn_ptr, count)\n        }"
+        },
+        {
+          "linea": 263,
+          "codigo": "unsafe {\n            let (start, count) = ActiveArr::::data(self.ptr);\n            let start = start.as_ptr();\n            for i in 0..count {\n                drop_in_place(start.add(i));\n            }\n            ActiveArr::::yeet(self.ptr);\n        }"
+        },
+        {
+          "linea": 300,
+          "codigo": "unsafe {\n            let (nn_ptr, _count) = ActiveArr::>::data(self.ptr);\n            from_raw_parts(nn_ptr.as_ptr().cast::(), self.len)\n        }"
+        },
+        {
+          "linea": 309,
+          "codigo": "unsafe {\n            let (nn_ptr, _count) = ActiveArr::>::data(self.ptr);\n            from_raw_parts_mut(nn_ptr.as_ptr().cast::(), self.len)\n        }"
+        },
+        {
+          "linea": 318,
+          "codigo": "unsafe { ActiveArr::>::data(self.ptr) }"
+        },
+        {
+          "linea": 322,
+          "codigo": "unsafe {\n            nn_ptr.as_ptr().cast::().add(self.len).write(item);\n            self.len += 1;\n        }"
+        },
+        {
+          "linea": 330,
+          "codigo": "unsafe { ActiveArr::>::data(self.ptr) }"
+        },
+        {
+          "linea": 337,
+          "codigo": "unsafe {\n            let (start, _count) = ActiveArr::>::data(self.ptr);\n            let start = start.as_ptr().cast::();\n            for i in 0..self.len {\n                drop_in_place(start.add(i));\n            }\n            ActiveArr::>::yeet(self.ptr);\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "heap.rs",
+      "ocurrencias": [
+        {
+          "linea": 329,
+          "codigo": "unsafe { &mut *self.aheap.heap.get() }"
+        },
+        {
+          "linea": 344,
+          "codigo": "unsafe { node_ref.node.as_ref().node_layout }"
+        },
+        {
+          "linea": 347,
+          "codigo": "unsafe {\n                heap.deallocate(ptr, layout);\n                any = true;\n            }"
+        },
+        {
+          "linea": 374,
+          "codigo": "unsafe {\n            Active::::write_heap(nn, self.aheap);\n            Active::::data(nn).as_ptr().write(data);\n        }"
+        },
+        {
+          "linea": 404,
+          "codigo": "unsafe {\n            Active::>::write_heap(nn, self.aheap);\n            Active::>::data(nn).as_ptr().write(ArcInner {\n                data,\n                refcnt: AtomicUsize::new(1),\n            });\n        }"
+        },
+        {
+          "linea": 428,
+          "codigo": "unsafe { ActiveArr::::layout_for_arr(count) }"
+        },
+        {
+          "linea": 435,
+          "codigo": "unsafe {\n            ActiveArr::::write_heap(aa_ptr, self.aheap);\n            ActiveArr::::write_capacity(aa_ptr, count);\n            let (start, count) = ActiveArr::::data(aa_ptr);\n            let start = start.as_ptr();\n            for i in 0..count {\n                start.add(i).write((f)());\n            }\n        }"
+        },
+        {
+          "linea": 458,
+          "codigo": "unsafe { ActiveArr::>::layout_for_arr(capacity) }"
+        },
+        {
+          "linea": 465,
+          "codigo": "unsafe {\n            ActiveArr::>::write_heap(aa_ptr, self.aheap);\n            ActiveArr::>::write_capacity(aa_ptr, capacity);\n            let (start, count) = ActiveArr::>::data(aa_ptr);\n            let start = start.as_ptr();\n            for i in 0..count {\n                start.add(i).write(MaybeUninit::uninit());\n            }\n        }"
+        },
+        {
+          "linea": 493,
+          "codigo": "unsafe {\n            ActiveUnsized::write_heap(ptr, self.aheap);\n            let data_ptr = ptr.as_ptr().cast::().add(offset).cast::<()>();\n            Ok(NonNull::new_unchecked(data_ptr))\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "node.rs",
+      "ocurrencias": [
+        {
+          "linea": 143,
+          "codigo": "unsafe { dummy_ptr.cast::().offset_from(data_ptr.cast::()) }"
+        }
+      ]
+    },
+    {
+      "ruta": "smoke.rs",
+      "ocurrencias": [
+        {
+          "linea": 22,
+          "codigo": "unsafe { AHeap::bootstrap(bufptr.cast::(), SIZE).unwrap() }"
+        },
+        {
+          "linea": 51,
+          "codigo": "unsafe { AHeap::bootstrap(bufptr.cast::(), SIZE).unwrap() }"
+        },
+        {
+          "linea": 69,
+          "codigo": "unsafe { AHeap::bootstrap(bufptr.cast::(), SIZE).unwrap() }"
+        },
+        {
+          "linea": 95,
+          "codigo": "unsafe {\n            alloc_1.cast::().as_ptr().add(i).write(1.2345f64);\n        }"
+        },
+        {
+          "linea": 100,
+          "codigo": "unsafe { core::slice::from_raw_parts(alloc_1.cast::().as_ptr(), ALLOC_1_F64S) }"
+        },
+        {
+          "linea": 103,
+          "codigo": "unsafe {\n        // Write the full contents of alloc 2\n        let ptr2 = alloc_2.cast::().as_ptr();\n        addr_of_mut!((*ptr2).a).write(10);\n        addr_of_mut!((*ptr2).b).write(u128::MAX - 3);\n        let base = addr_of_mut!((*ptr2).c).cast::();\n        for i in 0..ALLOC_2_U64S {\n            base.add(i).write(u64::MAX - (i as u64));\n        }\n\n        // read it back\n        assert_eq!((&*ptr2).a, 10);\n        assert_eq!((&*ptr2).b, u128::MAX - 3);\n        let sli = core::slice::from_raw_parts(base, ALLOC_2_U64S);\n        assert!(sli\n            .iter()\n            .enumerate()\n            .all(|(i, u)| *u == (u64::MAX - i as u64)));\n    }"
+        },
+        {
+          "linea": 123,
+          "codigo": "unsafe {\n        // Write the full contents of alloc 3\n        let ptr3 = alloc_3.cast::().as_ptr();\n        ptr3.as_mut().unwrap().d.iter_mut().for_each(|i| *i = 123);\n        (&*ptr3).d.iter().for_each(|i| assert_eq!(*i, 123));\n    }"
+        },
+        {
+          "linea": 130,
+          "codigo": "unsafe {\n        deallocate_raw(alloc_1, layout_1);\n    }"
+        },
+        {
+          "linea": 134,
+          "codigo": "unsafe {\n        deallocate_raw(alloc_2, layout_2);\n        deallocate_raw(alloc_3, layout_3);\n    }"
+        },
+        {
+          "linea": 145,
+          "codigo": "unsafe { AHeap::bootstrap(bufptr.cast::(), SIZE).unwrap() }"
+        },
+        {
+          "linea": 159,
+          "codigo": "unsafe { leaked_nn.as_ref() }"
+        },
+        {
+          "linea": 167,
+          "codigo": "unsafe { HeapBox::from_leaked(leaked_nn) }"
+        },
+        {
+          "linea": 186,
+          "codigo": "unsafe { AHeap::bootstrap(bufptr.cast::(), SIZE).unwrap() }"
+        },
+        {
+          "linea": 187,
+          "codigo": "unsafe { heap.as_ref() }"
+        }
+      ]
+    }
+  ],
+  "total_ocurrencias": 45
+}

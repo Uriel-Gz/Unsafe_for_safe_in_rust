@@ -1,0 +1,2806 @@
+{
+  "repositorio": "tokio-master",
+  "archivos": [
+    {
+      "ruta": "signal.rs",
+      "ocurrencias": [
+        {
+          "linea": 39,
+          "codigo": "unsafe {\n        assert_eq!(kill(getpid(), signal), 0);\n    }"
+        },
+        {
+          "linea": 4,
+          "codigo": "unsafe {\n        assert_eq!(kill(getpid(), signal), 0);\n    }"
+        }
+      ]
+    },
+    {
+      "ruta": "tinyhttp.rs",
+      "ocurrencias": [
+        {
+          "linea": 203,
+          "codigo": "unsafe { String::from_utf8_unchecked(Vec::from(s.as_ref())) }"
+        }
+      ]
+    },
+    {
+      "ruta": "file.rs",
+      "ocurrencias": [
+        {
+          "linea": 898,
+          "codigo": "unsafe {\n            std::os::unix::io::BorrowedFd::borrow_raw(std::os::unix::io::AsRawFd::as_raw_fd(self))\n        }"
+        },
+        {
+          "linea": 922,
+          "codigo": "unsafe {\n                BorrowedHandle::borrow_raw(\n                    AsRawHandle::as_raw_handle(self),\n                )\n            }"
+        }
+      ]
+    },
+    {
+      "ruta": "maybe_done.rs",
+      "ocurrencias": [
+        {
+          "linea": 94,
+          "codigo": "unsafe {\n                *self.get_unchecked_mut().thing += \", world\";\n            }"
+        },
+        {
+          "linea": 110,
+          "codigo": "unsafe { Pin::new_unchecked(&mut fut) }"
+        }
+      ]
+    },
+    {
+      "ruta": "async_fd.rs",
+      "ocurrencias": [
+        {
+          "linea": 935,
+          "codigo": "unsafe { std::os::unix::io::BorrowedFd::borrow_raw(self.as_raw_fd()) }"
+        }
+      ]
+    },
+    {
+      "ruta": "blocking.rs",
+      "ocurrencias": [
+        {
+          "linea": 239,
+          "codigo": "unsafe {\n            self.buf.set_len(len);\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "read_buf.rs",
+      "ocurrencias": [
+        {
+          "linea": 34,
+          "codigo": "unsafe { slice_to_uninit_mut(buf) }"
+        },
+        {
+          "linea": 66,
+          "codigo": "unsafe { slice_assume_init(slice) }"
+        },
+        {
+          "linea": 75,
+          "codigo": "unsafe { slice_assume_init_mut(slice) }"
+        },
+        {
+          "linea": 83,
+          "codigo": "unsafe { ReadBuf::uninit(&mut self.unfilled_mut()[..max]) }"
+        },
+        {
+          "linea": 94,
+          "codigo": "unsafe { slice_assume_init(slice) }"
+        },
+        {
+          "linea": 105,
+          "codigo": "unsafe { slice_assume_init_mut(slice) }"
+        },
+        {
+          "linea": 163,
+          "codigo": "unsafe {\n                self.buf[self.initialized..end]\n                    .as_mut_ptr()\n                    .write_bytes(0, end - self.initialized);\n            }"
+        },
+        {
+          "linea": 174,
+          "codigo": "unsafe { slice_assume_init_mut(slice) }"
+        },
+        {
+          "linea": 261,
+          "codigo": "unsafe {\n            self.buf[self.filled..end]\n                .as_mut_ptr()\n                .cast::()\n                .copy_from_nonoverlapping(buf.as_ptr(), amt);\n        }"
+        },
+        {
+          "linea": 292,
+          "codigo": "unsafe { self.unfilled_mut() }"
+        },
+        {
+          "linea": 298,
+          "codigo": "unsafe { bytes::buf::UninitSlice::from_raw_parts_mut(ptr, len) }"
+        },
+        {
+          "linea": 54,
+          "codigo": "unsafe { &mut *(dst as *mut _ as *mut [MaybeUninit]) }"
+        },
+        {
+          "linea": 66,
+          "codigo": "unsafe {\n            me.buf.advance_mut(n);\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "split.rs",
+      "ocurrencias": [
+        {
+          "linea": 63,
+          "codigo": "unsafe { Pin::new_unchecked(&mut *guard) }"
+        }
+      ]
+    },
+    {
+      "ruta": "stderr.rs",
+      "ocurrencias": [
+        {
+          "linea": 90,
+          "codigo": "unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) }"
+        },
+        {
+          "linea": 106,
+          "codigo": "unsafe { BorrowedHandle::borrow_raw(self.as_raw_handle()) }"
+        }
+      ]
+    },
+    {
+      "ruta": "stdin.rs",
+      "ocurrencias": [
+        {
+          "linea": 65,
+          "codigo": "unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) }"
+        },
+        {
+          "linea": 81,
+          "codigo": "unsafe { BorrowedHandle::borrow_raw(self.as_raw_handle()) }"
+        }
+      ]
+    },
+    {
+      "ruta": "stdout.rs",
+      "ocurrencias": [
+        {
+          "linea": 139,
+          "codigo": "unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) }"
+        },
+        {
+          "linea": 155,
+          "codigo": "unsafe { BorrowedHandle::borrow_raw(self.as_raw_handle()) }"
+        }
+      ]
+    },
+    {
+      "ruta": "fill_buf.rs",
+      "ocurrencias": [
+        {
+          "linea": 39,
+          "codigo": "unsafe {\n                // Safety: This is necessary only due to a limitation in the\n                // borrow checker. Once Rust starts using the polonius borrow\n                // checker, this can be simplified.\n                //\n                // The safety of this transmute relies on the fact that the\n                // value of `reader` is `None` when we return in this branch.\n                // Otherwise the caller could poll us again after\n                // completion, and access the mutable reference while the\n                // returned immutable reference still exists.\n                let slice = std::mem::transmute::<&[u8], &'a [u8]>(slice);\n                Poll::Ready(Ok(slice))\n            }"
+        }
+      ]
+    },
+    {
+      "ruta": "take.rs",
+      "ocurrencias": [
+        {
+          "linea": 98,
+          "codigo": "unsafe {\n            buf.assume_init(n);\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "vec_with_initialized.rs",
+      "ocurrencias": [
+        {
+          "linea": 82,
+          "codigo": "unsafe { std::slice::from_raw_parts_mut::<'a, MaybeUninit>(ptr, cap) }"
+        },
+        {
+          "linea": 88,
+          "codigo": "unsafe {\n            read_buf.assume_init(num_initialized);\n        }"
+        },
+        {
+          "linea": 111,
+          "codigo": "unsafe {\n            self.num_initialized = parts.initialized;\n            vec.set_len(parts.len);\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "atomic_u16.rs",
+      "ocurrencias": [
+        {
+          "linea": 40,
+          "codigo": "unsafe { &*self.inner.get() }"
+        }
+      ]
+    },
+    {
+      "ruta": "atomic_u32.rs",
+      "ocurrencias": [
+        {
+          "linea": 40,
+          "codigo": "unsafe { &*self.inner.get() }"
+        }
+      ]
+    },
+    {
+      "ruta": "atomic_usize.rs",
+      "ocurrencias": [
+        {
+          "linea": 35,
+          "codigo": "unsafe { (*self.inner.get()).get_mut() }"
+        },
+        {
+          "linea": 45,
+          "codigo": "unsafe { &*self.inner.get() }"
+        },
+        {
+          "linea": 52,
+          "codigo": "unsafe { &mut *self.inner.get() }"
+        }
+      ]
+    },
+    {
+      "ruta": "join.rs",
+      "ocurrencias": [
+        {
+          "linea": 135,
+          "codigo": "unsafe { Pin::new_unchecked(fut) }"
+        },
+        {
+          "linea": 157,
+          "codigo": "unsafe { Pin::new_unchecked(fut) }"
+        },
+        {
+          "linea": 311,
+          "codigo": "unsafe { Header::get_id(self.raw.header_ptr()) }"
+        },
+        {
+          "linea": 338,
+          "codigo": "unsafe {\n            self.raw\n                .try_read_output(&mut ret as *mut _ as *mut (), cx.waker());\n        }"
+        },
+        {
+          "linea": 367,
+          "codigo": "unsafe { Header::get_id_ptr(self.raw.header_ptr()) }"
+        },
+        {
+          "linea": 368,
+          "codigo": "unsafe { id_ptr.as_ref() }"
+        }
+      ]
+    },
+    {
+      "ruta": "pin.rs",
+      "ocurrencias": [
+        {
+          "linea": 132,
+          "codigo": "unsafe {\n            $crate::macros::support::Pin::new_unchecked(&mut $x)\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "select.rs",
+      "ocurrencias": [
+        {
+          "linea": 554,
+          "codigo": "unsafe { Pin::new_unchecked(fut) }"
+        }
+      ]
+    },
+    {
+      "ruta": "try_join.rs",
+      "ocurrencias": [
+        {
+          "linea": 181,
+          "codigo": "unsafe { Pin::new_unchecked(fut) }"
+        },
+        {
+          "linea": 205,
+          "codigo": "unsafe { Pin::new_unchecked(fut) }"
+        }
+      ]
+    },
+    {
+      "ruta": "udp.rs",
+      "ocurrencias": [
+        {
+          "linea": 255,
+          "codigo": "unsafe { std::net::UdpSocket::from_raw_fd(raw_fd) }"
+        },
+        {
+          "linea": 264,
+          "codigo": "unsafe { std::net::UdpSocket::from_raw_socket(raw_socket) }"
+        },
+        {
+          "linea": 810,
+          "codigo": "unsafe {\n                &mut *(buf.unfilled_mut() as *mut [std::mem::MaybeUninit] as *mut [u8])\n            }"
+        },
+        {
+          "linea": 818,
+          "codigo": "unsafe {\n            buf.assume_init(n);\n        }"
+        },
+        {
+          "linea": 935,
+          "codigo": "unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit] as *mut [u8]) }"
+        },
+        {
+          "linea": 941,
+          "codigo": "unsafe {\n                    buf.advance_mut(n);\n                }"
+        },
+        {
+          "linea": 983,
+          "codigo": "unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit] as *mut [u8]) }"
+        },
+        {
+          "linea": 989,
+          "codigo": "unsafe {\n                    buf.advance_mut(n);\n                }"
+        },
+        {
+          "linea": 1058,
+          "codigo": "unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit] as *mut [u8]) }"
+        },
+        {
+          "linea": 1064,
+          "codigo": "unsafe {\n                    buf.advance_mut(n);\n                }"
+        },
+        {
+          "linea": 1114,
+          "codigo": "unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit] as *mut [u8]) }"
+        },
+        {
+          "linea": 1120,
+          "codigo": "unsafe {\n                    buf.advance_mut(n);\n                }"
+        },
+        {
+          "linea": 1347,
+          "codigo": "unsafe {\n                &mut *(buf.unfilled_mut() as *mut [std::mem::MaybeUninit] as *mut [u8])\n            }"
+        },
+        {
+          "linea": 1355,
+          "codigo": "unsafe {\n            buf.assume_init(n);\n        }"
+        },
+        {
+          "linea": 1603,
+          "codigo": "unsafe {\n                &mut *(buf.unfilled_mut() as *mut [std::mem::MaybeUninit] as *mut [u8])\n            }"
+        },
+        {
+          "linea": 1611,
+          "codigo": "unsafe {\n            buf.assume_init(n);\n        }"
+        },
+        {
+          "linea": 2029,
+          "codigo": "unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) }"
+        },
+        {
+          "linea": 2046,
+          "codigo": "unsafe { BorrowedSocket::borrow_raw(self.as_raw_socket()) }"
+        }
+      ]
+    },
+    {
+      "ruta": "listener.rs",
+      "ocurrencias": [
+        {
+          "linea": 272,
+          "codigo": "unsafe { std::net::TcpListener::from_raw_fd(raw_fd) }"
+        },
+        {
+          "linea": 281,
+          "codigo": "unsafe { std::net::TcpListener::from_raw_socket(raw_socket) }"
+        },
+        {
+          "linea": 290,
+          "codigo": "unsafe { std::net::TcpListener::from_raw_fd(raw_fd) }"
+        },
+        {
+          "linea": 412,
+          "codigo": "unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) }"
+        },
+        {
+          "linea": 431,
+          "codigo": "unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) }"
+        },
+        {
+          "linea": 448,
+          "codigo": "unsafe { BorrowedSocket::borrow_raw(self.as_raw_socket()) }"
+        },
+        {
+          "linea": 165,
+          "codigo": "unsafe { net::UnixListener::from_raw_fd(raw_fd) }"
+        },
+        {
+          "linea": 238,
+          "codigo": "unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) }"
+        }
+      ]
+    },
+    {
+      "ruta": "socket.rs",
+      "ocurrencias": [
+        {
+          "linea": 652,
+          "codigo": "unsafe { mio::net::TcpStream::from_raw_fd(raw_fd) }"
+        },
+        {
+          "linea": 660,
+          "codigo": "unsafe { mio::net::TcpStream::from_raw_socket(raw_socket) }"
+        },
+        {
+          "linea": 708,
+          "codigo": "unsafe { mio::net::TcpListener::from_raw_fd(raw_fd) }"
+        },
+        {
+          "linea": 716,
+          "codigo": "unsafe { mio::net::TcpListener::from_raw_socket(raw_socket) }"
+        },
+        {
+          "linea": 761,
+          "codigo": "unsafe { TcpSocket::from_raw_fd(raw_fd) }"
+        },
+        {
+          "linea": 769,
+          "codigo": "unsafe { TcpSocket::from_raw_socket(raw_socket) }"
+        },
+        {
+          "linea": 802,
+          "codigo": "unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) }"
+        },
+        {
+          "linea": 841,
+          "codigo": "unsafe { BorrowedSocket::borrow_raw(self.as_raw_socket()) }"
+        },
+        {
+          "linea": 184,
+          "codigo": "unsafe { mio::net::UnixListener::from_raw_fd(raw_fd) }"
+        },
+        {
+          "linea": 219,
+          "codigo": "unsafe { mio::net::UnixStream::from_raw_fd(raw_fd) }"
+        },
+        {
+          "linea": 241,
+          "codigo": "unsafe { mio::net::UnixDatagram::from_raw_fd(raw_fd) }"
+        },
+        {
+          "linea": 256,
+          "codigo": "unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) }"
+        },
+        {
+          "linea": 512,
+          "codigo": "unsafe { std::os::unix::net::UnixDatagram::from_raw_fd(raw_fd) }"
+        },
+        {
+          "linea": 864,
+          "codigo": "unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit] as *mut [u8]) }"
+        },
+        {
+          "linea": 870,
+          "codigo": "unsafe {\n                    buf.advance_mut(n);\n                }"
+        },
+        {
+          "linea": 920,
+          "codigo": "unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit] as *mut [u8]) }"
+        },
+        {
+          "linea": 926,
+          "codigo": "unsafe {\n                    buf.advance_mut(n);\n                }"
+        },
+        {
+          "linea": 982,
+          "codigo": "unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit] as *mut [u8]) }"
+        },
+        {
+          "linea": 988,
+          "codigo": "unsafe {\n                    buf.advance_mut(n);\n                }"
+        },
+        {
+          "linea": 1029,
+          "codigo": "unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit] as *mut [u8]) }"
+        },
+        {
+          "linea": 1035,
+          "codigo": "unsafe {\n                    buf.advance_mut(n);\n                }"
+        },
+        {
+          "linea": 1167,
+          "codigo": "unsafe {\n                &mut *(buf.unfilled_mut() as *mut [std::mem::MaybeUninit] as *mut [u8])\n            }"
+        },
+        {
+          "linea": 1175,
+          "codigo": "unsafe {\n            buf.assume_init(n);\n        }"
+        },
+        {
+          "linea": 1269,
+          "codigo": "unsafe {\n                &mut *(buf.unfilled_mut() as *mut [std::mem::MaybeUninit] as *mut [u8])\n            }"
+        },
+        {
+          "linea": 1277,
+          "codigo": "unsafe {\n            buf.assume_init(n);\n        }"
+        },
+        {
+          "linea": 1593,
+          "codigo": "unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) }"
+        }
+      ]
+    },
+    {
+      "ruta": "stream.rs",
+      "ocurrencias": [
+        {
+          "linea": 253,
+          "codigo": "unsafe { std::net::TcpStream::from_raw_fd(raw_fd) }"
+        },
+        {
+          "linea": 262,
+          "codigo": "unsafe { std::net::TcpStream::from_raw_socket(raw_socket) }"
+        },
+        {
+          "linea": 271,
+          "codigo": "unsafe { std::net::TcpStream::from_raw_fd(raw_fd) }"
+        },
+        {
+          "linea": 366,
+          "codigo": "unsafe {\n                &mut *(buf.unfilled_mut() as *mut [std::mem::MaybeUninit] as *mut [u8])\n            }"
+        },
+        {
+          "linea": 372,
+          "codigo": "unsafe { buf.assume_init(ret) }"
+        },
+        {
+          "linea": 763,
+          "codigo": "unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit] as *mut [u8]) }"
+        },
+        {
+          "linea": 769,
+          "codigo": "unsafe {\n                    buf.advance_mut(n);\n                }"
+        },
+        {
+          "linea": 1291,
+          "codigo": "unsafe { self.io.poll_read(cx, buf) }"
+        },
+        {
+          "linea": 1387,
+          "codigo": "unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) }"
+        },
+        {
+          "linea": 1403,
+          "codigo": "unsafe { BorrowedSocket::borrow_raw(self.as_raw_socket()) }"
+        },
+        {
+          "linea": 1421,
+          "codigo": "unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) }"
+        },
+        {
+          "linea": 485,
+          "codigo": "unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit] as *mut [u8]) }"
+        },
+        {
+          "linea": 491,
+          "codigo": "unsafe {\n                    buf.advance_mut(n);\n                }"
+        },
+        {
+          "linea": 869,
+          "codigo": "unsafe { std::os::unix::net::UnixStream::from_raw_fd(raw_fd) }"
+        },
+        {
+          "linea": 1045,
+          "codigo": "unsafe { self.io.poll_read(cx, buf) }"
+        },
+        {
+          "linea": 1079,
+          "codigo": "unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) }"
+        }
+      ]
+    },
+    {
+      "ruta": "pipe.rs",
+      "ocurrencias": [
+        {
+          "linea": 496,
+          "codigo": "unsafe { mio_pipe::Sender::from_raw_fd(owned_fd.into_raw_fd()) }"
+        },
+        {
+          "linea": 745,
+          "codigo": "unsafe { OwnedFd::from_raw_fd(mio_pipe.into_raw_fd()) }"
+        },
+        {
+          "linea": 789,
+          "codigo": "unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) }"
+        },
+        {
+          "linea": 992,
+          "codigo": "unsafe { mio_pipe::Receiver::from_raw_fd(owned_fd.into_raw_fd()) }"
+        },
+        {
+          "linea": 1303,
+          "codigo": "unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit] as *mut [u8]) }"
+        },
+        {
+          "linea": 1309,
+          "codigo": "unsafe {\n                    buf.advance_mut(n);\n                }"
+        },
+        {
+          "linea": 1338,
+          "codigo": "unsafe { OwnedFd::from_raw_fd(mio_pipe.into_raw_fd()) }"
+        },
+        {
+          "linea": 1352,
+          "codigo": "unsafe { self.io.poll_read(cx, buf) }"
+        },
+        {
+          "linea": 1364,
+          "codigo": "unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) }"
+        },
+        {
+          "linea": 1372,
+          "codigo": "unsafe { std::mem::zeroed() }"
+        },
+        {
+          "linea": 1376,
+          "codigo": "unsafe { libc::fstat(fd.as_raw_fd(), &mut stat) }"
+        },
+        {
+          "linea": 1388,
+          "codigo": "unsafe { libc::fcntl(fd.as_raw_fd(), libc::F_GETFL) }"
+        },
+        {
+          "linea": 1415,
+          "codigo": "unsafe { libc::fcntl(fd.as_raw_fd(), libc::F_SETFL, flags) }"
+        },
+        {
+          "linea": 1427,
+          "codigo": "unsafe { libc::fcntl(fd.as_raw_fd(), libc::F_GETFL) }"
+        },
+        {
+          "linea": 1436,
+          "codigo": "unsafe { libc::fcntl(fd.as_raw_fd(), libc::F_SETFL, new) }"
+        }
+      ]
+    },
+    {
+      "ruta": "ucred.rs",
+      "ocurrencias": [
+        {
+          "linea": 86,
+          "codigo": "unsafe {\n            let raw_fd = sock.as_raw_fd();\n\n            let mut ucred = ucred {\n                pid: 0,\n                uid: 0,\n                gid: 0,\n            };\n\n            let ucred_size = mem::size_of::();\n\n            // These paranoid checks should be optimized-out\n            assert!(mem::size_of::() <= mem::size_of::());\n            assert!(ucred_size <= u32::MAX as usize);\n\n            let mut ucred_size = ucred_size as socklen_t;\n\n            let ret = getsockopt(\n                raw_fd,\n                SOL_SOCKET,\n                SO_PEERCRED,\n                &mut ucred as *mut ucred as *mut c_void,\n                &mut ucred_size,\n            );\n            if ret == 0 && ucred_size as usize == mem::size_of::() {\n                Ok(super::UCred {\n                    uid: ucred.uid as unix::uid_t,\n                    gid: ucred.gid as unix::gid_t,\n                    pid: Some(ucred.pid as unix::pid_t),\n                })\n            } else {\n                Err(io::Error::last_os_error())\n            }\n        }"
+        },
+        {
+          "linea": 133,
+          "codigo": "unsafe {\n            let raw_fd = sock.as_raw_fd();\n\n            let mut unpcbid = unpcbid {\n                unp_pid: 0,\n                unp_euid: 0,\n                unp_egid: 0,\n            };\n\n            let unpcbid_size = size_of::();\n            let mut unpcbid_size = unpcbid_size as socklen_t;\n\n            let ret = getsockopt(\n                raw_fd,\n                SOL_SOCKET,\n                LOCAL_PEEREID,\n                &mut unpcbid as *mut unpcbid as *mut c_void,\n                &mut unpcbid_size,\n            );\n            if ret == 0 && unpcbid_size as usize == size_of::() {\n                Ok(super::UCred {\n                    uid: unpcbid.unp_euid as unix::uid_t,\n                    gid: unpcbid.unp_egid as unix::gid_t,\n                    pid: Some(unpcbid.unp_pid as unix::pid_t),\n                })\n            } else {\n                Err(io::Error::last_os_error())\n            }\n        }"
+        },
+        {
+          "linea": 175,
+          "codigo": "unsafe {\n            let raw_fd = sock.as_raw_fd();\n\n            let mut uid = MaybeUninit::uninit();\n            let mut gid = MaybeUninit::uninit();\n\n            let ret = getpeereid(raw_fd, uid.as_mut_ptr(), gid.as_mut_ptr());\n\n            if ret == 0 {\n                Ok(super::UCred {\n                    uid: uid.assume_init() as unix::uid_t,\n                    gid: gid.assume_init() as unix::gid_t,\n                    pid: None,\n                })\n            } else {\n                Err(io::Error::last_os_error())\n            }\n        }"
+        },
+        {
+          "linea": 213,
+          "codigo": "unsafe {\n            let raw_fd = sock.as_raw_fd();\n\n            let mut uid = MaybeUninit::uninit();\n            let mut gid = MaybeUninit::uninit();\n            let mut pid: MaybeUninit = MaybeUninit::uninit();\n            let mut pid_size: MaybeUninit = MaybeUninit::new(size_of::() as u32);\n\n            if getsockopt(\n                raw_fd,\n                SOL_LOCAL,\n                LOCAL_PEEREPID,\n                pid.as_mut_ptr() as *mut c_void,\n                pid_size.as_mut_ptr(),\n            ) != 0\n            {\n                return Err(io::Error::last_os_error());\n            }\n\n            assert!(pid_size.assume_init() == (size_of::() as u32));\n\n            let ret = getpeereid(raw_fd, uid.as_mut_ptr(), gid.as_mut_ptr());\n\n            if ret == 0 {\n                Ok(super::UCred {\n                    uid: uid.assume_init() as unix::uid_t,\n                    gid: gid.assume_init() as unix::gid_t,\n                    pid: Some(pid.assume_init() as unix::pid_t),\n                })\n            } else {\n                Err(io::Error::last_os_error())\n            }\n        }"
+        },
+        {
+          "linea": 257,
+          "codigo": "unsafe {\n            let raw_fd = sock.as_raw_fd();\n\n            let mut cred = ptr::null_mut();\n            let ret = libc::getpeerucred(raw_fd, &mut cred);\n\n            if ret == 0 {\n                let uid = libc::ucred_geteuid(cred);\n                let gid = libc::ucred_getegid(cred);\n                let pid = libc::ucred_getpid(cred);\n\n                libc::ucred_free(cred);\n\n                Ok(super::UCred {\n                    uid: uid as unix::uid_t,\n                    gid: gid as unix::gid_t,\n                    pid: Some(pid as unix::pid_t),\n                })\n            } else {\n                Err(io::Error::last_os_error())\n            }\n        }"
+        },
+        {
+          "linea": 289,
+          "codigo": "unsafe {\n            let raw_fd = sock.as_raw_fd();\n\n            let mut uid = std::mem::MaybeUninit::uninit();\n            let mut gid = std::mem::MaybeUninit::uninit();\n\n            let ret = libc::getpeereid(raw_fd, uid.as_mut_ptr(), gid.as_mut_ptr());\n\n            if ret == 0 {\n                Ok(super::UCred {\n                    uid: uid.assume_init(),\n                    gid: gid.assume_init(),\n                    pid: None,\n                })\n            } else {\n                Err(io::Error::last_os_error())\n            }\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "named_pipe.rs",
+      "ocurrencias": [
+        {
+          "linea": 158,
+          "codigo": "unsafe { named_pipe_info(self.io.as_raw_handle()) }"
+        },
+        {
+          "linea": 605,
+          "codigo": "unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit] as *mut [u8]) }"
+        },
+        {
+          "linea": 611,
+          "codigo": "unsafe {\n                    buf.advance_mut(n);\n                }"
+        },
+        {
+          "linea": 896,
+          "codigo": "unsafe { self.io.poll_read(cx, buf) }"
+        },
+        {
+          "linea": 934,
+          "codigo": "unsafe { BorrowedHandle::borrow_raw(self.as_raw_handle()) }"
+        },
+        {
+          "linea": 1029,
+          "codigo": "unsafe { named_pipe_info(self.io.as_raw_handle()) }"
+        },
+        {
+          "linea": 1397,
+          "codigo": "unsafe { &mut *(dst as *mut _ as *mut [std::mem::MaybeUninit] as *mut [u8]) }"
+        },
+        {
+          "linea": 1403,
+          "codigo": "unsafe {\n                    buf.advance_mut(n);\n                }"
+        },
+        {
+          "linea": 1685,
+          "codigo": "unsafe { self.io.poll_read(cx, buf) }"
+        },
+        {
+          "linea": 1723,
+          "codigo": "unsafe { BorrowedHandle::borrow_raw(self.as_raw_handle()) }"
+        },
+        {
+          "linea": 2078,
+          "codigo": "unsafe {\n    ///     assert_eq!(\n    ///         ERROR_SUCCESS,\n    ///         SetSecurityInfo(\n    ///             pipe.as_raw_handle() as _,\n    ///             SE_KERNEL_OBJECT,\n    ///             DACL_SECURITY_INFORMATION,\n    ///             ptr::null_mut(),\n    ///             ptr::null_mut(),\n    ///             ptr::null_mut(),\n    ///             ptr::null_mut(),\n    ///         )\n    ///     );\n    /// }"
+        },
+        {
+          "linea": 2113,
+          "codigo": "unsafe {\n    ///     assert_eq!(\n    ///         ERROR_ACCESS_DENIED,\n    ///         SetSecurityInfo(\n    ///             pipe.as_raw_handle() as _,\n    ///             SE_KERNEL_OBJECT,\n    ///             DACL_SECURITY_INFORMATION,\n    ///             ptr::null_mut(),\n    ///             ptr::null_mut(),\n    ///             ptr::null_mut(),\n    ///             ptr::null_mut(),\n    ///         )\n    ///     );\n    /// }"
+        },
+        {
+          "linea": 2277,
+          "codigo": "unsafe { self.create_with_security_attributes_raw(addr, ptr::null_mut()) }"
+        },
+        {
+          "linea": 2512,
+          "codigo": "unsafe { self.open_with_security_attributes_raw(addr, ptr::null_mut()) }"
+        }
+      ]
+    },
+    {
+      "ruta": "mod.rs",
+      "ocurrencias": [
+        {
+          "linea": 1486,
+          "codigo": "unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) }"
+        },
+        {
+          "linea": 1521,
+          "codigo": "unsafe { BorrowedHandle::borrow_raw(self.as_raw_handle()) }"
+        },
+        {
+          "linea": 197,
+          "codigo": "unsafe { File::from_raw_fd(fd.into_raw_fd()) }"
+        },
+        {
+          "linea": 230,
+          "codigo": "unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) }"
+        },
+        {
+          "linea": 298,
+          "codigo": "unsafe { BorrowedFd::borrow_raw(self.as_raw_fd()) }"
+        },
+        {
+          "linea": 339,
+          "codigo": "unsafe { self.inner.poll_read(cx, buf) }"
+        },
+        {
+          "linea": 344,
+          "codigo": "unsafe {\n        let fd = fd.as_raw_fd();\n        let previous = libc::fcntl(fd, libc::F_GETFL);\n        if previous == -1 {\n            return Err(io::Error::last_os_error());\n        }\n\n        let new = if nonblocking {\n            previous | libc::O_NONBLOCK\n        } else {\n            previous & !libc::O_NONBLOCK\n        };\n\n        let r = libc::fcntl(fd, libc::F_SETFL, new);\n        if r == -1 {\n            return Err(io::Error::last_os_error());\n        }\n    }"
+        },
+        {
+          "linea": 71,
+          "codigo": "unsafe { std::os::unix::net::UnixStream::from_raw_fd(receiver_fd) }"
+        },
+        {
+          "linea": 383,
+          "codigo": "unsafe { Notified(Task::new(self.raw)) }"
+        },
+        {
+          "linea": 396,
+          "codigo": "unsafe { Header::get_id(self.raw.header_ptr()) }"
+        },
+        {
+          "linea": 542,
+          "codigo": "unsafe { Header::get_id(target) }"
+        },
+        {
+          "linea": 100,
+          "codigo": "unsafe {\n            Self::try_with_current(|context| f(&context.collector)).expect(FAIL_NO_THREAD_LOCAL)\n        }"
+        },
+        {
+          "linea": 155,
+          "codigo": "unsafe {\n                ManuallyDrop::take(&mut self.0)();\n            }"
+        },
+        {
+          "linea": 226,
+          "codigo": "unsafe {\n            let mut frame = Frame {\n                inner_addr: Self::poll as *const c_void,\n                parent: None,\n            };\n\n            Context::with_current_frame(|current| {\n                frame.parent = current.take();\n                current.set(Some(NonNull::from(&frame)));\n            });\n\n            let _restore = defer(|| {\n                Context::with_current_frame(|current| {\n                    current.set(frame.parent);\n                });\n            });\n\n            let this = self.project();\n            this.future.poll(cx)\n        }"
+        },
+        {
+          "linea": 1,
+          "codigo": "unsafe {}"
+        },
+        {
+          "linea": 335,
+          "codigo": "unsafe { entry.is_pending() }"
+        },
+        {
+          "linea": 338,
+          "codigo": "unsafe { entry.fire(Ok(())) }"
+        },
+        {
+          "linea": 372,
+          "codigo": "unsafe {\n            let wheels_lock = self.inner.wheels.read();\n            let mut lock = wheels_lock.lock_sharded_wheel(entry.as_ref().shard_id());\n\n            if entry.as_ref().might_be_registered() {\n                lock.remove(entry);\n            }\n\n            entry.as_ref().handle().fire(Ok(()));\n        }"
+        },
+        {
+          "linea": 396,
+          "codigo": "unsafe { entry.as_ref().might_be_registered() }"
+        },
+        {
+          "linea": 403,
+          "codigo": "unsafe { entry.fire(Err(crate::time::error::Error::shutdown())) }"
+        },
+        {
+          "linea": 411,
+          "codigo": "unsafe { lock.insert(entry) }"
+        },
+        {
+          "linea": 418,
+          "codigo": "unsafe {\n                        entry.fire(Ok(()))\n                    }"
+        },
+        {
+          "linea": 432,
+          "codigo": "unsafe { self.0.get_unchecked(index as usize) }"
+        },
+        {
+          "linea": 102,
+          "codigo": "unsafe {\n            self.levels[level].add_entry(item);\n        }"
+        },
+        {
+          "linea": 118,
+          "codigo": "unsafe {\n            let when = item.as_ref().cached_when();\n            if when == u64::MAX {\n                self.pending.remove(item);\n            } else {\n                debug_assert!(\n                    self.elapsed <= when,\n                    \"elapsed={}; when={}\",\n                    self.elapsed,\n                    when\n                );\n\n                let level = self.level_for(when);\n                self.levels[level].remove_entry(item);\n            }\n        }"
+        },
+        {
+          "linea": 233,
+          "codigo": "unsafe { item.cached_when() }"
+        },
+        {
+          "linea": 238,
+          "codigo": "unsafe { item.mark_pending(expiration.deadline) }"
+        },
+        {
+          "linea": 245,
+          "codigo": "unsafe {\n                        self.levels[level].add_entry(item);\n                    }"
+        }
+      ]
+    },
+    {
+      "ruta": "windows.rs",
+      "ocurrencias": [
+        {
+          "linea": 124,
+          "codigo": "unsafe {\n                RegisterWaitForSingleObject(\n                    &mut wait_object,\n                    inner.child.as_raw_handle() as _,\n                    Some(callback),\n                    ptr as *mut _,\n                    INFINITE,\n                    WT_EXECUTEINWAITTHREAD | WT_EXECUTEONLYONCE,\n                )\n            }"
+        },
+        {
+          "linea": 136,
+          "codigo": "unsafe { Box::from_raw(ptr) }"
+        },
+        {
+          "linea": 156,
+          "codigo": "unsafe {\n            let rc = UnregisterWaitEx(self.wait_object, INVALID_HANDLE_VALUE);\n            if rc == 0 {\n                panic!(\"failed to unregister: {}\", io::Error::last_os_error());\n            }\n            drop(Box::from_raw(self.tx));\n        }"
+        },
+        {
+          "linea": 244,
+          "codigo": "unsafe { StdFile::from_raw_handle(io.into_raw_handle()) }"
+        },
+        {
+          "linea": 263,
+          "codigo": "unsafe {\n        let mut dup_handle = INVALID_HANDLE_VALUE;\n        let cur_proc = GetCurrentProcess();\n\n        let status = DuplicateHandle(\n            cur_proc,\n            io.as_raw_handle() as _,\n            cur_proc,\n            &mut dup_handle,\n            0,\n            0,\n            DUPLICATE_SAME_ACCESS,\n        );\n\n        if status == 0 {\n            return Err(io::Error::last_os_error());\n        }\n\n        Ok(StdFile::from_raw_handle(dup_handle as _))\n    }"
+        }
+      ]
+    },
+    {
+      "ruta": "pidfd_reaper.rs",
+      "ocurrencias": [
+        {
+          "linea": 41,
+          "codigo": "unsafe { syscall(SYS_pidfd_open, pid, PIDFD_NONBLOCK) }"
+        },
+        {
+          "linea": 53,
+          "codigo": "unsafe { File::from_raw_fd(fd as i32) }"
+        }
+      ]
+    },
+    {
+      "ruta": "park.rs",
+      "ocurrencias": [
+        {
+          "linea": 292,
+          "codigo": "unsafe {\n            let raw = unparker_to_raw_waker(self.inner);\n            Waker::from_raw(raw)\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "scoped.rs",
+      "ocurrencias": [
+        {
+          "linea": 53,
+          "codigo": "unsafe { f(Some(&*val)) }"
+        }
+      ]
+    },
+    {
+      "ruta": "driver.rs",
+      "ocurrencias": [
+        {
+          "linea": 177,
+          "codigo": "unsafe { &*ptr }"
+        },
+        {
+          "linea": 226,
+          "codigo": "unsafe {\n                self.registrations\n                    .remove(&mut self.synced.lock(), &scheduled_io)\n            }"
+        }
+      ]
+    },
+    {
+      "ruta": "registration_set.rs",
+      "ocurrencias": [
+        {
+          "linea": 109,
+          "codigo": "unsafe { self.remove(synced, &io) }"
+        },
+        {
+          "linea": 119,
+          "codigo": "unsafe { NonNull::new_unchecked(Arc::as_ptr(io).cast_mut()) }"
+        },
+        {
+          "linea": 133,
+          "codigo": "unsafe { NonNull::new_unchecked(Arc::as_ptr(handle) as *mut _) }"
+        },
+        {
+          "linea": 138,
+          "codigo": "unsafe { Arc::from_raw(ptr.as_ptr() as *const _) }"
+        }
+      ]
+    },
+    {
+      "ruta": "scheduled_io.rs",
+      "ocurrencias": [
+        {
+          "linea": 263,
+          "codigo": "unsafe { &mut *waiter.as_ptr() }"
+        },
+        {
+          "linea": 432,
+          "codigo": "unsafe {\n            let me = self.get_unchecked_mut();\n            (&me.scheduled_io, &mut me.state, &me.waiter)\n        }"
+        },
+        {
+          "linea": 445,
+          "codigo": "unsafe { (*waiter.get()).interest }"
+        },
+        {
+          "linea": 486,
+          "codigo": "unsafe {\n                        (*waiter.get()).waker = Some(cx.waker().clone());\n                    }"
+        },
+        {
+          "linea": 495,
+          "codigo": "unsafe { NonNull::new_unchecked(waiter.get()) }"
+        },
+        {
+          "linea": 507,
+          "codigo": "unsafe { &mut *waiter.get() }"
+        },
+        {
+          "linea": 527,
+          "codigo": "unsafe { &mut *waiter.get() }"
+        },
+        {
+          "linea": 557,
+          "codigo": "unsafe {\n            waiters\n                .list\n                .remove(NonNull::new_unchecked(self.waiter.get()))\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "runtime.rs",
+      "ocurrencias": [
+        {
+          "linea": 156,
+          "codigo": "unsafe {\n            if std::mem::size_of::() > BOX_FUTURE_THRESHOLD {\n                self.handle.spawn_local_named(Box::pin(future), meta)\n            } else {\n                self.handle.spawn_local_named(future, meta)\n            }\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "inject.rs",
+      "ocurrencias": [
+        {
+          "linea": 58,
+          "codigo": "unsafe { self.shared.push(&mut synced, task) }"
+        },
+        {
+          "linea": 68,
+          "codigo": "unsafe { self.shared.pop(&mut synced) }"
+        },
+        {
+          "linea": 12,
+          "codigo": "unsafe { inject.push(&mut synced, task) }"
+        },
+        {
+          "linea": 17,
+          "codigo": "unsafe { inject.pop(&mut synced) }"
+        },
+        {
+          "linea": 22,
+          "codigo": "unsafe { inject.pop(&mut synced) }"
+        },
+        {
+          "linea": 29,
+          "codigo": "unsafe {\n        inject.push_batch(\n            &mut inject_synced,\n            (0..10).map(|_| super::unowned(async {}).0),\n        );\n\n        assert_eq!(5, inject.pop_n(&mut inject_synced, 5).count());\n        assert_eq!(5, inject.pop_n(&mut inject_synced, 5).count());\n        assert_eq!(0, inject.pop_n(&mut inject_synced, 5).count());\n    }"
+        },
+        {
+          "linea": 45,
+          "codigo": "unsafe {\n        inject.push_batch(\n            &mut inject_synced,\n            (0..10).map(|_| super::unowned(async {}).0),\n        );\n        let _ = inject.pop_n(&mut inject_synced, 10);\n\n        assert_eq!(inject.len(), 0);\n    }"
+        }
+      ]
+    },
+    {
+      "ruta": "rt_multi_thread.rs",
+      "ocurrencias": [
+        {
+          "linea": 51,
+          "codigo": "unsafe { prev.set_queue_next(Some(next)) }"
+        },
+        {
+          "linea": 75,
+          "codigo": "unsafe { batch_tail.get_queue_next().is_none() }"
+        },
+        {
+          "linea": 87,
+          "codigo": "unsafe { task::Notified::::from_raw(task) }"
+        },
+        {
+          "linea": 96,
+          "codigo": "unsafe {\n                tail.set_queue_next(Some(batch_head));\n            }"
+        }
+      ]
+    },
+    {
+      "ruta": "shared.rs",
+      "ocurrencias": [
+        {
+          "linea": 78,
+          "codigo": "unsafe { task.get_queue_next().is_none() }"
+        },
+        {
+          "linea": 83,
+          "codigo": "unsafe { tail.set_queue_next(Some(task)) }"
+        }
+      ]
+    },
+    {
+      "ruta": "synced.rs",
+      "ocurrencias": [
+        {
+          "linea": 26,
+          "codigo": "unsafe { task.get_queue_next() }"
+        },
+        {
+          "linea": 32,
+          "codigo": "unsafe { task.set_queue_next(None) }"
+        },
+        {
+          "linea": 35,
+          "codigo": "unsafe { task::Notified::from_raw(task) }"
+        }
+      ]
+    },
+    {
+      "ruta": "queue.rs",
+      "ocurrencias": [
+        {
+          "linea": 81,
+          "codigo": "unsafe { Box::from_raw(Box::into_raw(buffer).cast()) }"
+        },
+        {
+          "linea": 149,
+          "codigo": "unsafe { self.inner.tail.unsync_load() }"
+        },
+        {
+          "linea": 168,
+          "codigo": "unsafe {\n                    ptr::write((*ptr).as_mut_ptr(), task);\n                }"
+        },
+        {
+          "linea": 196,
+          "codigo": "unsafe { self.inner.tail.unsync_load() }"
+        },
+        {
+          "linea": 233,
+          "codigo": "unsafe {\n                ptr::write((*ptr).as_mut_ptr(), task);\n            }"
+        },
+        {
+          "linea": 321,
+          "codigo": "unsafe { ptr::read((*ptr).as_ptr()) }"
+        },
+        {
+          "linea": 352,
+          "codigo": "unsafe { self.inner.tail.unsync_load() }"
+        },
+        {
+          "linea": 382,
+          "codigo": "unsafe { ptr::read(ptr).assume_init() }"
+        },
+        {
+          "linea": 399,
+          "codigo": "unsafe { dst.inner.tail.unsync_load() }"
+        },
+        {
+          "linea": 432,
+          "codigo": "unsafe { ptr::read((*ptr).as_ptr()) }"
+        },
+        {
+          "linea": 509,
+          "codigo": "unsafe { ptr::read((*ptr).as_ptr()) }"
+        },
+        {
+          "linea": 516,
+          "codigo": "unsafe { ptr::write((*ptr).as_mut_ptr(), task) }"
+        },
+        {
+          "linea": 130,
+          "codigo": "unsafe { self.inner.tail.unsync_load() }"
+        },
+        {
+          "linea": 152,
+          "codigo": "unsafe {\n                    ptr::write((*ptr).as_mut_ptr(), task);\n                }"
+        },
+        {
+          "linea": 180,
+          "codigo": "unsafe { self.inner.tail.unsync_load() }"
+        },
+        {
+          "linea": 219,
+          "codigo": "unsafe {\n                ptr::write((*ptr).as_mut_ptr(), task);\n            }"
+        },
+        {
+          "linea": 311,
+          "codigo": "unsafe { ptr::read((*ptr).as_ptr()) }"
+        },
+        {
+          "linea": 344,
+          "codigo": "unsafe { self.inner.tail.unsync_load() }"
+        },
+        {
+          "linea": 374,
+          "codigo": "unsafe { ptr::read(ptr).assume_init() }"
+        },
+        {
+          "linea": 391,
+          "codigo": "unsafe { dst.inner.tail.unsync_load() }"
+        },
+        {
+          "linea": 426,
+          "codigo": "unsafe { ptr::read((*ptr).as_ptr()) }"
+        },
+        {
+          "linea": 504,
+          "codigo": "unsafe { ptr::read((*ptr).as_ptr()) }"
+        },
+        {
+          "linea": 511,
+          "codigo": "unsafe { ptr::write((*ptr).as_mut_ptr(), task) }"
+        }
+      ]
+    },
+    {
+      "ruta": "worker.rs",
+      "ocurrencias": [
+        {
+          "linea": 826,
+          "codigo": "unsafe { worker.inject().pop_n(&mut synced.inject, n) }"
+        },
+        {
+          "linea": 1120,
+          "codigo": "unsafe { self.shared.inject.pop(&mut synced.inject) }"
+        },
+        {
+          "linea": 1128,
+          "codigo": "unsafe {\n            self.shared.inject.push(&mut synced.inject, task);\n        }"
+        },
+        {
+          "linea": 1225,
+          "codigo": "unsafe {\n            self.shared.inject.push_batch(self, iter);\n        }"
+        },
+        {
+          "linea": 809,
+          "codigo": "unsafe { cx.shared().inject.pop_n(&mut synced.inject, n) }"
+        },
+        {
+          "linea": 1342,
+          "codigo": "unsafe { self.inject.pop(&mut synced.inject) }"
+        },
+        {
+          "linea": 1437,
+          "codigo": "unsafe {\n            self.inject.push(&mut synced.inject, task);\n        }"
+        },
+        {
+          "linea": 1446,
+          "codigo": "unsafe {\n            self.inject.push_batch(self, iter);\n        }"
+        },
+        {
+          "linea": 1455,
+          "codigo": "unsafe {\n            self.inject.push_batch(&mut synced.inject, iter);\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "taskdump.rs",
+      "ocurrencias": [
+        {
+          "linea": 43,
+          "codigo": "unsafe { trace_multi_thread(owned, &mut local, synced, injection) }"
+        },
+        {
+          "linea": 43,
+          "codigo": "unsafe { trace_multi_thread(owned, &mut local, synced, injection) }"
+        }
+      ]
+    },
+    {
+      "ruta": "abort.rs",
+      "ocurrencias": [
+        {
+          "linea": 74,
+          "codigo": "unsafe { Header::get_id(self.raw.header_ptr()) }"
+        },
+        {
+          "linea": 87,
+          "codigo": "unsafe { Header::get_id_ptr(self.raw.header_ptr()) }"
+        },
+        {
+          "linea": 88,
+          "codigo": "unsafe { id_ptr.as_ref() }"
+        }
+      ]
+    },
+    {
+      "ruta": "core.rs",
+      "ocurrencias": [
+        {
+          "linea": 253,
+          "codigo": "unsafe { Header::get_trailer(NonNull::from(header)) }"
+        },
+        {
+          "linea": 257,
+          "codigo": "unsafe { Header::get_scheduler::< S>(NonNull::from(header)) }"
+        },
+        {
+          "linea": 261,
+          "codigo": "unsafe { Header::get_id_ptr(NonNull::from(header)) }"
+        },
+        {
+          "linea": 264,
+          "codigo": "unsafe {\n                check(\n                    &result.header,\n                    &result.trailer,\n                    &result.core.scheduler,\n                    &result.core.task_id,\n                );\n            }"
+        },
+        {
+          "linea": 322,
+          "codigo": "unsafe { &mut *ptr }"
+        },
+        {
+          "linea": 328,
+          "codigo": "unsafe { Pin::new_unchecked(future) }"
+        },
+        {
+          "linea": 349,
+          "codigo": "unsafe {\n            self.set_stage(Stage::Consumed);\n        }"
+        },
+        {
+          "linea": 361,
+          "codigo": "unsafe {\n            self.set_stage(Stage::Finished(output));\n        }"
+        },
+        {
+          "linea": 376,
+          "codigo": "unsafe { &mut *ptr }"
+        },
+        {
+          "linea": 404,
+          "codigo": "unsafe { self.owner_id.with(|ptr| *ptr) }"
+        },
+        {
+          "linea": 485,
+          "codigo": "unsafe { &*ptr }"
+        }
+      ]
+    },
+    {
+      "ruta": "harness.rs",
+      "ocurrencias": [
+        {
+          "linea": 36,
+          "codigo": "unsafe { &*self.header_ptr().as_ptr() }"
+        },
+        {
+          "linea": 44,
+          "codigo": "unsafe { &self.cell.as_ref().trailer }"
+        },
+        {
+          "linea": 48,
+          "codigo": "unsafe { &self.cell.as_ref().core }"
+        },
+        {
+          "linea": 272,
+          "codigo": "unsafe {\n            drop(Box::from_raw(self.cell.as_ptr()));\n        }"
+        },
+        {
+          "linea": 380,
+          "codigo": "unsafe { Task::from_raw(self.cell.cast()) }"
+        },
+        {
+          "linea": 401,
+          "codigo": "unsafe { trailer.will_wake(waker) }"
+        },
+        {
+          "linea": 439,
+          "codigo": "unsafe {\n        trailer.set_waker(Some(waker));\n    }"
+        },
+        {
+          "linea": 448,
+          "codigo": "unsafe {\n            trailer.set_waker(None);\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "list.rs",
+      "ocurrencias": [
+        {
+          "linea": 101,
+          "codigo": "unsafe { self.bind_inner(task, notified) }"
+        },
+        {
+          "linea": 121,
+          "codigo": "unsafe { self.bind_inner(task, notified) }"
+        },
+        {
+          "linea": 130,
+          "codigo": "unsafe {\n            // safety: We just created the task, so we have exclusive access\n            // to the field.\n            task.header().set_owner_id(self.id);\n        }"
+        },
+        {
+          "linea": 208,
+          "codigo": "unsafe { self.list.remove(task.header_ptr()) }"
+        },
+        {
+          "linea": 269,
+          "codigo": "unsafe {\n            // safety: We just created the task, so we have exclusive access\n            // to the field.\n            task.header().set_owner_id(self.id);\n        }"
+        },
+        {
+          "linea": 310,
+          "codigo": "unsafe { inner.list.remove(task.header_ptr()) }"
+        },
+        {
+          "linea": 336,
+          "codigo": "unsafe { f(&mut *ptr) }"
+        },
+        {
+          "linea": 76,
+          "codigo": "unsafe {\n            // Write the value to the block\n            block.as_ref().write(slot_index, value);\n        }"
+        },
+        {
+          "linea": 93,
+          "codigo": "unsafe { block.as_ref().tx_close() }"
+        },
+        {
+          "linea": 106,
+          "codigo": "unsafe { &*block_ptr }"
+        },
+        {
+          "linea": 125,
+          "codigo": "unsafe { &(*block_ptr) }"
+        },
+        {
+          "linea": 128,
+          "codigo": "unsafe { NonNull::new_unchecked(block_ptr) }"
+        },
+        {
+          "linea": 163,
+          "codigo": "unsafe {\n                        block.tx_release(tail_position);\n                    }"
+        },
+        {
+          "linea": 225,
+          "codigo": "unsafe {\n            let tail_block = &*tail;\n            tail_block.is_closed()\n        }"
+        },
+        {
+          "linea": 243,
+          "codigo": "unsafe { self.head.as_ref() }"
+        },
+        {
+          "linea": 269,
+          "codigo": "unsafe {\n            let block = self.head.as_ref();\n\n            let ret = block.read(self.index);\n\n            if let Some(block::Read::Value(..)) = ret {\n                self.index = self.index.wrapping_add(1);\n            }\n\n            ret\n        }"
+        },
+        {
+          "linea": 310,
+          "codigo": "unsafe { self.head.as_ref() }"
+        },
+        {
+          "linea": 334,
+          "codigo": "unsafe {\n                // Get a handle to the block that will be freed and update\n                // `free_head` to point to the next block.\n                let block = self.free_head;\n\n                let observed_tail_position = block.as_ref().observed_tail_position();\n\n                let required_index = match observed_tail_position {\n                    Some(i) => i,\n                    None => return,\n                };\n\n                if required_index > self.index {\n                    return;\n                }\n\n                // We may read the next pointer with `Relaxed` ordering as it is\n                // guaranteed that the `reclaim_blocks` routine trails the `recv`\n                // routine. Any memory accessed by `reclaim_blocks` has already\n                // been acquired by `recv`.\n                let next_block = block.as_ref().load_next(Relaxed);\n\n                // Update the free list head\n                self.free_head = next_block.unwrap();\n\n                // Push the emptied block onto the back of the queue, making it\n                // available to senders.\n                tx.reclaim_block(block);\n            }"
+        }
+      ]
+    },
+    {
+      "ruta": "raw.rs",
+      "ocurrencias": [
+        {
+          "linea": 166,
+          "codigo": "unsafe { NonNull::new_unchecked(ptr.cast()) }"
+        },
+        {
+          "linea": 180,
+          "codigo": "unsafe { Header::get_trailer(self.ptr) }"
+        },
+        {
+          "linea": 185,
+          "codigo": "unsafe { self.ptr.as_ref() }"
+        },
+        {
+          "linea": 190,
+          "codigo": "unsafe { &*self.trailer_ptr().as_ptr() }"
+        },
+        {
+          "linea": 201,
+          "codigo": "unsafe { (vtable.poll)(self.ptr) }"
+        },
+        {
+          "linea": 206,
+          "codigo": "unsafe { (vtable.schedule)(self.ptr) }"
+        },
+        {
+          "linea": 211,
+          "codigo": "unsafe {\n            (vtable.dealloc)(self.ptr);\n        }"
+        },
+        {
+          "linea": 225,
+          "codigo": "unsafe { (vtable.drop_join_handle_slow)(self.ptr) }"
+        },
+        {
+          "linea": 230,
+          "codigo": "unsafe { (vtable.drop_abort_handle)(self.ptr) }"
+        },
+        {
+          "linea": 235,
+          "codigo": "unsafe { (vtable.shutdown)(self.ptr) }"
+        }
+      ]
+    },
+    {
+      "ruta": "waker.rs",
+      "ocurrencias": [
+        {
+          "linea": 28,
+          "codigo": "unsafe { ManuallyDrop::new(Waker::from_raw(raw_waker(*header))) }"
+        }
+      ]
+    },
+    {
+      "ruta": "loom_multi_thread.rs",
+      "ocurrencias": [
+        {
+          "linea": 47,
+          "codigo": "unsafe { Some(std::ptr::read(self.inner.as_ptr())) }"
+        }
+      ]
+    },
+    {
+      "ruta": "loom_multi_thread_alt.rs",
+      "ocurrencias": [
+        {
+          "linea": 49,
+          "codigo": "unsafe { Some(std::ptr::read(self.inner.as_ptr())) }"
+        }
+      ]
+    },
+    {
+      "ruta": "task_combinations.rs",
+      "ocurrencias": [
+        {
+          "linea": 276,
+          "codigo": "unsafe {\n                let me = Pin::into_inner_unchecked(self);\n                let inner = Pin::new_unchecked(&mut me.inner);\n                inner.poll(cx)\n            }"
+        }
+      ]
+    },
+    {
+      "ruta": "entry.rs",
+      "ocurrencias": [
+        {
+          "linea": 159,
+          "codigo": "unsafe { self.result.with(|p| *p) }"
+        },
+        {
+          "linea": 227,
+          "codigo": "unsafe { self.result.with_mut(|p| *p = result) }"
+        },
+        {
+          "linea": 490,
+          "codigo": "unsafe { &*self.inner.get() }"
+        },
+        {
+          "linea": 495,
+          "codigo": "unsafe { &*self.inner.get() }"
+        },
+        {
+          "linea": 499,
+          "codigo": "unsafe {\n                *self.inner.get() = Some(TimerShared::new(shard_id));\n            }"
+        },
+        {
+          "linea": 542,
+          "codigo": "unsafe { self.driver().clear_entry(NonNull::from(self.inner())) }"
+        },
+        {
+          "linea": 546,
+          "codigo": "unsafe { self.as_mut().get_unchecked_mut() }"
+        },
+        {
+          "linea": 557,
+          "codigo": "unsafe {\n                self.driver()\n                    .reregister(&self.driver.driver().io, tick, self.inner().into());\n            }"
+        },
+        {
+          "linea": 594,
+          "codigo": "unsafe { self.inner.as_ref().cached_when() }"
+        },
+        {
+          "linea": 598,
+          "codigo": "unsafe { self.inner.as_ref().sync_when() }"
+        },
+        {
+          "linea": 602,
+          "codigo": "unsafe { self.inner.as_ref().state.is_pending() }"
+        },
+        {
+          "linea": 654,
+          "codigo": "unsafe { Pin::new_unchecked(self) }"
+        }
+      ]
+    },
+    {
+      "ruta": "level.rs",
+      "ocurrencias": [
+        {
+          "linea": 131,
+          "codigo": "unsafe { item.as_ref().cached_when() }"
+        },
+        {
+          "linea": 133,
+          "codigo": "unsafe { self.slot[slot].remove(item) }"
+        }
+      ]
+    },
+    {
+      "ruta": "reusable_box.rs",
+      "ocurrencias": [
+        {
+          "linea": 28,
+          "codigo": "unsafe { NonNull::new_unchecked(boxed) }"
+        },
+        {
+          "linea": 57,
+          "codigo": "unsafe { self.boxed.as_ref() }"
+        },
+        {
+          "linea": 63,
+          "codigo": "unsafe {\n                self.set_same_layout(future);\n            }"
+        },
+        {
+          "linea": 110,
+          "codigo": "unsafe { Pin::new_unchecked(self.boxed.as_mut()) }"
+        },
+        {
+          "linea": 141,
+          "codigo": "unsafe {\n            drop(Box::from_raw(self.boxed.as_ptr()));\n        }"
+        },
+        {
+          "linea": 112,
+          "codigo": "unsafe { Pin::into_inner_unchecked(boxed) }"
+        },
+        {
+          "linea": 118,
+          "codigo": "unsafe { raw.write(new_value) }"
+        },
+        {
+          "linea": 124,
+          "codigo": "unsafe { Box::from_raw(raw) }"
+        },
+        {
+          "linea": 130,
+          "codigo": "unsafe { ptr::drop_in_place(raw) }"
+        },
+        {
+          "linea": 147,
+          "codigo": "unsafe { ManuallyDrop::take(&mut this.f) }"
+        },
+        {
+          "linea": 154,
+          "codigo": "unsafe { ManuallyDrop::take(&mut self.f) }"
+        }
+      ]
+    },
+    {
+      "ruta": "unix.rs",
+      "ocurrencias": [
+        {
+          "linea": 275,
+          "codigo": "unsafe {\n            signal_hook_registry::register(signal, move || action(globals, signal)).map(|_| ())\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "sys.rs",
+      "ocurrencias": [
+        {
+          "linea": 95,
+          "codigo": "unsafe {\n        let rc = console::SetConsoleCtrlHandler(Some(handler), 1);\n        let ret = if rc == 0 {\n            Err(io::Error::last_os_error())\n        } else {\n            Ok(())\n        };\n\n        init = Some(ret);\n    }"
+        },
+        {
+          "linea": 145,
+          "codigo": "unsafe {\n            super::handler(console::CTRL_C_EVENT);\n        }"
+        },
+        {
+          "linea": 162,
+          "codigo": "unsafe {\n                super::handler(console::CTRL_BREAK_EVENT);\n            }"
+        },
+        {
+          "linea": 180,
+          "codigo": "unsafe {\n                super::handler(console::CTRL_CLOSE_EVENT);\n            }"
+        },
+        {
+          "linea": 198,
+          "codigo": "unsafe {\n                super::handler(console::CTRL_SHUTDOWN_EVENT);\n            }"
+        },
+        {
+          "linea": 216,
+          "codigo": "unsafe {\n                super::handler(console::CTRL_LOGOFF_EVENT);\n            }"
+        }
+      ]
+    },
+    {
+      "ruta": "batch_semaphore.rs",
+      "ocurrencias": [
+        {
+          "linea": 254,
+          "codigo": "unsafe { waiter.as_mut().waker.with_mut(|waker| (*waker).take()) }"
+        },
+        {
+          "linea": 329,
+          "codigo": "unsafe { waiter.as_mut().waker.with_mut(|waker| (*waker).take()) }"
+        },
+        {
+          "linea": 499,
+          "codigo": "unsafe { &mut *waker }"
+        },
+        {
+          "linea": 511,
+          "codigo": "unsafe {\n                let node = Pin::into_inner_unchecked(node) as *mut _;\n                NonNull::new_unchecked(node)\n            }"
+        },
+        {
+          "linea": 668,
+          "codigo": "unsafe {\n            // Safety: all fields other than `node` are `Unpin`\n\n            is_unpin::<&Semaphore>();\n            is_unpin::<&mut bool>();\n            is_unpin::();\n\n            let this = self.get_unchecked_mut();\n            (\n                Pin::new_unchecked(&mut this.node),\n                this.semaphore,\n                this.num_permits,\n                &mut this.queued,\n            )\n        }"
+        },
+        {
+          "linea": 702,
+          "codigo": "unsafe { waiters.queue.remove(node) }"
+        }
+      ]
+    },
+    {
+      "ruta": "broadcast.rs",
+      "ocurrencias": [
+        {
+          "linea": 462,
+          "codigo": "unsafe { Sender::new_with_receiver_count(1, capacity) }"
+        },
+        {
+          "linea": 486,
+          "codigo": "unsafe { Self::new_with_receiver_count(0, capacity) }"
+        },
+        {
+          "linea": 901,
+          "codigo": "unsafe {\n                            // Safety: accessing `waker` is safe because\n                            // the tail lock is held.\n                            if let Some(waker) = (*waiter.as_ptr()).waker.take() {\n                                wakers.push(waker);\n                            }\n\n                            // Safety: `queued` is atomic.\n                            let queued = &(*waiter.as_ptr()).queued;\n                            // `Relaxed` suffices because the tail lock is held.\n                            assert!(queued.load(Relaxed));\n                            // `Release` is needed to synchronize with `Recv::drop`.\n                            // It is critical to set this variable **after** waker\n                            // is extracted, otherwise we may data race with `Recv::drop`.\n                            queued.store(false, Release);\n                        }"
+        },
+        {
+          "linea": 1097,
+          "codigo": "unsafe {\n            // Safety: Receiver is Unpin\n            is_unpin::<&mut Receiver>();\n\n            let me = self.get_unchecked_mut();\n            (me.receiver, &me.waiter)\n        }"
+        },
+        {
+          "linea": 1382,
+          "codigo": "unsafe { (*ptr).queued.load(Acquire) }"
+        },
+        {
+          "linea": 1421,
+          "codigo": "unsafe { (*ptr).queued.load(Relaxed) }"
+        },
+        {
+          "linea": 1435,
+          "codigo": "unsafe {\n                    self.waiter.with_mut(|ptr| {\n                        tail.waiters.remove((&mut *ptr).into());\n                    });\n                }"
+        },
+        {
+          "linea": 1442,
+          "codigo": "unsafe { (*ptr).clone() }"
+        },
+        {
+          "linea": 1489,
+          "codigo": "unsafe { *ptr = None }"
+        }
+      ]
+    },
+    {
+      "ruta": "mutex.rs",
+      "ocurrencias": [
+        {
+          "linea": 719,
+          "codigo": "unsafe {\n            // Safety: This is https://github.com/rust-lang/rust/pull/76936\n            &mut *self.c.get()\n        }"
+        },
+        {
+          "linea": 832,
+          "codigo": "unsafe { std::ptr::read(&me.resource_span) }"
+        },
+        {
+          "linea": 980,
+          "codigo": "unsafe { &*self.lock.c.get() }"
+        },
+        {
+          "linea": 986,
+          "codigo": "unsafe { &mut *self.lock.c.get() }"
+        },
+        {
+          "linea": 1009,
+          "codigo": "unsafe {\n            OwnedMutexGuardInner {\n                lock: ptr::read(&me.lock),\n                #[cfg(all(tokio_unstable, feature = \"tracing\"))]\n                resource_span: ptr::read(&me.resource_span),\n            }\n        }"
+        },
+        {
+          "linea": 1162,
+          "codigo": "unsafe { &*self.lock.c.get() }"
+        },
+        {
+          "linea": 1168,
+          "codigo": "unsafe { &mut *self.lock.c.get() }"
+        },
+        {
+          "linea": 1193,
+          "codigo": "unsafe { std::ptr::read(&me.resource_span) }"
+        },
+        {
+          "linea": 1267,
+          "codigo": "unsafe { &*self.data }"
+        },
+        {
+          "linea": 1273,
+          "codigo": "unsafe { &mut *self.data }"
+        },
+        {
+          "linea": 1296,
+          "codigo": "unsafe {\n            OwnedMappedMutexGuardInner {\n                data: me.data,\n                lock: ptr::read(&me.lock),\n                #[cfg(all(tokio_unstable, feature = \"tracing\"))]\n                resource_span: ptr::read(&me.resource_span),\n            }\n        }"
+        },
+        {
+          "linea": 1375,
+          "codigo": "unsafe { &*self.data }"
+        },
+        {
+          "linea": 1381,
+          "codigo": "unsafe { &mut *self.data }"
+        }
+      ]
+    },
+    {
+      "ruta": "notify.rs",
+      "ocurrencias": [
+        {
+          "linea": 370,
+          "codigo": "unsafe { waiter.as_ref() }"
+        },
+        {
+          "linea": 703,
+          "codigo": "unsafe { waiter.as_ref() }"
+        },
+        {
+          "linea": 707,
+          "codigo": "unsafe { waiter.waker.with_mut(|waker| (*waker).take()) }"
+        },
+        {
+          "linea": 780,
+          "codigo": "unsafe { waiter.as_ref() }"
+        },
+        {
+          "linea": 783,
+          "codigo": "unsafe { waiter.waker.with_mut(|waker| (*waker).take()) }"
+        },
+        {
+          "linea": 917,
+          "codigo": "unsafe {\n            // Safety: `notify`, `state` and `notify_waiters_calls` are `Unpin`.\n\n            is_unpin::<&Notify>();\n            is_unpin::();\n            is_unpin::();\n\n            let me = self.get_unchecked_mut();\n            (\n                me.notify,\n                &mut me.state,\n                &me.notify_waiters_calls,\n                &me.waiter,\n            )\n        }"
+        },
+        {
+          "linea": 1025,
+          "codigo": "unsafe {\n                            old_waker =\n                                waiter.waker.with_mut(|v| std::mem::replace(&mut *v, waker));\n                        }"
+        },
+        {
+          "linea": 1051,
+          "codigo": "unsafe { waiter.waker.with_mut(|waker| (*waker).take()) }"
+        },
+        {
+          "linea": 1071,
+          "codigo": "unsafe { waiter.waker.with_mut(|waker| (*waker).take()) }"
+        },
+        {
+          "linea": 1095,
+          "codigo": "unsafe { waiter.waker.with_mut(|waker| (*waker).take()) }"
+        },
+        {
+          "linea": 1099,
+          "codigo": "unsafe { waiters.remove(NonNull::from(waiter)) }"
+        },
+        {
+          "linea": 1104,
+          "codigo": "unsafe { Pin::new_unchecked(self).project() }"
+        },
+        {
+          "linea": 1159,
+          "codigo": "unsafe { waiters.remove(NonNull::from(waiter)) }"
+        },
+        {
+          "linea": 38,
+          "codigo": "unsafe { Waker::from_raw(RawWaker::new(Arc::into_raw(notify2) as *const _, VTABLE)) }"
+        }
+      ]
+    },
+    {
+      "ruta": "once_cell.rs",
+      "ocurrencias": [
+        {
+          "linea": 107,
+          "codigo": "unsafe {\n                self.value\n                    .with_mut(|ptr| ptr::drop_in_place((*ptr).as_mut_ptr()));\n            }"
+        },
+        {
+          "linea": 257,
+          "codigo": "unsafe {\n            self.value.with_mut(|ptr| (*ptr).as_mut_ptr().write(value));\n        }"
+        },
+        {
+          "linea": 268,
+          "codigo": "unsafe { self.get_unchecked() }"
+        },
+        {
+          "linea": 275,
+          "codigo": "unsafe { self.get_unchecked() }"
+        },
+        {
+          "linea": 289,
+          "codigo": "unsafe { self.get_unchecked_mut() }"
+        },
+        {
+          "linea": 355,
+          "codigo": "unsafe { self.get_unchecked() }"
+        },
+        {
+          "linea": 377,
+          "codigo": "unsafe { self.get_unchecked() }"
+        },
+        {
+          "linea": 405,
+          "codigo": "unsafe { Ok(self.get_unchecked()) }"
+        },
+        {
+          "linea": 430,
+          "codigo": "unsafe { Ok(self.get_unchecked()) }"
+        },
+        {
+          "linea": 442,
+          "codigo": "unsafe { self.value.with(|ptr| ptr::read(ptr).assume_init()) }"
+        },
+        {
+          "linea": 40,
+          "codigo": "unsafe { &*(self.value.get() as *const T) }"
+        },
+        {
+          "linea": 54,
+          "codigo": "unsafe {\n                std::ptr::write(value_ptr, set_to);\n            }"
+        },
+        {
+          "linea": 65,
+          "codigo": "unsafe {\n                std::ptr::drop_in_place(value_ptr);\n            }"
+        }
+      ]
+    },
+    {
+      "ruta": "oneshot.rs",
+      "ocurrencias": [
+        {
+          "linea": 598,
+          "codigo": "unsafe {\n            // SAFETY: The receiver will not access the `UnsafeCell` unless the\n            // channel has been marked as \"complete\" (the `VALUE_SENT` state bit\n            // is set).\n            // That bit is only set by the sender later on in this method, and\n            // calling this method consumes `self`. Therefore, if it was possible to\n            // call this method, we know that the `VALUE_SENT` bit is unset, and\n            // the receiver is not currently accessing the `UnsafeCell`.\n            *ptr = Some(t);\n        }"
+        },
+        {
+          "linea": 610,
+          "codigo": "unsafe {\n                // SAFETY: The receiver will not access the `UnsafeCell` unless\n                // the channel has been marked as \"complete\". Calling\n                // `complete()` will return true if this bit is set, and false\n                // if it is not set. Thus, if `complete()` returned false, it is\n                // safe for us to access the value, because we know that the\n                // receiver will not.\n                return Err(inner.consume_value().unwrap());\n            }"
+        },
+        {
+          "linea": 809,
+          "codigo": "unsafe { inner.tx_task.will_wake(cx) }"
+        },
+        {
+          "linea": 820,
+          "codigo": "unsafe { inner.tx_task.drop_task() }"
+        },
+        {
+          "linea": 827,
+          "codigo": "unsafe {\n                inner.tx_task.set_task(cx);\n            }"
+        },
+        {
+          "linea": 1011,
+          "codigo": "unsafe { inner.consume_value() }"
+        },
+        {
+          "linea": 1080,
+          "codigo": "unsafe { inner.consume_value() }"
+        },
+        {
+          "linea": 1134,
+          "codigo": "unsafe {\n                self.rx_task.with_task(Waker::wake_by_ref);\n            }"
+        },
+        {
+          "linea": 1152,
+          "codigo": "unsafe { self.consume_value() }"
+        },
+        {
+          "linea": 1161,
+          "codigo": "unsafe { self.rx_task.will_wake(cx) }"
+        },
+        {
+          "linea": 1177,
+          "codigo": "unsafe { self.consume_value() }"
+        },
+        {
+          "linea": 1182,
+          "codigo": "unsafe { self.rx_task.drop_task() }"
+        },
+        {
+          "linea": 1189,
+          "codigo": "unsafe {\n                    self.rx_task.set_task(cx);\n                }"
+        },
+        {
+          "linea": 1198,
+          "codigo": "unsafe { self.consume_value() }"
+        },
+        {
+          "linea": 1216,
+          "codigo": "unsafe {\n                self.tx_task.with_task(Waker::wake_by_ref);\n            }"
+        },
+        {
+          "linea": 1250,
+          "codigo": "unsafe {\n                self.rx_task.drop_task();\n            }"
+        },
+        {
+          "linea": 1256,
+          "codigo": "unsafe {\n                self.tx_task.drop_task();\n            }"
+        },
+        {
+          "linea": 1263,
+          "codigo": "unsafe {\n            // Note: the assertion holds because if the value has been sent by sender,\n            // we must ensure that the value must have been consumed by the receiver before\n            // dropping the `Inner`.\n            debug_assert!(self.consume_value().is_none());\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "rwlock.rs",
+      "ocurrencias": [
+        {
+          "linea": 1076,
+          "codigo": "unsafe {\n            // Safety: This is https://github.com/rust-lang/rust/pull/76936\n            &mut *self.c.get()\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "block.rs",
+      "ocurrencias": [
+        {
+          "linea": 96,
+          "codigo": "unsafe {\n            // Allocate the block on the heap.\n            // SAFETY: The size of the Block is non-zero, since it is at least the size of the header.\n            let block = std::alloc::alloc(Layout::new::>()) as *mut Block;\n            let block = match NonNull::new(block) {\n                Some(block) => block,\n                None => std::alloc::handle_alloc_error(Layout::new::>()),\n            };\n\n            // Write the header to the block.\n            Block::addr_of_header(block).as_ptr().write(BlockHeader {\n                // The absolute index in the channel of the first slot in the block.\n                start_index,\n\n                // Pointer to the next block in the linked list.\n                next: AtomicPtr::new(ptr::null_mut()),\n\n                ready_slots: AtomicUsize::new(0),\n\n                observed_tail_position: UnsafeCell::new(0),\n            });\n\n            // Initialize the values array.\n            Values::initialize(Block::addr_of_values(block));\n\n            // Convert the pointer to a `Box`.\n            // Safety: The raw pointer was allocated using the global allocator, and with\n            // the layout for a `Block`, so it's valid to convert it to box.\n            Box::from_raw(block.as_ptr())\n        }"
+        },
+        {
+          "linea": 279,
+          "codigo": "unsafe { *ptr }"
+        },
+        {
+          "linea": 288,
+          "codigo": "unsafe {\n            ret.map_or(true, |block| {\n                block.as_ref().header.start_index == self.header.start_index.wrapping_add(BLOCK_CAP)\n            })\n        }"
+        },
+        {
+          "linea": 353,
+          "codigo": "unsafe { NonNull::new_unchecked(Box::into_raw(new_block)) }"
+        },
+        {
+          "linea": 395,
+          "codigo": "unsafe { curr.as_ref().try_push(&mut new_block, AcqRel, Acquire) }"
+        }
+      ]
+    },
+    {
+      "ruta": "chan.rs",
+      "ocurrencias": [
+        {
+          "linea": 248,
+          "codigo": "unsafe { &mut *rx_fields_ptr }"
+        },
+        {
+          "linea": 276,
+          "codigo": "unsafe { &*rx_fields_ptr }"
+        },
+        {
+          "linea": 283,
+          "codigo": "unsafe { &*rx_fields_ptr }"
+        },
+        {
+          "linea": 298,
+          "codigo": "unsafe { &mut *rx_fields_ptr }"
+        },
+        {
+          "linea": 368,
+          "codigo": "unsafe { &mut *rx_fields_ptr }"
+        },
+        {
+          "linea": 432,
+          "codigo": "unsafe { &mut *rx_fields_ptr }"
+        },
+        {
+          "linea": 492,
+          "codigo": "unsafe { &mut *rx_fields_ptr }"
+        },
+        {
+          "linea": 536,
+          "codigo": "unsafe { &mut *rx_fields_ptr }"
+        },
+        {
+          "linea": 539,
+          "codigo": "unsafe { rx_fields.list.free_blocks() }"
+        }
+      ]
+    },
+    {
+      "ruta": "owned_read_guard.rs",
+      "ocurrencias": [
+        {
+          "linea": 38,
+          "codigo": "unsafe {\n            Inner {\n                #[cfg(all(tokio_unstable, feature = \"tracing\"))]\n                resource_span: ptr::read(&me.resource_span),\n                lock: ptr::read(&me.lock),\n                data: me.data,\n            }\n        }"
+        },
+        {
+          "linea": 173,
+          "codigo": "unsafe { &*self.data }"
+        }
+      ]
+    },
+    {
+      "ruta": "owned_write_guard.rs",
+      "ocurrencias": [
+        {
+          "linea": 42,
+          "codigo": "unsafe {\n            Inner {\n                #[cfg(all(tokio_unstable, feature = \"tracing\"))]\n                resource_span: ptr::read(&me.resource_span),\n                permits_acquired: me.permits_acquired,\n                lock: ptr::read(&me.lock),\n                data: me.data,\n            }\n        }"
+        },
+        {
+          "linea": 419,
+          "codigo": "unsafe { &*self.data }"
+        },
+        {
+          "linea": 425,
+          "codigo": "unsafe { &mut *self.data }"
+        }
+      ]
+    },
+    {
+      "ruta": "owned_write_guard_mapped.rs",
+      "ocurrencias": [
+        {
+          "linea": 41,
+          "codigo": "unsafe {\n            Inner {\n                #[cfg(all(tokio_unstable, feature = \"tracing\"))]\n                resource_span: ptr::read(&me.resource_span),\n                permits_acquired: me.permits_acquired,\n                lock: ptr::read(&me.lock),\n                data: me.data,\n            }\n        }"
+        },
+        {
+          "linea": 189,
+          "codigo": "unsafe { &*self.data }"
+        },
+        {
+          "linea": 195,
+          "codigo": "unsafe { &mut *self.data }"
+        }
+      ]
+    },
+    {
+      "ruta": "read_guard.rs",
+      "ocurrencias": [
+        {
+          "linea": 40,
+          "codigo": "unsafe { std::ptr::read(&me.resource_span) }"
+        },
+        {
+          "linea": 156,
+          "codigo": "unsafe { &*self.data }"
+        }
+      ]
+    },
+    {
+      "ruta": "write_guard.rs",
+      "ocurrencias": [
+        {
+          "linea": 44,
+          "codigo": "unsafe { std::ptr::read(&me.resource_span) }"
+        },
+        {
+          "linea": 416,
+          "codigo": "unsafe { &*self.data }"
+        },
+        {
+          "linea": 422,
+          "codigo": "unsafe { &mut *self.data }"
+        }
+      ]
+    },
+    {
+      "ruta": "write_guard_mapped.rs",
+      "ocurrencias": [
+        {
+          "linea": 42,
+          "codigo": "unsafe { std::ptr::read(&me.resource_span) }"
+        },
+        {
+          "linea": 172,
+          "codigo": "unsafe { &*self.data }"
+        },
+        {
+          "linea": 178,
+          "codigo": "unsafe { &mut *self.data }"
+        }
+      ]
+    },
+    {
+      "ruta": "atomic_waker.rs",
+      "ocurrencias": [
+        {
+          "linea": 189,
+          "codigo": "unsafe { self.waker.with_mut(|t| (*t).take()) }"
+        },
+        {
+          "linea": 64,
+          "codigo": "unsafe { Waker::from_raw(RawWaker::new(ptr::null(), &PANICKING_VTABLE)) }"
+        },
+        {
+          "linea": 65,
+          "codigo": "unsafe { Waker::from_raw(RawWaker::new(ptr::null(), &NONPANICKING_VTABLE)) }"
+        }
+      ]
+    },
+    {
+      "ruta": "loom_atomic_waker.rs",
+      "ocurrencias": [
+        {
+          "linea": 56,
+          "codigo": "unsafe { Waker::from_raw(RawWaker::new(ptr::null(), &PANICKING_VTABLE)) }"
+        }
+      ]
+    },
+    {
+      "ruta": "local.rs",
+      "ocurrencias": [
+        {
+          "linea": 415,
+          "codigo": "unsafe { handle.spawn_local(task, id) }"
+        },
+        {
+          "linea": 773,
+          "codigo": "unsafe {\n            // Safety: because the `LocalSet` itself is `!Send`, we know we are\n            // on the same thread if we have access to the `LocalSet`, and can\n            // therefore access the local run queue.\n            self.context.shared.local_state.assert_owner(task)\n        }"
+        },
+        {
+          "linea": 782,
+          "codigo": "unsafe {\n            // Safety: because the `LocalSet` itself is `!Send`, we know we are\n            // on the same thread if we have access to the `LocalSet`, and can\n            // therefore access the local run queue.\n            self.context.shared.local_state.task_pop_front()\n        }"
+        },
+        {
+          "linea": 930,
+          "codigo": "unsafe { self.context.shared.local_state.owned_is_empty() }"
+        },
+        {
+          "linea": 953,
+          "codigo": "unsafe {\n                // Safety: called from the thread that owns `LocalSet`\n                self.context.shared.local_state.close_and_shutdown_all();\n            }"
+        },
+        {
+          "linea": 973,
+          "codigo": "unsafe {\n                // Safety: called from the thread that owns `LocalSet`\n                self.context.shared.local_state.take_local_queue()\n            }"
+        },
+        {
+          "linea": 989,
+          "codigo": "unsafe { self.context.shared.local_state.owned_is_empty() }"
+        },
+        {
+          "linea": 1064,
+          "codigo": "unsafe {\n                    // Safety: if the current `LocalSet` context points to this\n                    // `LocalSet`, then we are on the thread that owns it.\n                    cx.shared.local_state.task_push_back(task);\n                }"
+        },
+        {
+          "linea": 1073,
+          "codigo": "unsafe {\n                        // Safety: we just checked that the thread ID matches\n                        // the localset's owner, so this is safe.\n                        self.local_state.task_push_back(task);\n                    }"
+        },
+        {
+          "linea": 1113,
+          "codigo": "unsafe { self.local_state.task_remove(task) }"
+        },
+        {
+          "linea": 1143,
+          "codigo": "unsafe { cx.shared.local_state.close_and_shutdown_all(); }"
+        },
+        {
+          "linea": 1294,
+          "codigo": "unsafe { local.context.shared.local_state.task_pop_front() }"
+        }
+      ]
+    },
+    {
+      "ruta": "atomic_cell.rs",
+      "ocurrencias": [
+        {
+          "linea": 42,
+          "codigo": "unsafe { Box::from_raw(val) }"
+        }
+      ]
+    },
+    {
+      "ruta": "idle_notified_set.rs",
+      "ocurrencias": [
+        {
+          "linea": 196,
+          "codigo": "unsafe {\n            *ptr = List::Idle;\n        }"
+        },
+        {
+          "linea": 224,
+          "codigo": "unsafe {\n            *ptr = List::Idle;\n        }"
+        },
+        {
+          "linea": 247,
+          "codigo": "unsafe { &*prev.as_ptr() }"
+        },
+        {
+          "linea": 273,
+          "codigo": "unsafe { &mut *ptr }"
+        },
+        {
+          "linea": 305,
+          "codigo": "unsafe { (self.func)(ManuallyDrop::take(&mut *ptr)) }"
+        },
+        {
+          "linea": 328,
+          "codigo": "unsafe {\n                // Safety: We are holding the lock and `all_entries` is a new\n                // LinkedList.\n                move_to_new_list(&mut lock.idle, &mut all_entries.all_entries);\n                move_to_new_list(&mut lock.notified, &mut all_entries.all_entries);\n            }"
+        },
+        {
+          "linea": 372,
+          "codigo": "unsafe {\n                let old_my_list = *ptr;\n                *ptr = List::Neither;\n                old_my_list\n            }"
+        },
+        {
+          "linea": 385,
+          "codigo": "unsafe {\n                // Safety: We just checked that the entry is in this particular\n                // list.\n                list.remove(ListEntry::as_raw(&self.entry)).unwrap();\n            }"
+        },
+        {
+          "linea": 399,
+          "codigo": "unsafe { ManuallyDrop::take(&mut *ptr) }"
+        },
+        {
+          "linea": 416,
+          "codigo": "unsafe { func(&mut *ptr, &mut context) }"
+        },
+        {
+          "linea": 440,
+          "codigo": "unsafe {\n            let old_my_list = *ptr;\n            if old_my_list == List::Idle {\n                *ptr = List::Notified;\n            }\n            old_my_list\n        }"
+        },
+        {
+          "linea": 450,
+          "codigo": "unsafe {\n                // Safety: We just checked that we are in this particular list.\n                lock.idle.remove(ListEntry::as_raw(me)).unwrap()\n            }"
+        },
+        {
+          "linea": 478,
+          "codigo": "unsafe { NonNull::new_unchecked(ptr as *mut ListEntry) }"
+        }
+      ]
+    },
+    {
+      "ruta": "linked_list.rs",
+      "ocurrencias": [
+        {
+          "linea": 124,
+          "codigo": "unsafe {\n            L::pointers(ptr).as_mut().set_next(self.head);\n            L::pointers(ptr).as_mut().set_prev(None);\n\n            if let Some(head) = self.head {\n                L::pointers(head).as_mut().set_prev(Some(ptr));\n            }\n\n            self.head = Some(ptr);\n\n            if self.tail.is_none() {\n                self.tail = Some(ptr);\n            }\n        }"
+        },
+        {
+          "linea": 143,
+          "codigo": "unsafe {\n            let head = self.head?;\n            self.head = L::pointers(head).as_ref().get_next();\n\n            if let Some(new_head) = L::pointers(head).as_ref().get_next() {\n                L::pointers(new_head).as_mut().set_prev(None);\n            } else {\n                self.tail = None;\n            }\n\n            L::pointers(head).as_mut().set_prev(None);\n            L::pointers(head).as_mut().set_next(None);\n\n            Some(L::from_raw(head))\n        }"
+        },
+        {
+          "linea": 163,
+          "codigo": "unsafe {\n            let last = self.tail?;\n            self.tail = L::pointers(last).as_ref().get_prev();\n\n            if let Some(prev) = L::pointers(last).as_ref().get_prev() {\n                L::pointers(prev).as_mut().set_next(None);\n            } else {\n                self.head = None;\n            }\n\n            L::pointers(last).as_mut().set_prev(None);\n            L::pointers(last).as_mut().set_next(None);\n\n            Some(L::from_raw(last))\n        }"
+        },
+        {
+          "linea": 254,
+          "codigo": "unsafe { Some(&*tail.as_ptr()) }"
+        },
+        {
+          "linea": 297,
+          "codigo": "unsafe { T::pointers(curr).as_ref() }"
+        },
+        {
+          "linea": 300,
+          "codigo": "unsafe { &mut *curr.as_ptr() }"
+        },
+        {
+          "linea": 301,
+          "codigo": "unsafe { self.list.remove(curr) }"
+        },
+        {
+          "linea": 319,
+          "codigo": "unsafe {\n                    let handle = ManuallyDrop::new(T::from_raw(curr));\n                    f(&handle);\n                    next = T::pointers(curr).as_ref().get_next();\n                }"
+        },
+        {
+          "linea": 362,
+          "codigo": "unsafe {\n                if let Some(head) = self.head {\n                    debug_assert!(L::pointers(head).as_ref().get_prev().is_none());\n                    L::pointers(head).as_mut().set_prev(Some(guard));\n                    L::pointers(guard).as_mut().set_next(Some(head));\n\n                    // The list is not empty, so the tail cannot be `None`.\n                    let tail = self.tail.unwrap();\n                    debug_assert!(L::pointers(tail).as_ref().get_next().is_none());\n                    L::pointers(tail).as_mut().set_next(Some(guard));\n                    L::pointers(guard).as_mut().set_prev(Some(tail));\n                } else {\n                    // The list is empty.\n                    L::pointers(guard).as_mut().set_prev(Some(guard));\n                    L::pointers(guard).as_mut().set_next(Some(guard));\n                }\n            }"
+        },
+        {
+          "linea": 386,
+          "codigo": "unsafe {\n                L::pointers(self.guard).as_ref().get_prev().unwrap()\n            }"
+        },
+        {
+          "linea": 403,
+          "codigo": "unsafe {\n                let last = self.tail()?;\n                let before_last = L::pointers(last).as_ref().get_prev().unwrap();\n\n                L::pointers(self.guard).as_mut().set_prev(Some(before_last));\n                L::pointers(before_last).as_mut().set_next(Some(self.guard));\n\n                L::pointers(last).as_mut().set_prev(None);\n                L::pointers(last).as_mut().set_next(None);\n\n                Some(L::from_raw(last))\n            }"
+        },
+        {
+          "linea": 435,
+          "codigo": "unsafe { ptr::addr_of!((*self.inner.get()).prev).read() }"
+        },
+        {
+          "linea": 439,
+          "codigo": "unsafe { ptr::addr_of!((*self.inner.get()).next).read() }"
+        },
+        {
+          "linea": 444,
+          "codigo": "unsafe {\n            ptr::addr_of_mut!((*self.inner.get()).prev).write(value);\n        }"
+        },
+        {
+          "linea": 450,
+          "codigo": "unsafe {\n            ptr::addr_of_mut!((*self.inner.get()).next).write(value);\n        }"
+        },
+        {
+          "linea": 597,
+          "codigo": "unsafe {\n            // Remove first\n            let mut list = LinkedList::new();\n\n            push_all(&mut list, &[c.as_ref(), b.as_ref(), a.as_ref()]);\n            assert!(list.remove(ptr(&a)).is_some());\n            assert_clean!(a);\n            // `a` should be no longer there and can't be removed twice\n            assert!(list.remove(ptr(&a)).is_none());\n            assert!(!list.is_empty());\n\n            assert!(list.remove(ptr(&b)).is_some());\n            assert_clean!(b);\n            // `b` should be no longer there and can't be removed twice\n            assert!(list.remove(ptr(&b)).is_none());\n            assert!(!list.is_empty());\n\n            assert!(list.remove(ptr(&c)).is_some());\n            assert_clean!(c);\n            // `b` should be no longer there and can't be removed twice\n            assert!(list.remove(ptr(&c)).is_none());\n            assert!(list.is_empty());\n        }"
+        },
+        {
+          "linea": 621,
+          "codigo": "unsafe {\n            // Remove middle\n            let mut list = LinkedList::new();\n\n            push_all(&mut list, &[c.as_ref(), b.as_ref(), a.as_ref()]);\n\n            assert!(list.remove(ptr(&a)).is_some());\n            assert_clean!(a);\n\n            assert_ptr_eq!(b, list.head);\n            assert_ptr_eq!(c, b.pointers.get_next());\n            assert_ptr_eq!(b, c.pointers.get_prev());\n\n            let items = collect_list(&mut list);\n            assert_eq!([31, 7].to_vec(), items);\n        }"
+        },
+        {
+          "linea": 638,
+          "codigo": "unsafe {\n            // Remove middle\n            let mut list = LinkedList::new();\n\n            push_all(&mut list, &[c.as_ref(), b.as_ref(), a.as_ref()]);\n\n            assert!(list.remove(ptr(&b)).is_some());\n            assert_clean!(b);\n\n            assert_ptr_eq!(c, a.pointers.get_next());\n            assert_ptr_eq!(a, c.pointers.get_prev());\n\n            let items = collect_list(&mut list);\n            assert_eq!([31, 5].to_vec(), items);\n        }"
+        },
+        {
+          "linea": 654,
+          "codigo": "unsafe {\n            // Remove last\n            // Remove middle\n            let mut list = LinkedList::new();\n\n            push_all(&mut list, &[c.as_ref(), b.as_ref(), a.as_ref()]);\n\n            assert!(list.remove(ptr(&c)).is_some());\n            assert_clean!(c);\n\n            assert!(b.pointers.get_next().is_none());\n            assert_ptr_eq!(b, list.tail);\n\n            let items = collect_list(&mut list);\n            assert_eq!([7, 5].to_vec(), items);\n        }"
+        },
+        {
+          "linea": 671,
+          "codigo": "unsafe {\n            // Remove first of two\n            let mut list = LinkedList::new();\n\n            push_all(&mut list, &[b.as_ref(), a.as_ref()]);\n\n            assert!(list.remove(ptr(&a)).is_some());\n\n            assert_clean!(a);\n\n            // a should be no longer there and can't be removed twice\n            assert!(list.remove(ptr(&a)).is_none());\n\n            assert_ptr_eq!(b, list.head);\n            assert_ptr_eq!(b, list.tail);\n\n            assert!(b.pointers.get_next().is_none());\n            assert!(b.pointers.get_prev().is_none());\n\n            let items = collect_list(&mut list);\n            assert_eq!([7].to_vec(), items);\n        }"
+        },
+        {
+          "linea": 694,
+          "codigo": "unsafe {\n            // Remove last of two\n            let mut list = LinkedList::new();\n\n            push_all(&mut list, &[b.as_ref(), a.as_ref()]);\n\n            assert!(list.remove(ptr(&b)).is_some());\n\n            assert_clean!(b);\n\n            assert_ptr_eq!(a, list.head);\n            assert_ptr_eq!(a, list.tail);\n\n            assert!(a.pointers.get_next().is_none());\n            assert!(a.pointers.get_prev().is_none());\n\n            let items = collect_list(&mut list);\n            assert_eq!([5].to_vec(), items);\n        }"
+        },
+        {
+          "linea": 714,
+          "codigo": "unsafe {\n            // Remove last item\n            let mut list = LinkedList::new();\n\n            push_all(&mut list, &[a.as_ref()]);\n\n            assert!(list.remove(ptr(&a)).is_some());\n            assert_clean!(a);\n\n            assert!(list.head.is_none());\n            assert!(list.tail.is_none());\n            let items = collect_list(&mut list);\n            assert!(items.is_empty());\n        }"
+        },
+        {
+          "linea": 729,
+          "codigo": "unsafe {\n            // Remove missing\n            let mut list = LinkedList::<&Entry, <&Entry as Link>::Target>::new();\n\n            list.push_front(b.as_ref());\n            list.push_front(a.as_ref());\n\n            assert!(list.remove(ptr(&c)).is_none());\n        }"
+        },
+        {
+          "linea": 791,
+          "codigo": "unsafe {\n                        let entry = ll.remove(ptr(&entries[expect as usize])).unwrap();\n                        assert_eq!(expect, entry.val);\n                    }"
+        }
+      ]
+    },
+    {
+      "ruta": "memchr.rs",
+      "ocurrencias": [
+        {
+          "linea": 16,
+          "codigo": "unsafe { libc::memchr(start.cast(), needle as _, haystack.len()) }"
+        }
+      ]
+    },
+    {
+      "ruta": "ptr_expose.rs",
+      "ocurrencias": [
+        {
+          "linea": 35,
+          "codigo": "unsafe { std::mem::transmute(ptr) }"
+        },
+        {
+          "linea": 55,
+          "codigo": "unsafe { maybe_ptr.unwrap_unchecked() }"
+        },
+        {
+          "linea": 69,
+          "codigo": "unsafe { std::mem::transmute(_ptr) }"
+        },
+        {
+          "linea": 74,
+          "codigo": "unsafe { maybe_ptr.unwrap_unchecked() }"
+        }
+      ]
+    },
+    {
+      "ruta": "rc_cell.rs",
+      "ocurrencias": [
+        {
+          "linea": 44,
+          "codigo": "unsafe { self.with_inner(|rc| rc.clone()) }"
+        },
+        {
+          "linea": 50,
+          "codigo": "unsafe { self.with_inner(|rc| std::mem::replace(rc, val)) }"
+        }
+      ]
+    },
+    {
+      "ruta": "sharded_list.rs",
+      "ocurrencias": [
+        {
+          "linea": 86,
+          "codigo": "unsafe { lock.remove(node) }"
+        },
+        {
+          "linea": 95,
+          "codigo": "unsafe { L::get_shard_id(L::as_raw(val)) }"
+        },
+        {
+          "linea": 131,
+          "codigo": "unsafe { self.lists.get_unchecked(id & self.shard_mask).lock() }"
+        },
+        {
+          "linea": 138,
+          "codigo": "unsafe { L::get_shard_id(L::as_raw(&val)) }"
+        }
+      ]
+    },
+    {
+      "ruta": "try_lock.rs",
+      "ocurrencias": [
+        {
+          "linea": 66,
+          "codigo": "unsafe { &*self.lock.data.get() }"
+        },
+        {
+          "linea": 72,
+          "codigo": "unsafe { &mut *self.lock.data.get() }"
+        }
+      ]
+    },
+    {
+      "ruta": "wake.rs",
+      "ocurrencias": [
+        {
+          "linea": 36,
+          "codigo": "unsafe { Waker::from_raw(RawWaker::new(ptr, waker_vtable::())) }"
+        }
+      ]
+    },
+    {
+      "ruta": "wake_list.rs",
+      "ocurrencias": [
+        {
+          "linea": 48,
+          "codigo": "unsafe { self.end.offset_from(self.start) }"
+        },
+        {
+          "linea": 51,
+          "codigo": "unsafe { ptr::drop_in_place(slice) }"
+        },
+        {
+          "linea": 60,
+          "codigo": "unsafe { start.add(self.curr) }"
+        },
+        {
+          "linea": 67,
+          "codigo": "unsafe { ptr::read(guard.start) }"
+        },
+        {
+          "linea": 69,
+          "codigo": "unsafe { guard.start.add(1) }"
+        },
+        {
+          "linea": 81,
+          "codigo": "unsafe { ptr::drop_in_place(slice) }"
+        }
+      ]
+    },
+    {
+      "ruta": "fs_file.rs",
+      "ocurrencias": [
+        {
+          "linea": 254,
+          "codigo": "unsafe { File::from_raw_fd(raw_fd) }"
+        }
+      ]
+    },
+    {
+      "ruta": "io_async_fd.rs",
+      "ocurrencias": [
+        {
+          "linea": 760,
+          "codigo": "unsafe {\n        let res = libc::send(\n            stream.as_raw_fd(),\n            data.as_ptr().cast(),\n            data.len(),\n            libc::MSG_OOB,\n        );\n        if res == -1 {\n            Err(io::Error::last_os_error())\n        } else {\n            Ok(res as usize)\n        }\n    }"
+        },
+        {
+          "linea": 863,
+          "codigo": "unsafe {\n        libc::setsockopt(\n            udp_socket.as_raw_fd(),\n            libc::SOL_SOCKET,\n            libc::SO_TIMESTAMP,\n            &options as *const _ as *const libc::c_void,\n            std::mem::size_of_val(&options) as libc::socklen_t,\n        )\n    }"
+        },
+        {
+          "linea": 894,
+          "codigo": "unsafe {\n        let res = libc::setsockopt(\n            socket.as_raw_fd(),\n            libc::SOL_IP,\n            libc::IP_RECVERR,\n            &recv_err as *const _ as *const libc::c_void,\n            std::mem::size_of_val(&recv_err) as libc::socklen_t,\n        );\n        if res == -1 {\n            panic!(\"{:?}\", std::io::Error::last_os_error());\n        }\n    }"
+        },
+        {
+          "linea": 913,
+          "codigo": "unsafe { std::mem::MaybeUninit::::zeroed().assume_init() }"
+        },
+        {
+          "linea": 933,
+          "codigo": "unsafe { std::mem::MaybeUninit::zeroed().assume_init() }"
+        },
+        {
+          "linea": 939,
+          "codigo": "unsafe { libc::sendmsg(socket_fd, &msg, 0) }"
+        }
+      ]
+    },
+    {
+      "ruta": "io_buf_reader.rs",
+      "ocurrencias": [
+        {
+          "linea": 315,
+          "codigo": "unsafe { &mut *this }"
+        }
+      ]
+    },
+    {
+      "ruta": "io_poll_aio.rs",
+      "ocurrencias": [
+        {
+          "linea": 37,
+          "codigo": "unsafe { self.map_unchecked_mut(|s| &mut s.0 .0) }"
+        },
+        {
+          "linea": 56,
+          "codigo": "unsafe { self.map_unchecked_mut(|s| &mut s.0 .0) }"
+        },
+        {
+          "linea": 75,
+          "codigo": "unsafe {\n                let p = self.0.as_mut().get_unchecked_mut();\n                libc::aio_fsync(libc::O_SYNC, p)\n            }"
+        },
+        {
+          "linea": 85,
+          "codigo": "unsafe { mem::MaybeUninit::zeroed().assume_init() }"
+        },
+        {
+          "linea": 95,
+          "codigo": "unsafe {\n                self.0.aio_sigevent = mem::zeroed();\n            }"
+        },
+        {
+          "linea": 105,
+          "codigo": "unsafe { self.map_unchecked_mut(|s| &mut *(s.0)) }"
+        },
+        {
+          "linea": 124,
+          "codigo": "unsafe { libc::aio_return(self.0 .0.as_mut().get_unchecked_mut()) }"
+        },
+        {
+          "linea": 151,
+          "codigo": "unsafe { mem::MaybeUninit::zeroed().assume_init() }"
+        },
+        {
+          "linea": 155,
+          "codigo": "unsafe {\n            let p = poll_aio.0.as_mut().get_unchecked_mut();\n            libc::aio_fsync(libc::O_SYNC, p)\n        }"
+        },
+        {
+          "linea": 169,
+          "codigo": "unsafe { mem::MaybeUninit::zeroed().assume_init() }"
+        },
+        {
+          "linea": 212,
+          "codigo": "unsafe { mem::zeroed() }"
+        },
+        {
+          "linea": 218,
+          "codigo": "unsafe { self.aiocb.as_mut().get_unchecked_mut() }"
+        },
+        {
+          "linea": 219,
+          "codigo": "unsafe { libc::lio_listio(libc::LIO_NOWAIT, p, 1, &mut self.sev) }"
+        },
+        {
+          "linea": 226,
+          "codigo": "unsafe { mem::MaybeUninit::zeroed().assume_init() }"
+        },
+        {
+          "linea": 236,
+          "codigo": "unsafe {\n                self.sev = mem::zeroed();\n            }"
+        },
+        {
+          "linea": 246,
+          "codigo": "unsafe { self.map_unchecked_mut(|s| &mut *(s.0)) }"
+        },
+        {
+          "linea": 267,
+          "codigo": "unsafe {\n                        let p1 = self.get_unchecked_mut();\n                        let p2: &mut [&mut libc::aiocb; 1] =\n                            p1.0.aiocb.as_mut().get_unchecked_mut();\n                        let p3: &mut libc::aiocb = p2[0];\n                        libc::aio_return(p3)\n                    }"
+        },
+        {
+          "linea": 290,
+          "codigo": "unsafe { mem::zeroed() }"
+        },
+        {
+          "linea": 311,
+          "codigo": "unsafe { mem::zeroed() }"
+        }
+      ]
+    },
+    {
+      "ruta": "io_read.rs",
+      "ocurrencias": [
+        {
+          "linea": 63,
+          "codigo": "unsafe { self.leaked_buffers.create(buf.capacity()) }"
+        }
+      ]
+    },
+    {
+      "ruta": "io_read_buf.rs",
+      "ocurrencias": [
+        {
+          "linea": 48,
+          "codigo": "unsafe {\n        read_buf.advance_mut(1);\n    }"
+        },
+        {
+          "linea": 53,
+          "codigo": "unsafe {\n        read_buf.advance_mut(5);\n    }"
+        },
+        {
+          "linea": 58,
+          "codigo": "unsafe {\n        read_buf.advance_mut(2);\n    }"
+        },
+        {
+          "linea": 69,
+          "codigo": "unsafe {\n        read_buf.advance_mut(8);\n    }"
+        },
+        {
+          "linea": 83,
+          "codigo": "unsafe {\n        uninit.advance_mut(4);\n    }"
+        }
+      ]
+    },
+    {
+      "ruta": "io_take.rs",
+      "ocurrencias": [
+        {
+          "linea": 60,
+          "codigo": "unsafe { self.leaked_buffers.create(10) }"
+        }
+      ]
+    },
+    {
+      "ruta": "process_raw_handle.rs",
+      "ocurrencias": [
+        {
+          "linea": 22,
+          "codigo": "unsafe { GetProcessId(handle as _) }"
+        }
+      ]
+    },
+    {
+      "ruta": "uds_cred.rs",
+      "ocurrencias": [
+        {
+          "linea": 21,
+          "codigo": "unsafe { geteuid() }"
+        },
+        {
+          "linea": 22,
+          "codigo": "unsafe { getegid() }"
+        }
+      ]
+    },
+    {
+      "ruta": "io_vec.rs",
+      "ocurrencias": [
+        {
+          "linea": 31,
+          "codigo": "unsafe { slice::from_raw_parts(tail.as_ptr(), tail.len()) }"
+        }
+      ]
+    },
+    {
+      "ruta": "task.rs",
+      "ocurrencias": [
+        {
+          "linea": 194,
+          "codigo": "unsafe {\n            let raw = to_raw(self.waker.clone());\n            Waker::from_raw(raw)\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "either.rs",
+      "ocurrencias": [
+        {
+          "linea": 74,
+          "codigo": "unsafe {\n            match $self.get_unchecked_mut() {\n                Self::Left(l) => Pin::new_unchecked(l).$method($($args),+),\n                Self::Right(r) => Pin::new_unchecked(r).$method($($args),+),\n            }\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "stream_reader.rs",
+      "ocurrencias": [
+        {
+          "linea": 321,
+          "codigo": "unsafe { Pin::into_inner_unchecked(self) }"
+        },
+        {
+          "linea": 323,
+          "codigo": "unsafe { Pin::new_unchecked(&mut me.inner) }"
+        }
+      ]
+    },
+    {
+      "ruta": "cancellation_token.rs",
+      "ocurrencias": [
+        {
+          "linea": 341,
+          "codigo": "unsafe { Self::new_future(&cancellation_token) }"
+        },
+        {
+          "linea": 382,
+          "codigo": "unsafe {\n                Self::new_future(this.cancellation_token)\n            }"
+        }
+      ]
+    },
+    {
+      "ruta": "mpsc.rs",
+      "ocurrencias": [
+        {
+          "linea": 87,
+          "codigo": "unsafe { mem::transmute::, InnerFuture<'static, T>>(v) }"
+        },
+        {
+          "linea": 105,
+          "codigo": "unsafe { &mut *inner }"
+        }
+      ]
+    },
+    {
+      "ruta": "frame.rs",
+      "ocurrencias": [
+        {
+          "linea": 86,
+          "codigo": "unsafe { &mut *(pin.rd.chunk_mut() as *mut _ as *mut [MaybeUninit]) }"
+        },
+        {
+          "linea": 96,
+          "codigo": "unsafe { pin.rd.advance_mut(read.filled().len()) }"
+        }
+      ]
+    },
+    {
+      "ruta": "maybe_dangling.rs",
+      "ocurrencias": [
+        {
+          "linea": 33,
+          "codigo": "unsafe { core::ptr::drop_in_place(self.0.as_mut_ptr()) }"
+        },
+        {
+          "linea": 48,
+          "codigo": "unsafe { self.map_unchecked_mut(|this| this.0.assume_init_mut()) }"
+        }
+      ]
+    },
+    {
+      "ruta": "poll_buf.rs",
+      "ocurrencias": [
+        {
+          "linea": 62,
+          "codigo": "unsafe { &mut *(dst as *mut _ as *mut [MaybeUninit]) }"
+        },
+        {
+          "linea": 74,
+          "codigo": "unsafe {\n        buf.advance_mut(n);\n    }"
+        }
+      ]
+    }
+  ],
+  "total_ocurrencias": 570
+}

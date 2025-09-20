@@ -1,0 +1,15 @@
+{
+  "repositorio": "rust-postgres-master",
+  "archivos": [
+    {
+      "ruta": "lazy_pin.rs",
+      "ocurrencias": [
+        {
+          "linea": 18,
+          "codigo": "unsafe { Pin::new_unchecked(&mut *self.value) }"
+        }
+      ]
+    }
+  ],
+  "total_ocurrencias": 1
+}

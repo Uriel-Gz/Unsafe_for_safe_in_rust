@@ -1,0 +1,181 @@
+{
+  "repositorio": "stm32f042-master",
+  "archivos": [
+    {
+      "ruta": "blinky.rs",
+      "ocurrencias": [
+        {
+          "linea": 24,
+          "codigo": "unsafe { w.moder1().bits(1) }"
+        }
+      ]
+    },
+    {
+      "ruta": "flash_systick_hsi48.rs",
+      "ocurrencias": [
+        {
+          "linea": 54,
+          "codigo": "unsafe { w.latency().bits(1) }"
+        },
+        {
+          "linea": 57,
+          "codigo": "unsafe { rcc.cfgr.write(|w| w.sw().bits(3)) }"
+        },
+        {
+          "linea": 70,
+          "codigo": "unsafe { w.moder1().bits(1) }"
+        },
+        {
+          "linea": 77,
+          "codigo": "unsafe { syst.cvr.write(1) }"
+        }
+      ]
+    },
+    {
+      "ruta": "lib.rs",
+      "ocurrencias": [
+        {
+          "linea": 248,
+          "codigo": "unsafe { &*CRC::ptr() }"
+        },
+        {
+          "linea": 267,
+          "codigo": "unsafe { &*GPIOF::ptr() }"
+        },
+        {
+          "linea": 286,
+          "codigo": "unsafe { &*GPIOC::ptr() }"
+        },
+        {
+          "linea": 303,
+          "codigo": "unsafe { &*GPIOB::ptr() }"
+        },
+        {
+          "linea": 320,
+          "codigo": "unsafe { &*GPIOA::ptr() }"
+        },
+        {
+          "linea": 339,
+          "codigo": "unsafe { &*SPI1::ptr() }"
+        },
+        {
+          "linea": 358,
+          "codigo": "unsafe { &*SPI2::ptr() }"
+        },
+        {
+          "linea": 375,
+          "codigo": "unsafe { &*PWR::ptr() }"
+        },
+        {
+          "linea": 394,
+          "codigo": "unsafe { &*I2C1::ptr() }"
+        },
+        {
+          "linea": 413,
+          "codigo": "unsafe { &*IWDG::ptr() }"
+        },
+        {
+          "linea": 432,
+          "codigo": "unsafe { &*WWDG::ptr() }"
+        },
+        {
+          "linea": 451,
+          "codigo": "unsafe { &*TIM1::ptr() }"
+        },
+        {
+          "linea": 470,
+          "codigo": "unsafe { &*TIM2::ptr() }"
+        },
+        {
+          "linea": 489,
+          "codigo": "unsafe { &*TIM3::ptr() }"
+        },
+        {
+          "linea": 506,
+          "codigo": "unsafe { &*TIM14::ptr() }"
+        },
+        {
+          "linea": 525,
+          "codigo": "unsafe { &*EXTI::ptr() }"
+        },
+        {
+          "linea": 544,
+          "codigo": "unsafe { &*DMA::ptr() }"
+        },
+        {
+          "linea": 563,
+          "codigo": "unsafe { &*RCC::ptr() }"
+        },
+        {
+          "linea": 582,
+          "codigo": "unsafe { &*SYSCFG::ptr() }"
+        },
+        {
+          "linea": 601,
+          "codigo": "unsafe { &*ADC::ptr() }"
+        },
+        {
+          "linea": 620,
+          "codigo": "unsafe { &*USART1::ptr() }"
+        },
+        {
+          "linea": 639,
+          "codigo": "unsafe { &*USART2::ptr() }"
+        },
+        {
+          "linea": 656,
+          "codigo": "unsafe { &*COMP::ptr() }"
+        },
+        {
+          "linea": 675,
+          "codigo": "unsafe { &*RTC::ptr() }"
+        },
+        {
+          "linea": 694,
+          "codigo": "unsafe { &*TIM16::ptr() }"
+        },
+        {
+          "linea": 713,
+          "codigo": "unsafe { &*TIM17::ptr() }"
+        },
+        {
+          "linea": 730,
+          "codigo": "unsafe { &*TSC::ptr() }"
+        },
+        {
+          "linea": 749,
+          "codigo": "unsafe { &*CEC::ptr() }"
+        },
+        {
+          "linea": 768,
+          "codigo": "unsafe { &*FLASH::ptr() }"
+        },
+        {
+          "linea": 787,
+          "codigo": "unsafe { &*DBGMCU::ptr() }"
+        },
+        {
+          "linea": 806,
+          "codigo": "unsafe { &*USB::ptr() }"
+        },
+        {
+          "linea": 825,
+          "codigo": "unsafe { &*CRS::ptr() }"
+        },
+        {
+          "linea": 844,
+          "codigo": "unsafe { &*CAN::ptr() }"
+        },
+        {
+          "linea": 927,
+          "codigo": "unsafe { DEVICE_PERIPHERALS }"
+        },
+        {
+          "linea": 930,
+          "codigo": "unsafe { Peripherals::steal() }"
+        }
+      ]
+    }
+  ],
+  "total_ocurrencias": 40
+}

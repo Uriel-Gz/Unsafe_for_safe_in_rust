@@ -1,0 +1,297 @@
+{
+  "repositorio": "hyper-master",
+  "archivos": [
+    {
+      "ruta": "tokiort.rs",
+      "ocurrencias": [
+        {
+          "linea": 111,
+          "codigo": "unsafe {\n            let mut tbuf = tokio::io::ReadBuf::uninit(buf.as_mut());\n            match tokio::io::AsyncRead::poll_read(self.project().inner, cx, &mut tbuf) {\n                Poll::Ready(Ok(())) => tbuf.filled().len(),\n                other => return other,\n            }\n        }"
+        },
+        {
+          "linea": 119,
+          "codigo": "unsafe {\n            buf.advance(n);\n        }"
+        },
+        {
+          "linea": 173,
+          "codigo": "unsafe {\n            let mut buf = hyper::rt::ReadBuf::uninit(tbuf.unfilled_mut());\n\n            match hyper::rt::Read::poll_read(self.project().inner, cx, buf.unfilled()) {\n                Poll::Ready(Ok(())) => buf.filled().len(),\n                other => return other,\n            }\n        }"
+        },
+        {
+          "linea": 185,
+          "codigo": "unsafe {\n            tbuf.assume_init(n_init);\n            tbuf.set_filled(n_filled);\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "upgrade.rs",
+      "ocurrencias": [
+        {
+          "linea": 307,
+          "codigo": "unsafe {\n                let raw: *mut dyn Io = Box::into_raw(self);\n                Ok(Box::from_raw(raw as *mut T))\n            }"
+        }
+      ]
+    },
+    {
+      "ruta": "compat.rs",
+      "ocurrencias": [
+        {
+          "linea": 18,
+          "codigo": "unsafe { self.map_unchecked_mut(|me| &mut me.0) }"
+        },
+        {
+          "linea": 33,
+          "codigo": "unsafe {\n            let mut buf = crate::rt::ReadBuf::uninit(tbuf.inner_mut());\n            buf.set_init(init);\n            buf.set_filled(filled);\n\n            match crate::rt::Read::poll_read(self.p(), cx, buf.unfilled()) {\n                Poll::Ready(Ok(())) => (buf.init_len(), buf.len()),\n                other => return other,\n            }\n        }"
+        },
+        {
+          "linea": 45,
+          "codigo": "unsafe {\n            tbuf.assume_init(n_init);\n            tbuf.set_filled(new_filled);\n        }"
+        },
+        {
+          "linea": 100,
+          "codigo": "unsafe {\n            let mut tbuf = tokio::io::ReadBuf::uninit(buf.as_mut());\n            match tokio::io::AsyncRead::poll_read(self.p(), cx, &mut tbuf) {\n                Poll::Ready(Ok(())) => tbuf.filled().len(),\n                other => return other,\n            }\n        }"
+        },
+        {
+          "linea": 108,
+          "codigo": "unsafe {\n            buf.advance(n);\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "body.rs",
+      "ocurrencias": [
+        {
+          "linea": 221,
+          "codigo": "unsafe { Box::from_raw(out) }"
+        },
+        {
+          "linea": 262,
+          "codigo": "unsafe {\n            std::slice::from_raw_parts(buf, len)\n        }"
+        },
+        {
+          "linea": 278,
+          "codigo": "unsafe { (*buf).0.as_ptr() }"
+        },
+        {
+          "linea": 285,
+          "codigo": "unsafe { (*buf).0.len() }"
+        },
+        {
+          "linea": 294,
+          "codigo": "unsafe { Box::from_raw(buf) }"
+        }
+      ]
+    },
+    {
+      "ruta": "error.rs",
+      "ocurrencias": [
+        {
+          "linea": 91,
+          "codigo": "unsafe {\n            std::slice::from_raw_parts_mut(dst, dst_len)\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "http_types.rs",
+      "ocurrencias": [
+        {
+          "linea": 108,
+          "codigo": "unsafe {\n            std::slice::from_raw_parts(method, method_len as usize)\n        }"
+        },
+        {
+          "linea": 140,
+          "codigo": "unsafe {\n            std::slice::from_raw_parts(uri, uri_len as usize)\n        }"
+        },
+        {
+          "linea": 175,
+          "codigo": "unsafe {\n                std::slice::from_raw_parts(scheme, scheme_len as usize)\n            }"
+        },
+        {
+          "linea": 181,
+          "codigo": "unsafe {\n                std::slice::from_raw_parts(authority, authority_len as usize)\n            }"
+        },
+        {
+          "linea": 187,
+          "codigo": "unsafe {\n                std::slice::from_raw_parts(path_and_query, path_and_query_len as usize)\n            }"
+        },
+        {
+          "linea": 194,
+          "codigo": "unsafe { &mut *req }"
+        },
+        {
+          "linea": 235,
+          "codigo": "unsafe { &mut *req }"
+        },
+        {
+          "linea": 370,
+          "codigo": "unsafe { &mut *resp }"
+        },
+        {
+          "linea": 513,
+          "codigo": "unsafe { raw_name_value(name, name_len, value, value_len) }"
+        },
+        {
+          "linea": 533,
+          "codigo": "unsafe { raw_name_value(name, name_len, value, value_len) }"
+        },
+        {
+          "linea": 627,
+          "codigo": "unsafe {\n                let vec = &mut *(vec as *mut Vec);\n                let name = std::slice::from_raw_parts(name, name_len);\n                let value = std::slice::from_raw_parts(value, value_len);\n                vec.extend(name);\n                vec.extend(b\": \");\n                vec.extend(value);\n                vec.extend(b\"\\r\\n\");\n            }"
+        },
+        {
+          "linea": 691,
+          "codigo": "unsafe {\n                let vec = &mut *(vec as *mut Vec);\n                let name = std::slice::from_raw_parts(name, name_len);\n                let value = std::slice::from_raw_parts(value, value_len);\n                vec.extend(name);\n                vec.extend(b\": \");\n                vec.extend(value);\n                vec.extend(b\"\\r\\n\");\n            }"
+        }
+      ]
+    },
+    {
+      "ruta": "io.rs",
+      "ocurrencias": [
+        {
+          "linea": 150,
+          "codigo": "unsafe { buf.as_mut() }"
+        },
+        {
+          "linea": 162,
+          "codigo": "unsafe { buf.advance(ok) }"
+        },
+        {
+          "linea": 232,
+          "codigo": "unsafe { self.read_buf.chunk_mut().as_uninit_slice_mut() }"
+        },
+        {
+          "linea": 238,
+          "codigo": "unsafe {\n                    // Safety: we just read that many bytes into the\n                    // uninitialized part of the buffer, so this is okay.\n                    // @tokio pls give me back `poll_read_buf` thanks\n                    self.read_buf.advance_mut(n);\n                }"
+        },
+        {
+          "linea": 142,
+          "codigo": "unsafe { &mut *(raw as *mut [u8] as *mut [MaybeUninit]) }"
+        },
+        {
+          "linea": 162,
+          "codigo": "unsafe { &*(&self.raw[0..self.filled] as *const [MaybeUninit] as *const [u8]) }"
+        },
+        {
+          "linea": 171,
+          "codigo": "unsafe {\n                std::mem::transmute::<&'cursor mut ReadBuf<'data>, &'cursor mut ReadBuf<'cursor>>(\n                    self,\n                )\n            }"
+        },
+        {
+          "linea": 274,
+          "codigo": "unsafe {\n            self.buf.raw[self.buf.filled..end]\n                .as_mut_ptr()\n                .cast::()\n                .copy_from_nonoverlapping(src.as_ptr(), amt);\n        }"
+        },
+        {
+          "linea": 404,
+          "codigo": "unsafe { pin.get_unchecked_mut() }"
+        }
+      ]
+    },
+    {
+      "ruta": "macros.rs",
+      "ocurrencias": [
+        {
+          "linea": 39,
+          "codigo": "unsafe { $eval }"
+        }
+      ]
+    },
+    {
+      "ruta": "task.rs",
+      "ocurrencias": [
+        {
+          "linea": 440,
+          "codigo": "unsafe { (*task).userdata = UserDataPointer(userdata) }"
+        },
+        {
+          "linea": 503,
+          "codigo": "unsafe { std::mem::transmute::<&mut Context<'_>, &mut hyper_context<'_>>(cx) }"
+        }
+      ]
+    },
+    {
+      "ruta": "conn.rs",
+      "ocurrencias": [
+        {
+          "linea": 1189,
+          "codigo": "unsafe {\n                    conn.io.read_buf_mut().set_len(len);\n                }"
+        }
+      ]
+    },
+    {
+      "ruta": "role.rs",
+      "ocurrencias": [
+        {
+          "linea": 50,
+          "codigo": "unsafe { HeaderValue::from_maybe_shared_unchecked($bytes) }"
+        },
+        {
+          "linea": 251,
+          "codigo": "unsafe { header.assume_init_ref() }"
+        },
+        {
+          "linea": 1066,
+          "codigo": "unsafe { header.assume_init_mut() }"
+        },
+        {
+          "linea": 1093,
+          "codigo": "unsafe { header.assume_init_ref() }"
+        },
+        {
+          "linea": 2987,
+          "codigo": "unsafe {\n                b.set_len(len);\n            }"
+        },
+        {
+          "linea": 3028,
+          "codigo": "unsafe {\n                b.set_len(len);\n            }"
+        }
+      ]
+    },
+    {
+      "ruta": "client.rs",
+      "ocurrencias": [
+        {
+          "linea": 593,
+          "codigo": "unsafe { UpgradedSendStream::new(send_stream) }"
+        }
+      ]
+    },
+    {
+      "ruta": "mod.rs",
+      "ocurrencias": [
+        {
+          "linea": 399,
+          "codigo": "unsafe { self.as_inner_unchecked().reserve_capacity(cnt) }"
+        },
+        {
+          "linea": 403,
+          "codigo": "unsafe { self.as_inner_unchecked().poll_capacity(cx) }"
+        },
+        {
+          "linea": 407,
+          "codigo": "unsafe { self.as_inner_unchecked().poll_reset(cx) }"
+        },
+        {
+          "linea": 412,
+          "codigo": "unsafe {\n            self.as_inner_unchecked()\n                .send_data(send_buf, end_of_stream)\n                .map_err(h2_to_io_error)\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "server.rs",
+      "ocurrencias": [
+        {
+          "linea": 495,
+          "codigo": "unsafe { UpgradedSendStream::new(send_stream) }"
+        }
+      ]
+    },
+    {
+      "ruta": "timer.rs",
+      "ocurrencias": [
+        {
+          "linea": 112,
+          "codigo": "unsafe {\n                let inner = Pin::into_inner_unchecked(self);\n                Some(Pin::new_unchecked(\n                    &mut *(&mut *inner as *mut dyn Sleep as *mut T),\n                ))\n            }"
+        }
+      ]
+    }
+  ],
+  "total_ocurrencias": 54
+}

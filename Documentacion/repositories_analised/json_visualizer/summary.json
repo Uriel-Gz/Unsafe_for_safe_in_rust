@@ -1,0 +1,71 @@
+{
+  "fecha_procesamiento": "2025-09-20 09:43:25",
+  "archivos_procesados": [
+    {
+      "nombre_archivo": "exa-master.html",
+      "repositorio": "exa-master",
+      "total_ocurrencias": 10,
+      "archivos_afectados": 3
+    },
+    {
+      "nombre_archivo": "fd-master.html",
+      "repositorio": "fd-master",
+      "total_ocurrencias": 1,
+      "archivos_afectados": 1
+    },
+    {
+      "nombre_archivo": "gxhash-main.html",
+      "repositorio": "gxhash-main",
+      "total_ocurrencias": 18,
+      "archivos_afectados": 4
+    },
+    {
+      "nombre_archivo": "hyper-master.html",
+      "repositorio": "hyper-master",
+      "total_ocurrencias": 54,
+      "archivos_afectados": 15
+    },
+    {
+      "nombre_archivo": "lucet-main.html",
+      "repositorio": "lucet-main",
+      "total_ocurrencias": 248,
+      "archivos_afectados": 37
+    },
+    {
+      "nombre_archivo": "mnemos-alloc-main.html",
+      "repositorio": "mnemos-alloc-main",
+      "total_ocurrencias": 45,
+      "archivos_afectados": 4
+    },
+    {
+      "nombre_archivo": "reth-main.html",
+      "repositorio": "reth-main",
+      "total_ocurrencias": 55,
+      "archivos_afectados": 13
+    },
+    {
+      "nombre_archivo": "rure-master.html",
+      "repositorio": "rure-master",
+      "total_ocurrencias": 6,
+      "archivos_afectados": 3
+    },
+    {
+      "nombre_archivo": "rust-postgres-master.html",
+      "repositorio": "rust-postgres-master",
+      "total_ocurrencias": 1,
+      "archivos_afectados": 1
+    },
+    {
+      "nombre_archivo": "stm32f042-master.html",
+      "repositorio": "stm32f042-master",
+      "total_ocurrencias": 40,
+      "archivos_afectados": 3
+    },
+    {
+      "nombre_archivo": "tokio-master.html",
+      "repositorio": "tokio-master",
+      "total_ocurrencias": 570,
+      "archivos_afectados": 104
+    }
+  ]
+}

@@ -1,0 +1,291 @@
+{
+  "repositorio": "reth-main",
+  "archivos": [
+    {
+      "ruta": "tui.rs",
+      "ocurrencias": [
+        {
+          "linea": 328,
+          "codigo": "unsafe { std::mem::transmute_copy(&app.list_state) }"
+        }
+      ]
+    },
+    {
+      "ruta": "sigsegv_handler.rs",
+      "ocurrencias": [
+        {
+          "linea": 16,
+          "codigo": "unsafe { backtrace_symbols_fd(buffer.as_ptr(), size, libc::STDERR_FILENO) }"
+        },
+        {
+          "linea": 26,
+          "codigo": "unsafe { libc::write(libc::STDERR_FILENO, s.as_ptr().cast(), s.len()) }"
+        },
+        {
+          "linea": 48,
+          "codigo": "unsafe {\n        // Collect return addresses\n        let depth = libc::backtrace(stack_trace.as_mut_ptr(), MAX_FRAMES as i32);\n        if depth == 0 {\n            return\n        }\n        &stack_trace[0..depth as usize]\n    }"
+        },
+        {
+          "linea": 121,
+          "codigo": "unsafe {\n        let alt_stack_size: usize = min_sigstack_size() + 64 * 1024;\n        let mut alt_stack: libc::stack_t = mem::zeroed();\n        alt_stack.ss_sp = alloc(Layout::from_size_align(alt_stack_size, 1).unwrap()).cast();\n        alt_stack.ss_size = alt_stack_size;\n        libc::sigaltstack(&alt_stack, ptr::null_mut());\n\n        let mut sa: libc::sigaction = mem::zeroed();\n        sa.sa_sigaction = print_stack_trace as libc::sighandler_t;\n        sa.sa_flags = libc::SA_NODEFER | libc::SA_RESETHAND | libc::SA_ONSTACK;\n        libc::sigemptyset(&mut sa.sa_mask);\n        libc::sigaction(libc::SIGSEGV, &sa, ptr::null_mut());\n    }"
+        },
+        {
+          "linea": 140,
+          "codigo": "unsafe { libc::getauxval(AT_MINSIGSTKSZ) }"
+        }
+      ]
+    },
+    {
+      "ruta": "conn.rs",
+      "ocurrencias": [
+        {
+          "linea": 105,
+          "codigo": "unsafe {\n            match $self.get_unchecked_mut() {\n                Self::EthOnly(l) => Pin::new_unchecked(l).$method($($args),+),\n                Self::Satellite(r) => Pin::new_unchecked(r).$method($($args),+),\n            }\n        }"
+        }
+      ]
+    },
+    {
+      "ruta": "account.rs",
+      "ocurrencias": [
+        {
+          "linea": 152,
+          "codigo": "unsafe {\n                RevmBytecode::new_analyzed(\n                    bytes,\n                    buf.read_u64::().unwrap() as usize,\n                    revm_primitives::JumpTable::from_slice(buf),\n                )\n            }"
+        }
+      ]
+    },
+    {
+      "ruta": "scale.rs",
+      "ocurrencias": [
+        {
+          "linea": 59,
+          "codigo": "unsafe { std::mem::transmute(buf) }"
+        }
+      ]
+    },
+    {
+      "ruta": "cursor.rs",
+      "ocurrencias": [
+        {
+          "linea": 87,
+          "codigo": "unsafe {\n            txn.txn_execute(|txn| {\n                mdbx_cursor_open(txn, dbi, &mut cursor);\n                let mut i = 0;\n                let mut count = 0u32;\n\n                while mdbx_cursor_get(cursor, &mut key, &mut data, MDBX_NEXT) == 0 {\n                    i += key.iov_len + data.iov_len;\n                    count += 1;\n                }\n\n                black_box(i);\n                assert_eq!(count, n);\n                mdbx_cursor_close(cursor);\n            })\n            .unwrap();\n        }"
+        },
+        {
+          "linea": 31,
+          "codigo": "unsafe {\n            txn.txn_execute(|txn_ptr| {\n                mdbx_result(ffi::mdbx_cursor_open(txn_ptr, dbi, &mut cursor))\n            })??;\n        }"
+        },
+        {
+          "linea": 40,
+          "codigo": "unsafe {\n            let cursor = ffi::mdbx_cursor_create(ptr::null_mut());\n\n            let res = ffi::mdbx_cursor_copy(other.cursor(), cursor);\n\n            let s = Self { txn: other.txn.clone(), cursor };\n\n            mdbx_result(res)?;\n\n            Ok(s)\n        }"
+        },
+        {
+          "linea": 88,
+          "codigo": "unsafe {\n            self.txn.txn_execute(|_| {\n                ffi::mdbx_cursor_put(self.cursor, &key_val, &mut data_val, flags.bits())\n            })?\n        }"
+        },
+        {
+          "linea": 441,
+          "codigo": "unsafe {\n            self.txn.txn_execute(|_| ffi::mdbx_cursor_del(self.cursor, flags.bits()))?\n        }"
+        },
+        {
+          "linea": 457,
+          "codigo": "unsafe { ffi::mdbx_cursor_close(self.cursor) }"
+        },
+        {
+          "linea": 492,
+          "codigo": "unsafe { ffi::mdbx_cursor_get(cursor.cursor(), &mut key, &mut data, op) }"
+        }
+      ]
+    },
+    {
+      "ruta": "transaction.rs",
+      "ocurrencias": [
+        {
+          "linea": 46,
+          "codigo": "unsafe {\n            txn.txn_execute(|txn| {\n                let mut i = 0;\n                for key in &keys {\n                    key_val.iov_len = key.len();\n                    key_val.iov_base = key.as_bytes().as_ptr().cast_mut().cast();\n\n                    mdbx_get(txn, dbi, &key_val, &mut data_val);\n\n                    i += key_val.iov_len;\n                }\n                black_box(i);\n            })\n            .unwrap();\n        }"
+        },
+        {
+          "linea": 99,
+          "codigo": "unsafe {\n            let mut txn: *mut MDBX_txn = ptr::null_mut();\n            env.with_raw_env_ptr(|env| {\n                mdbx_txn_begin_ex(env, ptr::null_mut(), 0, &mut txn, ptr::null_mut());\n\n                let mut i = 0;\n                for (key, data) in &items {\n                    key_val.iov_len = key.len();\n                    key_val.iov_base = key.as_bytes().as_ptr().cast_mut().cast();\n                    data_val.iov_len = data.len();\n                    data_val.iov_base = data.as_bytes().as_ptr().cast_mut().cast();\n\n                    i += mdbx_put(txn, dbi, &key_val, &mut data_val, 0);\n                }\n                assert_eq!(0, i);\n                mdbx_txn_abort(txn);\n            });\n        }"
+        },
+        {
+          "linea": 75,
+          "codigo": "unsafe {\n            mdbx_result(ffi::mdbx_txn_begin_ex(\n                env.env_ptr(),\n                ptr::null_mut(),\n                K::OPEN_FLAGS,\n                &mut txn,\n                ptr::null_mut(),\n            ))?;\n            Ok(Self::new_from_ptr(env, txn))\n        }"
+        },
+        {
+          "linea": 144,
+          "codigo": "unsafe { ffi::mdbx_txn_id(txn) }"
+        },
+        {
+          "linea": 163,
+          "codigo": "unsafe {\n            match ffi::mdbx_get(txn, dbi, &key_val, &mut data_val) {\n                ffi::MDBX_SUCCESS => Key::decode_val::(txn, data_val).map(Some),\n                ffi::MDBX_NOTFOUND => Ok(None),\n                err_code => Err(Error::from_err_code(err_code)),\n            }\n        }"
+        },
+        {
+          "linea": 192,
+          "codigo": "unsafe {\n                        ffi::mdbx_txn_commit_ex(txn, latency.mdb_commit_latency())\n                    }"
+        },
+        {
+          "linea": 240,
+          "codigo": "unsafe {\n            self.txn_execute(|txn| {\n                mdbx_result(ffi::mdbx_dbi_flags_ex(txn, db.dbi(), &mut flags, ptr::null_mut()))\n            })??;\n        }"
+        },
+        {
+          "linea": 258,
+          "codigo": "unsafe {\n            let mut stat = Stat::new();\n            self.txn_execute(|txn| {\n                mdbx_result(ffi::mdbx_dbi_stat(txn, dbi, stat.mdb_stat(), size_of::()))\n            })??;\n            Ok(stat)\n        }"
+        },
+        {
+          "linea": 363,
+          "codigo": "unsafe {\n                            ffi::mdbx_txn_abort(txn);\n                        }"
+        },
+        {
+          "linea": 419,
+          "codigo": "unsafe {\n            ffi::mdbx_put(txn, dbi, &key_val, &mut data_val, flags.bits())\n        }"
+        },
+        {
+          "linea": 441,
+          "codigo": "unsafe {\n            mdbx_result(self.txn_execute(|txn| {\n                ffi::mdbx_put(\n                    txn,\n                    db.dbi(),\n                    &key_val,\n                    &mut data_val,\n                    flags.bits() | ffi::MDBX_RESERVE,\n                )\n            })?)?;\n            Ok(slice::from_raw_parts_mut(data_val.iov_base as *mut u8, data_val.iov_len))\n        }"
+        },
+        {
+          "linea": 481,
+          "codigo": "unsafe { ffi::mdbx_del(txn, dbi, &key_val, &d) }"
+        },
+        {
+          "linea": 483,
+          "codigo": "unsafe { ffi::mdbx_del(txn, dbi, &key_val, ptr::null()) }"
+        },
+        {
+          "linea": 496,
+          "codigo": "unsafe { ffi::mdbx_drop(txn, dbi, false) }"
+        },
+        {
+          "linea": 631,
+          "codigo": "unsafe { mdbx_txn_renew(self.txn) }"
+        },
+        {
+          "linea": 649,
+          "codigo": "unsafe { Self(std::mem::zeroed()) }"
+        },
+        {
+          "linea": 186,
+          "codigo": "unsafe {\n                txn.drop_db(db).unwrap();\n            }"
+        }
+      ]
+    },
+    {
+      "ruta": "database.rs",
+      "ocurrencias": [
+        {
+          "linea": 39,
+          "codigo": "unsafe { ffi::mdbx_dbi_open(txn_ptr, name_ptr, flags, &mut dbi) }"
+        }
+      ]
+    },
+    {
+      "ruta": "environment.rs",
+      "ocurrencias": [
+        {
+          "linea": 154,
+          "codigo": "unsafe { ffi::mdbx_env_sync_ex(self.env_ptr(), force, false) }"
+        },
+        {
+          "linea": 159,
+          "codigo": "unsafe {\n            let mut stat = Stat::new();\n            mdbx_result(ffi::mdbx_env_stat_ex(\n                self.env_ptr(),\n                ptr::null(),\n                stat.mdb_stat(),\n                size_of::(),\n            ))?;\n            Ok(stat)\n        }"
+        },
+        {
+          "linea": 173,
+          "codigo": "unsafe {\n            let mut info = Info(mem::zeroed());\n            mdbx_result(ffi::mdbx_env_info_ex(\n                self.env_ptr(),\n                ptr::null(),\n                &mut info.0,\n                size_of::(),\n            ))?;\n            Ok(info)\n        }"
+        },
+        {
+          "linea": 248,
+          "codigo": "unsafe {\n            ffi::mdbx_env_close_ex(self.env, false);\n        }"
+        },
+        {
+          "linea": 311,
+          "codigo": "unsafe { Self(mem::zeroed()) }"
+        },
+        {
+          "linea": 625,
+          "codigo": "unsafe { std::mem::transmute(callback) }"
+        }
+      ]
+    },
+    {
+      "ruta": "txn_manager.rs",
+      "ocurrencias": [
+        {
+          "linea": 66,
+          "codigo": "unsafe {\n                                ffi::mdbx_txn_begin_ex(\n                                    env.0,\n                                    parent.0,\n                                    flags,\n                                    &mut txn,\n                                    ptr::null_mut(),\n                                )\n                            }"
+        },
+        {
+          "linea": 79,
+          "codigo": "unsafe { ffi::mdbx_txn_abort(tx.0) }"
+        },
+        {
+          "linea": 85,
+          "codigo": "unsafe {\n                                        ffi::mdbx_txn_commit_ex(tx.0, latency.mdb_commit_latency())\n                                    }"
+        },
+        {
+          "linea": 232,
+          "codigo": "unsafe { ffi::mdbx_txn_reset(txn_ptr) }"
+        }
+      ]
+    },
+    {
+      "ruta": "lib.rs",
+      "ocurrencias": [
+        {
+          "linea": 339,
+          "codigo": "unsafe { Mmap::map(&data_file)? }"
+        },
+        {
+          "linea": 343,
+          "codigo": "unsafe { Mmap::map(&offset_file)? }"
+        }
+      ]
+    },
+    {
+      "ruta": "lz4.rs",
+      "ocurrencias": [
+        {
+          "linea": 14,
+          "codigo": "unsafe {\n            dest.set_len(dest.capacity());\n        }"
+        },
+        {
+          "linea": 22,
+          "codigo": "unsafe {\n                    dest.set_len(previous_length + written);\n                }"
+        },
+        {
+          "linea": 29,
+          "codigo": "unsafe {\n                    dest.set_len(previous_length);\n                }"
+        },
+        {
+          "linea": 57,
+          "codigo": "unsafe {\n            dest.set_len(dest.capacity());\n        }"
+        },
+        {
+          "linea": 65,
+          "codigo": "unsafe {\n                    dest.set_len(previous_length + written);\n                }"
+        },
+        {
+          "linea": 72,
+          "codigo": "unsafe {\n                    dest.set_len(previous_length);\n                }"
+        }
+      ]
+    },
+    {
+      "ruta": "zstd.rs",
+      "ocurrencias": [
+        {
+          "linea": 131,
+          "codigo": "unsafe {\n            output.set_len(output.capacity());\n        }"
+        },
+        {
+          "linea": 139,
+          "codigo": "unsafe {\n                    output.set_len(previous_length + written);\n                }"
+        },
+        {
+          "linea": 146,
+          "codigo": "unsafe {\n                    output.set_len(previous_length);\n                }"
+        }
+      ]
+    }
+  ],
+  "total_ocurrencias": 55
+}
