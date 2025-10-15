@@ -1,33 +1,55 @@
 # script.py
+import os
+import pattern
 
 def replace_unsafe_code(origin):
-    # Lee el contenido del archivo
-    with open(origin, 'r') as file:
-        code = file.readlines()
+    
+    # Recorre el directorio y sus subdirectorios
+    for root, _, files in os.walk(origin):
 
-    # Reemplaza la sección unsafe por otro código
-    new_code = []
-    inside_unsafe = False
+        for filename in files:
+            # Reemplaza el codigo por uno que puede contener cambios
+            new_code = ""
 
-    for line in code:
-        if 'unsafe {' in line:
-            inside_unsafe = True
+            file_path = os.path.join(root, filename)
 
-            # new_code.append(cambio)
-            continue
-        if inside_unsafe and '*ptr' in line:
-            line = line.replace('*ptr', 'replace',10)
-            new_code.append(line)
-            continue
-        if inside_unsafe and '}' in line:
-            inside_unsafe = False
-            continue
-        else:
-            new_code.append(line)
+            # Lee el contenido del archivo
+            with open(file_path, 'r', encoding='utf-8') as f:
+                code = f.readlines()
 
-    # Escribe el nuevo contenido de vuelta al archivo
-    with open(f'result/{origin}', 'w') as file:
-        file.writelines(new_code)
+            if filename.endswith('.rs'):
+                i = 0
+                while i < len(code):
+                    subcode = code[i]
+                    if subcode.startswith('//') or subcode.startswith('/*') or subcode.startswith('*') or subcode.startswith('*/'):
+                        new_code += subcode
+                        continue
+                    if 'unsafe {' in subcode:
+                        
+                        while True:
+                            key , group = pattern.identify_unsafe(subcode)
+                            if key == None:
+                                i += 1
+                                subcode += code[i]
+                            elif key != 'default':
+                                replaced_code = pattern.replace_pattern(subcode, key, group)
+                                new_code += replaced_code
+                                break
+                            else:
+                                new_code += subcode
+                                break
+                    else:
+                        new_code += subcode
+                    i += 1
+            else: 
+                new_code = '\n'.join(code)
 
-# Llama a la función con la ruta del archivo Rust
-replace_unsafe_code('prueba.rs')
+            finalFileName = f'{str(root)[2:]}/{filename}'
+
+            os.makedirs(f'result/{str(root)[2:]}', exist_ok=True)
+
+            # Escribe el nuevo contenido de vuelta al archivo
+            with open(f'result/{finalFileName}', 'w') as file:
+                file.write(new_code)
+
+replace_unsafe_code('./x')

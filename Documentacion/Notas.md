@@ -77,6 +77,12 @@
 
 [25/08/2025] - [29/08/2025] Escribimos un poco del proceso y los datos que se van recolectando en el informe final.
 
+[08/10/2025] - [11/10/2025] Voy implementando la idea del programa final, partindo de definir algunos patros ejemplos, y sus posibles reemplazos, aplico en el archivo de prueba.rs.
+ideas:
+        - extractor deberia generar un archivo con los archivos a modificar
+        - modifier deberia tomar el archivo con los cambios y usarlo para modificar solo eso sin tener que ver todos los demas (S/N)
+
+
 ## Casos de uso de codigo unsafe
 
 ### Asiganciones

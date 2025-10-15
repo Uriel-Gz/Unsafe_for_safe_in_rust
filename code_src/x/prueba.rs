@@ -19,9 +19,9 @@ fn main() {
     // Usamos código `unsafe` para desreferenciar el segundo puntero
     unsafe {
         *ptr2 = 10;
-        println!("El valor del segundo puntero es: {}", *ptr2);
     }
 
+    
     // Imprimimos el valor original para verificar que ha cambiado
     println!("El valor original ahora es: {}", value);
 

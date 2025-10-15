@@ -67,7 +67,7 @@ def unsafe_code_extracter(directory):
     pattern = r'unsafe\s*\{(?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*\}'
 
     file = open('unsafe_code.html', 'w')
-    file.write(header)
+    file.write(header)  
 
     # Recorre el directorio y sus subdirectorios
     for root, _, files in os.walk(directory):
