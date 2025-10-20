@@ -82,6 +82,7 @@ ideas:
         - extractor deberia generar un archivo con los archivos a modificar
         - modifier deberia tomar el archivo con los cambios y usarlo para modificar solo eso sin tener que ver todos los demas (S/N)
 
+[20/10/2025] Hoy cambio el enfoque para tratar los patrones, ahora en lugar de una lista con patrones y otra con posibles reemplazos, trabajo cada patron como si fuera una unidad independiente, conteniendo el mismo ambas cosas y modelandolos a partir de una pequeña interface IPattern.
 
 ## Casos de uso de codigo unsafe
 
