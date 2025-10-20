@@ -1,6 +1,7 @@
 # script.py
 import os
 import pattern
+import u_cases.u_analizer
 
 def replace_unsafe_code(origin):
     

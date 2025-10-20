@@ -1,28 +1,24 @@
 def extraer_bloques(texto, palabra_clave):
+    import re
     bloques = []
-    pos = 0
-    while True:
-        inicio = texto.find(f"{palabra_clave} {{", pos)
-        if inicio == -1:
-            break
-
-        i = inicio + len(f"{palabra_clave} {{")
-        start = i
-        nivel = 1
-        while i < len(texto):
+    # Buscar "palabra_clave" seguida opcionalmente de espacios y "{"
+    patron = re.compile(rf'{re.escape(palabra_clave)}\s*\{{')
+    for match in patron.finditer(texto):
+        inicio = match.end()  # Posición después de "{"
+        stack = [inicio]  # Usar stack para manejar anidamiento
+        i = inicio
+        while i < len(texto) and stack:
             if texto[i] == '{':
-                nivel += 1
+                stack.append(i)
             elif texto[i] == '}':
-                nivel -= 1
-                if nivel == 0:
-                    bloques.append(texto[start:i])
-                    pos = i + 1
+                stack.pop()
+                if not stack:
+                    # Bloque cerrado, extraer desde inicio hasta i (excluyendo la llave de cierre)
+                    bloques.append(texto[inicio:i])
                     break
             i += 1
-        else:
-            # No se cerró correctamente
-            print("Error: bloque no cerrado correctamente.")
-            break
+        if stack:
+            print(f"Error: bloque no cerrado correctamente para '{palabra_clave}' en posición {match.start()}.")
     return bloques
 
 
