@@ -1,9 +1,9 @@
 from u_ipattern import IPattern
+import re
 
 
 class PointerDereference(IPattern):
     def match(self, code_line):
-        import re
         pattern = re.compile(r'\*\s*(\w+);')
         match = pattern.search(code_line)
         if match:
@@ -16,7 +16,6 @@ class PointerDereference(IPattern):
 
 class PointerAssignment(IPattern):
     def match(self, code_line):
-        import re
         pattern = re.compile(r'\*\s*(\w+)\s*=\s*(.+);')
         match = pattern.search(code_line)
         if match:
