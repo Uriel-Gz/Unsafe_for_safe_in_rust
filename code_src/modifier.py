@@ -1,7 +1,7 @@
 # script.py
 import os
 import pattern
-import u_cases.u_analizer
+import u_cases.u_analizer as analizer
 
 def replace_unsafe_code(origin):
     
@@ -28,13 +28,12 @@ def replace_unsafe_code(origin):
                     if 'unsafe {' in subcode:
                         
                         while True:
-                            key , group = pattern.identify_unsafe(subcode)
-                            if key == None:
+                            type_uc = analizer.analyze(subcode)
+                            if type_uc == None:
                                 i += 1
                                 subcode += code[i]
-                            elif key != 'default':
-                                replaced_code = pattern.replace_pattern(subcode, key, group)
-                                new_code += replaced_code
+                            elif type_uc != None:
+                                new_code += type_uc.replace(subcode)
                                 break
                             else:
                                 new_code += subcode
@@ -47,6 +46,7 @@ def replace_unsafe_code(origin):
 
             finalFileName = f'{str(root)[2:]}/{filename}'
 
+            # Crea los directorios necesarios en 'result' si no existen
             os.makedirs(f'result/{str(root)[2:]}', exist_ok=True)
 
             # Escribe el nuevo contenido de vuelta al archivo
