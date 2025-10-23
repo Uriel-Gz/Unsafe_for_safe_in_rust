@@ -2,12 +2,12 @@ from abc import ABC, abstractmethod
 
 
 class IPattern(ABC):
-    @abstractmethod
     @staticmethod
+    @abstractmethod
     def match(self, string: str) -> bool:
         pass
 
-    @abstractmethod
     @staticmethod   
+    @abstractmethod
     def replace(self, string: str) -> str:
         pass

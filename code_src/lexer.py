@@ -47,12 +47,35 @@ class Lexer:
         self.advance()  # skip closing quote
         return result
 
+    def read_comment(self):
+        result = ''
+        if self.current_char == '/' and self.peek() == '/':
+            while self.current_char and self.current_char != '\n':
+                result += self.current_char
+                self.advance()
+        elif self.current_char == '/' and self.peek() == '*':
+            result += '/*'
+            self.advance()
+            self.advance()
+            while self.current_char:
+                if self.current_char == '*' and self.peek() == '/':
+                    result += '*/'
+                    self.advance()
+                    self.advance()
+                    break
+                result += self.current_char
+                self.advance()
+        return result
+
     def tokenize(self):
         tokens = []
         while self.current_char is not None:
             if self.current_char.isspace():
                 self.skip_whitespace()
                 continue
+            elif self.current_char == '/' and self.peek() in ['/', '*']:
+                comment = self.read_comment()
+                tokens.append(Token('COMMENT', comment))
             elif self.current_char.isalpha() or self.current_char == '_':
                 ident = self.read_identifier()
                 # Keywords

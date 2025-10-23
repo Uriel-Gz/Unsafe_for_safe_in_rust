@@ -1,4 +1,4 @@
-from lexer import Lexer
+# from lexer import Lexer
 from grammars import GRAMMARS
 
 
@@ -20,7 +20,7 @@ class Parser:
         return None
 
     def parse_rule(self, rule_name, grammar):
-        rules = grammar['rules'][rule_name]
+        rules = grammar[rule_name]
         for rule in rules:
             saved_pos = self.pos
             if self.match_sequence(rule):
@@ -32,32 +32,25 @@ class Parser:
         for item in sequence:
             if isinstance(item, str):
                 if item.startswith('opt_'):
-                    # Optional rule
                     self.parse_rule(item, self.grammar)
-                elif item in self.grammar['rules']:
+                elif item in self.grammar:
                     if not self.parse_rule(item, self.grammar):
                         return False
                 else:
-                    # Terminal
                     token = self.consume()
                     # if token:
                     #     print(f"Matching terminal: expected {item}, got {token.type} and {token.value}")
                     if not token or token.type != item and token.value != item:
                         return False
             else:
-                # For simplicity, assume terminals are strings
                 token = self.consume()
                 if not token or token.type != item and token.value != item:
                     return False
         return True
 
-    def parse(self, grammar_name):
-        self.grammar = GRAMMARS[grammar_name]
-        return self.parse_rule(self.grammar['start'], self.grammar)
+    def parse(self, type_UC):
+        self.grammar = type_UC.rules
+        self.type_uc = type_UC
+        return self.parse_rule(self.grammar['stmt'], self.grammar)
 
 
-def test_parser(code, grammar_name):
-    lexer = Lexer(code)
-    tokens = lexer.tokenize()
-    parser = Parser(tokens)
-    return parser.parse(grammar_name)

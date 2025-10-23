@@ -1,16 +1,26 @@
-from desreference import PointerDereference as ptrDref, PointerAssignment as ptrAsgn
+from u_cases.u_desreference import PointerReturn as ptrRtn
+from u_cases.u_desreference import PointerAssignment as ptrAsgn
+
+from lexer import Lexer
+from parser import Parser
+
+from grammars import GRAMMARS as G
 
 
 class UnsafeAnalyzer:
 
     types_of_unsafe = [
-        ptrDref,
+        ptrRtn,
         ptrAsgn,
     ]
 
+    @staticmethod
+    def analyze(self, code_block):
+        lexer = Lexer(code_block)
+        tokens = lexer.tokenize()
+        p = Parser(tokens)
 
-    def analyze(self, code_block, start_line):
-        for tu in self.types_of_unsafe:
-            instance = tu.match(code_block, start_line)
+        for type_u in self.types_of_unsafe:
+            instance = p.parse(code_block, type_u)
             if instance:
-                return instance
+                return type_u 

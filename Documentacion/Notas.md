@@ -84,6 +84,8 @@ ideas:
 
 [20/10/2025] Hoy cambio el enfoque para tratar los patrones, ahora en lugar de una lista con patrones y otra con posibles reemplazos, trabajo cada patron como si fuera una unidad independiente, conteniendo el mismo ambas cosas y modelandolos a partir de una pequeña interface IPattern.
 
+[22/10/2025] Empiezo a cambiar el esquema de gramatica para que coincida con la idea de tener cada tipo de unsafe su propio conjunto de patrones y posibilidad de reemplar.
+
 ## Casos de uso de codigo unsafe
 
 ### Asiganciones
