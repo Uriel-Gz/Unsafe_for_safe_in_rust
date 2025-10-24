@@ -48,27 +48,60 @@
 # Definiciones de gramáticas como diccionarios para facilitar el parsing
 
 GRAMMARS = {
-    'direct_assign': {
+    'combined': {
         'start': 'stmt',
         'rules': {
             'stmt': [
-                ['kwinit','*','IDENTIFIER', '=', 'NUMBER', ';'],
-                ['let','*','IDENTIFIER', '=', 'NUMBER', ';'],
-                ['let', 'IDENTIFIER', '=', 'expr', 'opt_method', '(', 'opt_expr', ')', ';'],
-                ['let', 'IDENTIFIER', '=', 'Some', '(', 'expr', 'opt_method', '(', 'expr', ')', ')', ';'],
-                ['let', 'IDENTIFIER', '=', 'Some', '(', '&', '*', 'IDENTIFIER', ')', ';'],
-                ['let', 'IDENTIFIER', ':', '*', 'mut', 'type', '=', 'Box',':', ':', 'into_raw', '(', 'IDENTIFIER', ')', ';', 'Ok', '(', 'Box',':', ':', 'from_raw', '(', 'IDENTIFIER', 'as', '*', 'mut', 'type', ')', ')']
+                [],
+                ['return_reference'],
+                ['some', 'direct_assign', 'some'],
+                ['some', 'pointer_manip', 'some']
             ],
-            'kwinit': [['let'], []],
-            'opt_method': [[':',':' , 'IDENTIFIER'], []],
-            'opt_expr': [['expr'], []],
+        'some': [['stmt'],[]]
+        }
+    },
+
+
+
+    'return_reference': {
+        'start': 'stmt',
+        'rules': {
+            'stmt': [
+                ['&', 'IDENTIFIER', '.', 'IDENTIFIER', ';'],
+                ['&mut', 'IDENTIFIER', '.', 'IDENTIFIER', ';'],
+                ['let', 'IDENTIFIER', '=', 'IDENTIFIER', '(', ')', ';'],
+                ['(', '&', 'IDENTIFIER', '.', 'IDENTIFIER', ',', '&mut', 'IDENTIFIER', '.', 'IDENTIFIER', ',', '&', 'IDENTIFIER', '.', 'IDENTIFIER', ')', ';'],
+                ['*', '(', 'IDENTIFIER', ')', '.', 'IDENTIFIER', '=', 'Some', '(', 'IDENTIFIER', ')', ';'],
+                ['*', 'IDENTIFIER', '=', 'Some', '(', 'IDENTIFIER', ')', ';'],
+                ['let', 'IDENTIFIER', '=', '*', 'IDENTIFIER', ';'],
+                ['let', 'IDENTIFIER', ':', 'type', '?=', 'unsafe', '{', 'expr', '}'],
+                ['let', 'IDENTIFIER', '=', '&', 'IDENTIFIER', 'as', '*', 'const', 'type', 'opt_as', ';', '*', 'IDENTIFIER', ';'],
+                ['unsafe', '{', 'expr', '}']
+            ],
+            'opt_as': [['as', '*', 'const', 'type'], []],
             'expr': [['IDENTIFIER'], ['NUMBER'], ['STRING_LITERAL']],
             'type': [['IDENTIFIER']]
         }
     },
 
 
-
+    'direct_assign': {
+        'start': 'stmt',
+        'rules': {
+            'stmt': [
+                ['opt_init','*','IDENTIFIER', '=', 'expr', ';'],
+                ['let', 'IDENTIFIER', '=', 'expr', 'opt_method', '(', 'opt_expr', ')', ';'],
+                ['let', 'IDENTIFIER', '=', 'Some', '(', 'expr', 'opt_method', '(', 'expr', ')', ')', ';'],
+                ['let', 'IDENTIFIER', '=', 'Some', '(', '&', '*', 'IDENTIFIER', ')', ';'],
+                ['let', 'IDENTIFIER', ':', '*', 'mut', 'type', '=', 'Box',':', ':', 'into_raw', '(', 'IDENTIFIER', ')', ';', 'Ok', '(', 'Box',':', ':', 'from_raw', '(', 'IDENTIFIER', 'as', '*', 'mut', 'type', ')', ')']
+            ],
+            'opt_init': [['let'], []],
+            'opt_method': [[':',':' , 'IDENTIFIER'], []],
+            'opt_expr': [['expr'], []],
+            'expr': [['IDENTIFIER'], ['NUMBER'], ['STRING_LITERAL']],
+            'type': [['IDENTIFIER']]
+        }
+    },
 
 
     'pointer_manip': {
@@ -94,24 +127,7 @@ GRAMMARS = {
             'stmt': [['*', 'IDENTIFIER', '+=', 'STRING_LITERAL', ';']]
         }
     },
-    'value_return': {
-        'start': 'stmt',
-        'rules': {
-            'stmt': [
-                ['let', 'IDENTIFIER', '=', 'IDENTIFIER', '(', ')', ';'],
-                ['(', '&', 'IDENTIFIER', '.', 'IDENTIFIER', ',', '&mut', 'IDENTIFIER', '.', 'IDENTIFIER', ',', '&', 'IDENTIFIER', '.', 'IDENTIFIER', ')', ';'],
-                ['*', '(', 'IDENTIFIER', ')', '.', 'IDENTIFIER', '=', 'Some', '(', 'IDENTIFIER', ')', ';'],
-                ['*', 'IDENTIFIER', '=', 'Some', '(', 'IDENTIFIER', ')', ';'],
-                ['let', 'IDENTIFIER', '=', '*', 'IDENTIFIER', ';'],
-                ['let', 'IDENTIFIER', ':', 'type', '?=', 'unsafe', '{', 'expr', '}'],
-                ['let', 'IDENTIFIER', '=', '&', 'IDENTIFIER', 'as', '*', 'const', 'type', 'opt_as', ';', '*', 'IDENTIFIER', ';'],
-                ['unsafe', '{', 'expr', '}']
-            ],
-            'opt_as': [['as', '*', 'const', 'type'], []],
-            'expr': [['IDENTIFIER'], ['NUMBER'], ['STRING_LITERAL']],
-            'type': [['IDENTIFIER']]
-        }
-    },
+
     'extern_func': {
         'start': 'stmt',
         'rules': {
