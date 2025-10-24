@@ -20,6 +20,13 @@ class Lexer:
         self.pos = 0
         self.current_char = self.text[0] if self.text else None
 
+    def peek(self):
+        peek_pos = self.pos + 1
+        if peek_pos > len(self.text) - 1:
+            return None
+        else:
+            return self.text[peek_pos]
+
     def advance(self):
         self.pos += 1
         if self.pos > len(self.text) - 1:

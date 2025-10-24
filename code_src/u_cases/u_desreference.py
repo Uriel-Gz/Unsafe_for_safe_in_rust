@@ -21,15 +21,13 @@ class PointerReturn(IPattern):
             'expr': [['IDENTIFIER'], ['NUMBER'], ['STRING_LITERAL']],
             'type': [['IDENTIFIER']]
         }
-
-    def match(self, code_line):
-        pattern = re.compile(r'\*\s*(\w+);')
-        match = pattern.search(code_line)
-        if match:
-            pointer_name = match.group(1)
-            return pointer_name
-        return None
     
+    def replace(self, string: str, matched_data):
+        rule_index = matched_data['rule_index']
+        matched_tokens = matched_data['matched_tokens']
+        if rule_index == 0:
+            return string.replace('&' + matched_tokens[1].value + '.' + matched_tokens[3].value + ';', matched_tokens[1].value + '.' + matched_tokens[3].value + ';')
+        return string
 
     
 
@@ -49,15 +47,11 @@ class PointerAssignment(IPattern):
             'expr': [['IDENTIFIER'], ['NUMBER'], ['STRING_LITERAL']],
             'type': [['IDENTIFIER']]
         }
-
-    def match(self, code_line):
-        pattern = re.compile(r'\*\s*(\w+)\s*=\s*(.+);')
-        match = pattern.search(code_line)
-        if match:
-            pointer_name = match.group(1)
-            assigned_value = match.group(2)
-            return pointer_name, assigned_value
-        return None
     
-    def replace(self, string: str):
-        pass
+    def replace(self, string: str, matched_data):
+        # print(f'Matched data in PointerAssignment: {matched_data}')
+        rule_index = matched_data['rule_index']
+        matched_tokens = matched_data['matched_tokens']
+        if rule_index == 0:
+            return string.replace('*' + matched_tokens[1].value + ' = ' + matched_tokens[3].value + ';', 'mem.replace(' + matched_tokens[1].value + ', ' + matched_tokens[3].value + ')' + ';')
+        return string

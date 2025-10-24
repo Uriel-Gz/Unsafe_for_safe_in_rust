@@ -1,7 +1,6 @@
 # script.py
 import os
-import pattern
-import u_cases.u_analizer as analizer
+from u_cases.u_analizer import UnsafeAnalyzer
 
 def replace_unsafe_code(origin):
     
@@ -27,20 +26,21 @@ def replace_unsafe_code(origin):
                         continue
                     if 'unsafe {' in subcode:
                         
-                        while True:
+                        while i < len(code):
+                            analizer = UnsafeAnalyzer()
                             type_uc = analizer.analyze(subcode)
                             if type_uc == None:
+                                if 'unsafe {' not in code[i]:
+                                    subcode += code[i]
                                 i += 1
-                                subcode += code[i]
-                            elif type_uc != None:
-                                new_code += type_uc.replace(subcode)
-                                break
                             else:
-                                new_code += subcode
+                                type_u = type_uc['type_u'] if type_uc != None else None
+                                methadata = type_uc['matched_data'] if type_uc != None else None
+                                new_code += type_u.replace(type_u, subcode, methadata)
                                 break
                     else:
                         new_code += subcode
-                    i += 1
+                        i += 1
             else: 
                 new_code = '\n'.join(code)
 
@@ -53,4 +53,5 @@ def replace_unsafe_code(origin):
             with open(f'result/{finalFileName}', 'w') as file:
                 file.write(new_code)
 
-replace_unsafe_code('./x')
+if __name__ == "__main__":
+    replace_unsafe_code('./x')

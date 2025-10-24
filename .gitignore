@@ -124,3 +124,12 @@ versions/
 # Archivos de configuración de otros sistemas de gestión de workflows
 workflow/
 workflows/
+
+# Ignorar carpeta de resultados
+result/
+
+# Ignorar caché y archivos compilados de Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
