@@ -86,6 +86,8 @@ ideas:
 
 [22/10/2025] Empiezo a cambiar el esquema de gramatica para que coincida con la idea de tener cada tipo de unsafe su propio conjunto de patrones y posibilidad de reemplar.
 
+[24/10/2025] El uso de gramatica en lugar de expresiones regulares va tomando forma, pude hacer que tome los parametros que detecto y los sustituya en el codigo, ademas arregle el detalle de saltearme lineas.
+
 ## Casos de uso de codigo unsafe
 
 ### Asiganciones
