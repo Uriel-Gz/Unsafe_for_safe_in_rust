@@ -14,11 +14,11 @@ class UnsafeAnalyzer:
         ptrAsgn,
     ]
 
-    def analyze(self, code_block):
-        lexer = Lexer(code_block)
-        tokens = lexer.tokenize()
-        #! generalizar el lugar del unsafe
-        tokens_ = tokens[2:] 
+    def analyze(self, tokens_):
+        # lexer = Lexer(code_block)
+        # tokens = lexer.tokenize()
+        # #! generalizar el lugar del unsafe
+        # tokens_ = tokens[2:] 
         p = Parser(tokens_)
 
         for type_u in self.types_of_unsafe:

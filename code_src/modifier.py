@@ -1,6 +1,7 @@
 # script.py
 import os
 from u_cases.u_analizer import UnsafeAnalyzer
+from lexer import Lexer
 
 def replace_unsafe_code(origin):
     
@@ -18,29 +19,37 @@ def replace_unsafe_code(origin):
                 code = f.readlines()
 
             if filename.endswith('.rs'):
-                i = 0
-                while i < len(code):
-                    subcode = code[i]
-                    if subcode.startswith('//') or subcode.startswith('/*') or subcode.startswith('*') or subcode.startswith('*/'):
-                        new_code += subcode
-                        continue
-                    if 'unsafe {' in subcode:
+                
+                #* reconstruyo el codigo leido por lineas y lo tokenizo
+                code = '\n'.join(code)
+                lexer = Lexer(code)
+                tokens = lexer.tokenize()
+
+                pos = 0
+                while pos < len(tokens):
+
+                    if tokens[pos].type == 'UNSAFFE':
+                        #* Salta 'unsafe' y '{'
+                        pos += 2
+                        subcode = []
+                        analizer = UnsafeAnalyzer()
                         
-                        while i < len(code):
-                            analizer = UnsafeAnalyzer()
+                        while pos < len(code):
+                            subcode.append(tokens[pos])
                             type_uc = analizer.analyze(subcode)
+
                             if type_uc == None:
-                                if 'unsafe {' not in code[i]:
-                                    subcode += code[i]
-                                i += 1
+                                pos += 1
+                                if pos < len(tokens):
+                                    subcode.append(tokens[pos])
                             else:
                                 type_u = type_uc['type_u'] if type_uc != None else None
                                 methadata = type_uc['matched_data'] if type_uc != None else None
-                                new_code += type_u.replace(type_u, subcode, methadata)
+                                code = type_u.replace(type_u, code, methadata)
                                 break
                     else:
-                        new_code += subcode
-                        i += 1
+                        # new_code += subcode
+                        pos += 1
             else: 
                 new_code = '\n'.join(code)
 
