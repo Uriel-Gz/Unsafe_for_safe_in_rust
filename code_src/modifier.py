@@ -54,4 +54,4 @@ def replace_unsafe_code(origin):
                 file.write(new_code)
 
 if __name__ == "__main__":
-    replace_unsafe_code('./x')
+    replace_unsafe_code('./unsafe-code-examples')

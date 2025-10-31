@@ -1,5 +1,4 @@
 from u_cases.u_ipattern import IPattern
-import re
 
 
 class PointerReturn(IPattern):

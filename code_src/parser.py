@@ -77,9 +77,8 @@ class Parser:
                     return False
         return True
 
-    def parse(self, type_UC):
-        self.grammar = type_UC.rules
-        self.type_uc = type_UC
+    def parse(self, rules):
+        self.grammar = rules
         return self.parse_rule('stmt', self.grammar)
 
 

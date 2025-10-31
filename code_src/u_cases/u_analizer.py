@@ -19,11 +19,10 @@ class UnsafeAnalyzer:
         tokens = lexer.tokenize()
         #! generalizar el lugar del unsafe
         tokens_ = tokens[2:] 
-        print(tokens_)
         p = Parser(tokens_)
 
         for type_u in self.types_of_unsafe:
-            result = p.parse(type_u)
+            result = p.parse(type_u.rules)
             if result:
                 return {'type_u': type_u, 'matched_data': result}
             
