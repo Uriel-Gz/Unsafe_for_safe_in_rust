@@ -79,6 +79,8 @@ class Parser:
 
     def parse(self, rules):
         self.grammar = rules
+        if self.tokens == []:
+            return None
         return self.parse_rule('stmt', self.grammar)
 
 

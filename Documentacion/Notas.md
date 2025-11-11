@@ -88,6 +88,8 @@ ideas:
 
 [24/10/2025] El uso de gramatica en lugar de expresiones regulares va tomando forma, pude hacer que tome los parametros que detecto y los sustituya en el codigo, ademas arregle el detalle de saltearme lineas.
 
+[06/11/2025] - [11/11/2025] Profundizo en una descripcion detallada de la gramatica general que deberia usar la herramienta, ajusto los casos de u_desreference y agrego algunos casos para analizar en el archivo de pruebas.
+
 ## Casos de uso de codigo unsafe
 
 ### Asiganciones
