@@ -1,63 +1,69 @@
-# Gramáticas BNF para casos de código unsafe en Rust
 
-# Caso 1: Asignaciones Unsafe Directas (ptr::write, ptr::read, Box::from_raw)
-# stmt ::= "let" IDENTIFIER "=" expr ("." IDENTIFIER)? "(" expr? ")" ";"
-#        | "let" IDENTIFIER "=" expr ("." IDENTIFIER)? "(" expr? ")" ";" "Some" "(" "ptr::read" "(" IDENTIFIER ")" ")" ";"
-#        | "let" IDENTIFIER "=" expr ("." IDENTIFIER)? "(" expr? ")" ";" "Some" "(" "&*" IDENTIFIER ")" ";"
-#        | "let" IDENTIFIER ":" "*" "mut" type "=" "Box::into_raw" "(" IDENTIFIER ")" ";" "Ok" "(" "Box::from_raw" "(" IDENTIFIER "as" "*" "mut" type ")" ")" ")"
-
-# Caso 2: Manipulación de punteros (*, &mut, unsafe block)
-# stmt ::= "*" "(" IDENTIFIER ")" "." IDENTIFIER "=" expr ";"
-#        | "let" IDENTIFIER ":" "&mut" type "=" "&mut" "*" IDENTIFIER ";"
-#        | "let" IDENTIFIER ":" "*" "mut" type "=" expr ";"
-#        | "let" IDENTIFIER ":" "*" "mut" type "=" "*" "(" IDENTIFIER ")" "." IDENTIFIER ";"
-#        | "*" "unsafe" "{" "&mut" "*" IDENTIFIER "}" ("." IDENTIFIER)* "=" expr ";"
-#        | "let" IDENTIFIER "=" "&mut" "*" "(" IDENTIFIER "as" "*" "mut" type ")" ";"
-#        | "*" "(" IDENTIFIER ")" "." IDENTIFIER "=" type "::" IDENTIFIER "(" "*" "(" IDENTIFIER ")" "." IDENTIFIER ")" ";"
-
-# Caso 3: Manipulación de strings (*, +=)
-# stmt ::= "*" IDENTIFIER "+=" STRING_LITERAL ";"
-
-# Caso 4: Devolución de valores y asignación con Some
-# stmt ::= "let" IDENTIFIER "=" IDENTIFIER "(" ")" ";"
-#        | "(" "&" IDENTIFIER "." IDENTIFIER "," "&mut" IDENTIFIER "." IDENTIFIER "," "&" IDENTIFIER "." IDENTIFIER ")" ";"
-#        | "*" "(" IDENTIFIER ")" "." IDENTIFIER "=" "Some" "(" IDENTIFIER ")" ";"
-#        | "*" IDENTIFIER "=" "Some" "(" IDENTIFIER ")" ";"
-#        | "let" IDENTIFIER "=" "*" IDENTIFIER ";"
-#        | "let" IDENTIFIER ":" type "?=" "unsafe" "{" expr "}"
-#        | "let" IDENTIFIER "=" "&" IDENTIFIER "as" "*" "const" type ("as" "*" "const" type)? ";" "*" IDENTIFIER ";"
-#        | "unsafe" "{" expr "}"
-
-# Caso 5: Llamada a funciones externas y uso de instrucciones ensamblador
-# stmt ::= "extern" STRING_LITERAL "{" "fn" IDENTIFIER "(" (IDENTIFIER ":" type ("," IDENTIFIER ":" type)*)? ")" "->" type ";" "}"
-#        | "core::arch::x86_64::_mm_storeu_ps" "(" IDENTIFIER ".as_mut().as_mut_ptr()" "as" "*" "mut" type "," expr ")" ";"
-#        | "*" "(" IDENTIFIER ".as_mut().as_mut_ptr()" "as" "*" "mut" type ")" "=" expr ";"
-
-# Caso 6: Casos especiales MaybeUninit y PhantomData con unsafe block
-# stmt ::= "unsafe" "{" "let" ("mut")? IDENTIFIER "=" "MaybeUninit" "::" "<" type ">" "::uninit" "(" ")" ";" IDENTIFIER "(" expr? "," "std::ptr::null()" "," IDENTIFIER ".as_mut_ptr" "(" ")" ")" ";" IDENTIFIER ".assume_init" "(" ")" ";" "}"
-#        | "unsafe" "{" "let" IDENTIFIER "=" type "::" "::data" "(" "self.ptr" ")" ";" IDENTIFIER ".as_ref()" ("." IDENTIFIER)* ".fetch_add" "(" NUMBER "," IDENTIFIER ")" ";" type "{" "ptr:" "self.ptr," "pd:" "PhantomData," "}" "}"
-
-# Tokens comunes:
-# IDENTIFIER ::= [a-zA-Z_][a-zA-Z0-9_]*
-# expr ::= IDENTIFIER | NUMBER | STRING_LITERAL | expr OP expr | ...
-# type ::= IDENTIFIER ("::" IDENTIFIER)* ("<" type ">")?
-# OP ::= "+" | "-" | "*" | "/" | etc.
-
-# Para simplificar, definiremos gramáticas más abstractas y parsers recursivos descendentes simples.
-
-# Definiciones de gramáticas como diccionarios para facilitar el parsing
 
 GRAMMARS = {
-    'combined': {
+
+    'unsafe': {
         'start': 'stmt',
         'rules': {
             'stmt': [
-                [],
                 ['return_reference'],
                 ['some', 'direct_assign', 'some'],
-                ['some', 'pointer_manip', 'some']
+
+
+                ['some', 'pointer_manip', 'some'],
+                ['unsafe', '{', 'some', '}','some']
             ],
-        'some': [['stmt'],[]]
+            'some': [['print_case'], [], ['stmt']],
+
+
+            #* formato de las posibles asignaciones directas a punteros
+            'direct_assign': [
+                ['opt_dec', 'opt_pointer', 'IDENTIFIER', '=', 'expr', ';'],
+                ['opt_dec', 'opt_pointer', 'IDENTIFIER', '=', 'expr', 'opt_method', '(', 'opt_expr', ')', ';'],
+                # el siguiente caso se puede ver en tokio-master/tokio/src/sync/oneshot.rs entre otros
+                ['opt_dec', 'opt_pointer', 'IDENTIFIER', '=', 'Some', '(', 'expr', ')', ';'],
+                ['opt_dec', 'opt_pointer', 'IDENTIFIER', '=', 'Some', '(', '&', '*', 'IDENTIFIER', ')', ';'],
+            ],
+
+            #* formatode las posibles devoluciones de referencias
+            'return_reference': [
+                # el siguiente caso se puede ver en hyper-master/src/ffi/http_types.rs entre otros
+                ['&', 'mut', '*', 'IDENTIFIER'],
+                # el siguiente caso se puede ver en lucet-main/lucet-runtime/lucet-runtime-internals/src/instance/signals.rs entre otros
+                ['*', 'IDENTIFIER'],
+                ['&', 'IDENTIFIER', '.', 'IDENTIFIER', ';'],
+                # el siguiente caso se puede ver en  hyper-master/benches/support/tokiort.rs entre otros
+                ['IDENTIFIER', '.', 'opt_method', ';'],
+                ['&', 'IDENTIFIER', '.', 'IDENTIFIER', 'opt_params', ';'],
+                ['&', 'mut', 'IDENTIFIER', '.', 'IDENTIFIER', ';'],
+                ['(', '&', 'IDENTIFIER', '.', 'IDENTIFIER', ',', '&mut', 'IDENTIFIER', '.', 'IDENTIFIER', ',', '&', 'IDENTIFIER', '.', 'IDENTIFIER', ')', ';'],
+                ['*', '(', 'IDENTIFIER', ')', '.', 'IDENTIFIER', '=', 'Some', '(', 'IDENTIFIER', ')', ';'],
+                # el siguiente caso se puede ver en  hyper-master/benches/support/task.rs entre otros
+                ['*', '(', 'IDENTIFIER', ')', '.', 'IDENTIFIER', '=', 'IDENTIFIER', '(', 'expr', ')'],
+                # el siguiente caso se usa en gxhash-main/src/hasher.rs entre otros
+                ['let', 'IDENTIFIER', '=', '&', 'IDENTIFIER', 'as', '*', 'const', 'type', 'opt_as', ';', '*', 'IDENTIFIER', ';'],
+                # el siguiente caso se usa en lucet-main/lucet-concurrency-tests/src/killswitch.rs entre otros
+                ['let', 'IDENTIFIER', '=', 'IDENTIFIER', 'opt_method', 'comment', 'direct_assign'],
+                ['expr']
+            ],
+
+
+            #* auxiliares:
+            'opt_dec': [['let'], []],
+            'opt_pointer': [['*'], []],
+            'opt_lib_method': [[':',':' , 'IDENTIFIER', 'opt_params'], []],
+            'opt_method': [['.' , 'IDENTIFIER', 'opt_params'], []],
+            'opt_expr': [['expr'], {',','expr'}, []],
+            'opt_as': [['as', '*', 'const', 'type'], []],
+            'opt_params': [['(', 'expr' ,')'], {'(',')'}],
+            'expr': [['IDENTIFIER'], ['NUMBER'], ['STRING_LITERAL']],
+            'expr_complex': [['&', '*', 'IDENTIFIER']],
+            'type': [['IDENTIFIER']],
+            'print_case': [
+                ['println', '!', '(', 'STRING_LITERAL', 'opt_expr', ')', ';']
+            ],
+            'comment': [['COMMENT', 'comment'], []]
+
         }
     },
 
@@ -113,6 +119,7 @@ GRAMMARS = {
                 ['let', 'IDENTIFIER', ':', '*', 'mut', 'type', '=', 'expr', ';'],
                 ['let', 'IDENTIFIER', ':', '*', 'mut', 'type', '=', '*', '(', 'IDENTIFIER', ')', '.', 'IDENTIFIER', ';'],
                 ['*', 'unsafe', '{', '&mut', '*', 'IDENTIFIER', '}', 'opt_dots', '=', 'expr', ';'],
+                #! el siguiente caso se usa en tokio-master/tokio/src/io/util/read_buf.rs entre otros
                 ['let', 'IDENTIFIER', '=', '&mut', '*', '(', 'IDENTIFIER', 'as', '*', 'mut', 'type', ')', ';'],
                 ['*', '(', 'IDENTIFIER', ')', '.', 'IDENTIFIER', '=', 'type', '::', 'IDENTIFIER', '(', '*', '(', 'IDENTIFIER', ')', '.', 'IDENTIFIER', ')', ';']
             ],
