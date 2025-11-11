@@ -7,12 +7,8 @@ class PointerReturn(IPattern):
             'stmt': [
                 ['&', 'IDENTIFIER', '.', 'IDENTIFIER', ';'],
                 ['&mut', 'IDENTIFIER', '.', 'IDENTIFIER', ';'],
-                ['let', 'IDENTIFIER', '=', 'IDENTIFIER', '(', ')', ';'],
                 ['(', '&', 'IDENTIFIER', '.', 'IDENTIFIER', ',', '&mut', 'IDENTIFIER', '.', 'IDENTIFIER', ',', '&', 'IDENTIFIER', '.', 'IDENTIFIER', ')', ';'],
                 ['*', '(', 'IDENTIFIER', ')', '.', 'IDENTIFIER', '=', 'Some', '(', 'IDENTIFIER', ')', ';'],
-                ['*', 'IDENTIFIER', '=', 'Some', '(', 'IDENTIFIER', ')', ';'],
-                ['let', 'IDENTIFIER', '=', '*', 'IDENTIFIER', ';'],
-                ['let', 'IDENTIFIER', ':', 'type', '?=', 'unsafe', '{', 'expr', '}'],
                 ['let', 'IDENTIFIER', '=', '&', 'IDENTIFIER', 'as', '*', 'const', 'type', 'opt_as', ';', '*', 'IDENTIFIER', ';'],
                 ['expr']
             ],
@@ -34,16 +30,17 @@ class PointerAssignment(IPattern):
 
     rules = {
             'stmt': [
-                ['opt_init','*','IDENTIFIER', '=', 'expr', ';'],
-                ['let', 'IDENTIFIER', '=', 'expr', 'opt_method', '(', 'opt_expr', ')', ';'],
-                ['let', 'IDENTIFIER', '=', 'Some', '(', 'expr', 'opt_method', '(', 'expr', ')', ')', ';'],
-                ['let', 'IDENTIFIER', '=', 'Some', '(', '&', '*', 'IDENTIFIER', ')', ';'],
-                ['let', 'IDENTIFIER', ':', '*', 'mut', 'type', '=', 'Box',':', ':', 'into_raw', '(', 'IDENTIFIER', ')', ';', 'Ok', '(', 'Box',':', ':', 'from_raw', '(', 'IDENTIFIER', 'as', '*', 'mut', 'type', ')', ')']
+                ['opt_dec', 'opt_pointer', 'IDENTIFIER', '=', 'expr', ';'],
+                ['opt_dec', 'opt_pointer', 'IDENTIFIER', '=', 'expr', 'opt_method', '(', 'opt_expr', ')', ';'],
+                ['opt_dec', 'opt_pointer', 'IDENTIFIER', '=', 'Some', '(', 'expr', ')', ';'],
+                ['opt_dec', 'opt_pointer', 'IDENTIFIER', '=', 'Some', '(', '&', '*', 'IDENTIFIER', ')', ';'],
             ],
-            'opt_init': [['let'], []],
+            'opt_dec': [['let'], []],
+            'opt_pointer': [['*'], []],
             'opt_method': [[':',':' , 'IDENTIFIER'], []],
             'opt_expr': [['expr'], []],
             'expr': [['IDENTIFIER'], ['NUMBER'], ['STRING_LITERAL']],
+            'expr_complex': [['&', '*', 'IDENTIFIER']],
             'type': [['IDENTIFIER']]
         }
     
@@ -52,5 +49,17 @@ class PointerAssignment(IPattern):
         rule_index = matched_data['rule_index']
         matched_tokens = matched_data['matched_tokens']
         if rule_index == 0:
-            return string.replace('*' + matched_tokens[1].value + ' = ' + matched_tokens[3].value + ';', 'mem.replace(' + matched_tokens[1].value + ', ' + matched_tokens[3].value + ')' + ';')
+            return string.replace('*' + matched_tokens[1].value + ' = ' + matched_tokens[3].value + ';', 'mem::replace(' + matched_tokens[1].value + ', ' + matched_tokens[3].value + ')' + ';')
+        elif rule_index == 1:
+            aux = ''.join([token.value for token in matched_tokens[3:-1]])
+            # print(f'Auxiliary expression in PointerAssignment: {aux}')
+            return string.replace('let ' + matched_tokens[1].value + ' = ' + aux + ';', 'mem::replace(' + matched_tokens[1].value + ', ' + aux + ');')
+        elif rule_index == 2:
+            aux = ''.join([token.value for token in matched_tokens[3:-1]])
+            # print(f'Auxiliary expression in PointerAssignment (Some case): {aux}')
+            return string.replace('let ' + matched_tokens[1].value + ' = ' + aux + ';', 'mem::replace(' + matched_tokens[1].value + ', ' + aux + ');')
+        elif rule_index == 3:
+            aux = ''.join([token.value for token in matched_tokens[3:-1]])
+            # print(f'Auxiliary expression in PointerAssignment (Some with deref case): {aux}')
+            return string.replace('let ' + matched_tokens[1].value + ' = ' + aux + ';', 'mem::replace(' + matched_tokens[1].value + ', ' + aux + ');')
         return string
