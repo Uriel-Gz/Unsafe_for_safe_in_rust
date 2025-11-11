@@ -47,11 +47,14 @@ class Lexer:
 
     def read_string_literal(self):
         result = ''
-        self.advance()  # skip opening quote
+        result += self.current_char  # starting quote
+        self.advance()
         while self.current_char and self.current_char != '"':
             result += self.current_char
             self.advance()
-        self.advance()  # skip closing quote
+        if self.current_char == '"':
+            result += self.current_char  # ending quote
+            self.advance()
         return result
 
     def read_comment(self):
