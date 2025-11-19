@@ -1,0 +1,1 @@
+unsafe { let arr = [1 , 2 , 3 , 4 , 5] ; let ptr = arr . as_ptr () . add (2) ; println ! ("Third element: {}" , * ptr) ; }

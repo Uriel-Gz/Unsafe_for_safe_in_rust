@@ -1,0 +1,1 @@
+unsafe { let p = & x as * const i32 ; println ! ("{:p}" , p) ; }

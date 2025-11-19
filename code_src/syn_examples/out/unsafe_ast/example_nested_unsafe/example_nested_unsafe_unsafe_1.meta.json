@@ -1,0 +1,7 @@
+{
+  "file": "example_nested_unsafe",
+  "index": 1,
+  "line": 3,
+  "column": 4,
+  "tokens": "unsafe { let y = { unsafe { x + 1 } } ; println ! (\"y = {}\" , y) ; }"
+}

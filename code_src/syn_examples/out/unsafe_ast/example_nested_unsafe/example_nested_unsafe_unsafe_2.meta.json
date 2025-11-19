@@ -1,0 +1,7 @@
+{
+  "file": "example_nested_unsafe",
+  "index": 2,
+  "line": 4,
+  "column": 18,
+  "tokens": "unsafe { x + 1 }"
+}

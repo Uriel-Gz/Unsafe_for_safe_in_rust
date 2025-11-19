@@ -1,0 +1,7 @@
+{
+  "file": "example1",
+  "index": 2,
+  "line": 8,
+  "column": 12,
+  "tokens": "unsafe { * (& x as * const i32) }"
+}

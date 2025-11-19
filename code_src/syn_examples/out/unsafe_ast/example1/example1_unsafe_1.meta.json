@@ -1,0 +1,7 @@
+{
+  "file": "example1",
+  "index": 1,
+  "line": 3,
+  "column": 4,
+  "tokens": "unsafe { let p = & x as * const i32 ; println ! (\"{:p}\" , p) ; }"
+}
