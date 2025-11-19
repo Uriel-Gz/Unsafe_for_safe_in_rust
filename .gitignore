@@ -1,7 +1,7 @@
 # Directorios y archivos que se ignoran
 
 # Directorio de compilación
-structures/target/
+target/
 
 # Archivos de depuración
 .debug/
@@ -133,3 +133,6 @@ __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
+
+# Ignorar el programa que hace practicamente lo mismo que este repo
+SafeNet-main/
