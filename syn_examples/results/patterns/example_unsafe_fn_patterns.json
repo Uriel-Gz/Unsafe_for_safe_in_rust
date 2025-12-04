@@ -1,0 +1,26 @@
+[
+  {
+    "file": "example_unsafe_fn",
+    "kind": "unsafe_block",
+    "index": 1,
+    "line": 4,
+    "column": 12,
+    "snippet": "unsafe { * a }"
+  },
+  {
+    "file": "example_unsafe_fn",
+    "kind": "deref_expr",
+    "index": 2,
+    "line": 4,
+    "column": 21,
+    "snippet": "a"
+  },
+  {
+    "file": "example_unsafe_fn",
+    "kind": "unsafe_block",
+    "index": 3,
+    "line": 8,
+    "column": 4,
+    "snippet": "unsafe { dangerous () }"
+  }
+]

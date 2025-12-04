@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <style>
+        a:hover{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<pre>
+<h3>In the repository (subfolder/s) examples</h3>
+In the file: <a onclick="cargarArchivo('../../examples/example_unsafe_trait.rs','unsafe_block_example_unsafe_trait_1','24')"><em>example_unsafe_trait</em></a> linea 24 columna 4
+<code class="rust" style="border-radius: 10px;">
+unsafe { let s = S ; s . unsafe_method () ; }</code>
+<code class="rust" id="unsafe_block_example_unsafe_trait_1" style="overflow: auto; height: 150px; display: none;"></code>
+
+</pre>
+    <script>
+        let f = false;
+        function cargarArchivo(archivo, id, line) {
+            if (!f) {
+                f = true;
+                fetch(archivo)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Error al cargar el archivo');
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        const bloque = document.getElementById(id);
+                        bloque.innerText = data;
+                        bloque.style.display = 'block'; // Mostrar el contenido
+                        bloque.scrollTop = parseInt(line, 10) * 15; // Mostrar el contenido
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }else{
+                    f = false;
+                    const bloque = document.getElementById(id);
+                    bloque.innerText = '';
+                    bloque.style.display = 'none'; // Mostrar el contenido
+                }
+            }
+    </script>
+</body>
+</html>

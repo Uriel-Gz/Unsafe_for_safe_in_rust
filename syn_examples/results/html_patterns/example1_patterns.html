@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <style>
+        a:hover{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<pre>
+<h3>In the repository (subfolder/s) examples</h3>
+In the file: <a onclick="cargarArchivo('../../examples/example1.rs','unsafe_block_example1_1','3')"><em>example1</em></a> linea 3 columna 4
+<code class="rust" style="border-radius: 10px;">
+unsafe { let p = & x as * const i32 ; println ! ("{:p}" , p) ; }</code>
+<code class="rust" id="unsafe_block_example1_1" style="overflow: auto; height: 150px; display: none;"></code>
+<h3>In the repository (subfolder/s) examples</h3>
+In the file: <a onclick="cargarArchivo('../../examples/example1.rs','unsafe_block_example1_2','8')"><em>example1</em></a> linea 8 columna 12
+<code class="rust" style="border-radius: 10px;">
+unsafe { * (& x as * const i32) }</code>
+<code class="rust" id="unsafe_block_example1_2" style="overflow: auto; height: 150px; display: none;"></code>
+<h3>In the repository (subfolder/s) examples</h3>
+In the file: <a onclick="cargarArchivo('../../examples/example1.rs','unsafe_block_example1_3','8')"><em>example1</em></a> linea 8 columna 21
+<code class="rust" style="border-radius: 10px;">
+(& x as * const i32)</code>
+<code class="rust" id="unsafe_block_example1_3" style="overflow: auto; height: 150px; display: none;"></code>
+<h3>In the repository (subfolder/s) examples</h3>
+In the file: <a onclick="cargarArchivo('../../examples/example1.rs','unsafe_block_example1_4','10')"><em>example1</em></a> linea 10 columna 4
+<code class="rust" style="border-radius: 10px;">
+unsafe { let z = y + 10 ; println ! ("z = {}" , z) ; }</code>
+<code class="rust" id="unsafe_block_example1_4" style="overflow: auto; height: 150px; display: none;"></code>
+<h3>In the repository (subfolder/s) examples</h3>
+In the file: <a onclick="cargarArchivo('../../examples/example1.rs','unsafe_block_example1_5','15')"><em>example1</em></a> linea 15 columna 4
+<code class="rust" style="border-radius: 10px;">
+unsafe { let arr = [1 , 2 , 3 , 4 , 5] ; let ptr = arr . as_ptr () . add (2) ; println ! ("Third element: {}" , * ptr) ; }</code>
+<code class="rust" id="unsafe_block_example1_5" style="overflow: auto; height: 150px; display: none;"></code>
+
+</pre>
+    <script>
+        let f = false;
+        function cargarArchivo(archivo, id, line) {
+            if (!f) {
+                f = true;
+                fetch(archivo)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Error al cargar el archivo');
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        const bloque = document.getElementById(id);
+                        bloque.innerText = data;
+                        bloque.style.display = 'block'; // Mostrar el contenido
+                        bloque.scrollTop = parseInt(line, 10) * 15; // Mostrar el contenido
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }else{
+                    f = false;
+                    const bloque = document.getElementById(id);
+                    bloque.innerText = '';
+                    bloque.style.display = 'none'; // Mostrar el contenido
+                }
+            }
+    </script>
+</body>
+</html>

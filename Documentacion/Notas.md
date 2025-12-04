@@ -90,8 +90,9 @@ ideas:
 
 [06/11/2025] - [11/11/2025] Profundizo en una descripcion detallada de la gramatica general que deberia usar la herramienta, ajusto los casos de u_desreference y agrego algunos casos para analizar en el archivo de pruebas.
 
-[14/11/2025] Plasmo las dideas de loq ue he estado haciendo, tratare de resumir todo el funiconamiento para ser consiso.
+[14/11/2025] Plasmo las ideas de lo que he estado haciendo, tratare de resumir todo el funionamiento para ser consiso.
 
+[25/11/2025] - [30/11/2025] Genero una version en rust del extractor, con algunas modificaciones y extras.
 
 ## Casos de uso de codigo unsafe
 

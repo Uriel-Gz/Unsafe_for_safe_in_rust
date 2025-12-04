@@ -1,0 +1,10 @@
+[
+  {
+    "file": "example_unsafe_trait",
+    "kind": "unsafe_block",
+    "index": 1,
+    "line": 24,
+    "column": 4,
+    "snippet": "unsafe { let s = S ; s . unsafe_method () ; }"
+  }
+]
