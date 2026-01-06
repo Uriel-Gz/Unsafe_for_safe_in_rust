@@ -52,8 +52,8 @@ impl VisitMut for UnsafeReplacer {
 
 fn main() -> Result<()> {
     let directory = PathBuf::from("examples");
-    let out_dir = PathBuf::from("results");
-    let out_dir_ch = PathBuf::from("results_changed");
+    let out_dir = PathBuf::from("result");
+    let out_dir_ch = PathBuf::from("result_changed");
     fs::create_dir_all(&out_dir)?;
     fs::create_dir_all(&out_dir_ch)?;
 

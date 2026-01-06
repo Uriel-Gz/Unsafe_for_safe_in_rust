@@ -1,7 +1,0 @@
-{
-  "file": "example_unsafe_fn",
-  "index": 1,
-  "line": 4,
-  "column": 12,
-  "tokens": "unsafe { * a }"
-}

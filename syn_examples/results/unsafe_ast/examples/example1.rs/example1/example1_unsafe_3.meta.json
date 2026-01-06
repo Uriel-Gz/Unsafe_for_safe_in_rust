@@ -1,7 +1,0 @@
-{
-  "file": "example1",
-  "index": 3,
-  "line": 10,
-  "column": 4,
-  "tokens": "unsafe { let z = y + 10 ; println ! (\"z = {}\" , z) ; }"
-}

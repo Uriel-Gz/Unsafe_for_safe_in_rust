@@ -1,1 +1,0 @@
-unsafe { let s = S ; s . unsafe_method () ; }

@@ -202,4 +202,66 @@ impl<'ast> Visit<'ast> for PatternDetector {
         }
         syn::visit::visit_expr_assign(self, node);
     }
+
+    // Verifica expresiones unarias como negación o dereferencia adicional
+    fn visit_expr_unary(&mut self, node: &'ast ExprUnary) {
+        // Ejemplo: detectar negación de punteros o valores críticos
+        if matches!(node.op, UnOp::Not(_)) {
+            let tok = node.to_token_stream().to_string();
+            self.push("unary_not_expr", node.span(), tok);
+        }
+        syn::visit::visit_expr_unary(self, node);
+    }
+
+    // Verifica tipos puntero raw en declaraciones
+    fn visit_type_ptr(&mut self, node: &'ast syn::TypePtr) {
+        let tok = node.to_token_stream().to_string();
+        self.push("raw_pointer_type", node.span(), tok);
+        syn::visit::visit_type_ptr(self, node);
+    }
+
+    // Verifica expresiones de dirección raw (&raw const o &raw mut)
+    fn visit_expr_raw_addr(&mut self, node: &'ast syn::ExprRawAddr) {
+        let tok = node.to_token_stream().to_string();
+        self.push("raw_addr_expr", node.span(), tok);
+        syn::visit::visit_expr_raw_addr(self, node);
+    }
+
+    // Verifica llamadas a funciones, potencialmente unsafe
+    fn visit_expr_call(&mut self, node: &'ast syn::ExprCall) {
+        // Ejemplo: detectar llamadas con argumentos potencialmente peligrosos
+        if node.args.len() > 5 {
+            let tok = node.to_token_stream().to_string();
+            self.push("large_call_args", node.span(), tok);
+        }
+        syn::visit::visit_expr_call(self, node);
+    }
+
+    // Verifica indexaciones de arrays o slices
+    fn visit_expr_index(&mut self, node: &'ast syn::ExprIndex) {
+        // Ejemplo: detectar indexación sin bounds checking explícito
+        let tok = node.to_token_stream().to_string();
+        self.push("array_index_expr", node.span(), tok);
+        syn::visit::visit_expr_index(self, node);
+    }
+
+    // Verifica expresiones de referencia (& o &mut)
+    fn visit_expr_reference(&mut self, node: &'ast syn::ExprReference) {
+        // Ejemplo: detectar referencias mutables a datos sensibles
+        if node.mutability.is_some() {
+            let tok = node.to_token_stream().to_string();
+            self.push("mutable_ref_expr", node.span(), tok);
+        }
+        syn::visit::visit_expr_reference(self, node);
+    }
+
+    // Verifica operaciones binarias, como aritmética de punteros
+    fn visit_expr_binary(&mut self, node: &'ast syn::ExprBinary) {
+        // Ejemplo: detectar operaciones aritméticas potencialmente inseguras
+        if matches!(node.op, syn::BinOp::Add(_) | syn::BinOp::Sub(_)) {
+            let tok = node.to_token_stream().to_string();
+            self.push("binary_arith_expr", node.span(), tok);
+        }
+        syn::visit::visit_expr_binary(self, node);
+    }
 }

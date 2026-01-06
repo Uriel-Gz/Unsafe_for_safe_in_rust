@@ -1,1 +1,0 @@
-unsafe { let z = y + 10 ; println ! ("z = {}" , z) ; }

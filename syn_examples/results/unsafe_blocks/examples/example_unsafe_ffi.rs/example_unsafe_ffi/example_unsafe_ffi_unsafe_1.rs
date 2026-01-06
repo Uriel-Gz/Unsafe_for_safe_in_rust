@@ -1,1 +1,0 @@
-unsafe { let s = b"hello\0" . as_ptr () as * const i8 ; puts (s) ; }

@@ -1,7 +1,0 @@
-{
-  "file": "example_unsafe_trait",
-  "index": 1,
-  "line": 24,
-  "column": 4,
-  "tokens": "unsafe { let s = S ; s . unsafe_method () ; }"
-}

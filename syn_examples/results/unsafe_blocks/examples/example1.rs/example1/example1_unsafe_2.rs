@@ -1,1 +1,0 @@
-unsafe { * (& x as * const i32) }

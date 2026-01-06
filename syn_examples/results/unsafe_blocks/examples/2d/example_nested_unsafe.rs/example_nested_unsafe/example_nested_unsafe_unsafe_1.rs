@@ -1,1 +1,0 @@
-unsafe { let y = { unsafe { x + 1 } } ; println ! ("y = {}" , y) ; }
