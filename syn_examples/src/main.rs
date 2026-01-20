@@ -1,4 +1,5 @@
 use std::fs;
+use std::io::{self, Write};
 use std::path::{Path, PathBuf};
 use anyhow::{Context, Result};
 use syn::{visit_mut::VisitMut, visit::Visit, File, Expr, ExprUnsafe};
@@ -13,55 +14,96 @@ use std::collections::HashMap;
 use walkdir::WalkDir;
 mod extractor;
 mod modifier;
-use modifier::modify;
+use modifier::replace_unsafe_code;
 use extractor::{process_file, extract_unsafe_blocks};
 
-struct UnsafeReplacer;
+/// Display the main menu and return user's choice
+pub fn display_menu() -> String {
+    println!("\n{}Seleccione una opción:{}", "\x1b[0m", "\x1b[0m\n");
+    println!("{}(1) {}\x1b[0mExtraer código unsafe", "\x1b[33m", "\x1b[0m");
+    println!("{}(2) {}\x1b[0mReemplazar código unsafe", "\x1b[93m", "\x1b[0m");
+    println!("{}(3) \x1b[0mSalir\n", "\x1b[91m");
 
-impl VisitMut for UnsafeReplacer {
-    fn visit_expr_mut(&mut self, node: &mut Expr) {
-        // Recurse first
-        syn::visit_mut::visit_expr_mut(self, node);
+    print!("Ingrese su elección: ");
+    io::stdout().flush().unwrap();
 
-        // If this expression is an unsafe block, we want to rewrite it
-        if let Expr::Unsafe(u) = node {
-            // Convert the unsafe block to tokens, replace the 'unsafe' ident
-            let mut tokens = u.to_token_stream().into_iter().collect::<Vec<TokenTree>>();
-            // Find first ident token equal to "unsafe" and replace it
-            for i in 0..tokens.len() {
-                match &tokens[i] {
-                    TokenTree::Ident(id) => {
-                        if id.to_string() == "unsafe" {
-                            tokens[i] = TokenTree::Ident(proc_macro2::Ident::new("unp_reemplazado", id.span()));
-                            break;
-                        }
-                    }
-                    _ => {}
+    let mut input = String::new();
+    io::stdin().read_line(&mut input).unwrap();
+    input.trim().to_string()
+}
+
+/// Display the welcome banner
+pub fn show_init() {
+    // Clear terminal
+    print!("\x1B[2J\x1B[1;1H");
+
+    println!("{}\x1b[94m             ================================================== \x1b[0m", "");
+    println!("\x1b[94m         ====\x1b[91m    #### \x1b[92m #    #                           \x1b[94m       ====           \x1b[0m");
+    println!("\x1b[94m     ====\x1b[91m        #   #\x1b[92m ##  ##  ###  #####  ####  #       \x1b[94m          ====       \x1b[0m");
+    println!("\x1b[94m ====\x1b[91m            #### \x1b[92m # ## # #   #  #   # #   # ####   \x1b[94m               ====   \x1b[0m");
+    println!("\x1b[94m ====\x1b[91m            #   #\x1b[92m #    # #   #  #     ####  #   #   \x1b[94m              ====   \x1b[0m");
+    println!("\x1b[94m     ====\x1b[91m        #   #\x1b[92m #    #  ###   #     #     #   #   \x1b[94m          ====       \x1b[0m");
+    println!("\x1b[94m         ====\x1b[97m                                           lite \x1b[94m  ====           \x1b[0m");
+    println!("\x1b[94m             ================================================== \x1b[0m");
+    println!("\n<< \x1b[92mAnalizador\x1b[97m, \x1b[92mextractor \x1b[92my \x1b[92mmodificador \x1b[97mde código unsafe para Rust\x1b[0m >>\n");
+}
+
+/// Get file path from user input
+pub fn get_file_path(prompt: &str) -> String {
+    print!("{}", prompt);
+    io::stdout().flush().unwrap();
+
+    let mut input = String::new();
+    io::stdin().read_line(&mut input).unwrap();
+    input.trim().to_string()
+}
+
+/// Main event loop
+fn main() -> Result<()> {
+    show_init();
+
+    let out_dir = PathBuf::from("result");
+    let out_dir_ch = PathBuf::from("result_changed");
+    let report = PathBuf::from("report");
+    fs::create_dir_all(&out_dir)?;
+    fs::create_dir_all(&out_dir_ch)?;
+    fs::create_dir_all(&report)?;
+
+    loop {
+        let choice = display_menu();
+
+        match choice.as_str() {
+            "1" => {
+                let path = get_file_path("Ingrese la ruta del archivo Rust: ");
+                if Path::new(&path).exists() {
+                    println!("\n\x1b[92m✓ Extrayendo código unsafe...\x1b[0m");
+                    let path_to = PathBuf::from(path.clone());
+                    extractor::extract_unsafe_blocks(&path_to, &out_dir)?;
+                    println!("\x1b[92m✓ Extracción completada\x1b[0m");
+                } else {
+                    println!("\x1b[91m✗ El archivo no existe\x1b[0m");
                 }
             }
-
-            // Re-parse tokens into an Expr
-            let ts: TokenStream = TokenStream::from_iter(tokens.into_iter());
-            if let Ok(new_expr) = syn::parse2::<Expr>(ts) {
-                *node = new_expr;
+            "2" => {
+                let path = get_file_path("Ingrese la ruta del archivo Rust: ");
+                if Path::new(&path).exists() {
+                    println!("\n\x1b[92m✓ Reemplazando código unsafe...\x1b[0m");
+                    let path_to = PathBuf::from(path.clone());
+                    modifier::replace_unsafe_code(&path_to, &out_dir_ch, Some(&report))?;
+                    println!("\x1b[92m✓ Reemplazo completado\x1b[0m");
+                } else {
+                    println!("\x1b[91m✗ El archivo no existe\x1b[0m");
+                }
+            }
+            "3" => {
+                println!("\nSaliendo del programa.");
+                break;
+            }
+            _ => {
+                println!("\x1b[91mOpción inválida. Por favor, intente de nuevo.\x1b[0m");
             }
         }
     }
-}
-
-
-fn main() -> Result<()> {
-    let directory = PathBuf::from("examples");
-    let out_dir = PathBuf::from("result");
-    let out_dir_ch = PathBuf::from("result_changed");
-    fs::create_dir_all(&out_dir)?;
-    fs::create_dir_all(&out_dir_ch)?;
-
-    //extractor de codigo en formato de bloques unsafe y html
-    extract_unsafe_blocks(&directory, &out_dir)?;
-
-    //modificador de codigo, reemplaza unsafe por unp_reemplazado
-    modify(&directory, &out_dir_ch)?;
 
     Ok(())
 }
