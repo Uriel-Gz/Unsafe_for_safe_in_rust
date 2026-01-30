@@ -21,7 +21,7 @@ impl TemplateManager {
         let mut templates = HashMap::new();
         
         // Templates para patrones específicos
-        templates.insert("deref_expr".to_string(), "safe_dereference({var})".to_string());
+        templates.insert("deref_expr".to_string(), "mem::replace({var})".to_string());
         templates.insert("assign_to_deref".to_string(), "safe_assign({var}, {expr})".to_string());
         templates.insert("raw_addr_expr".to_string(), "safe_raw_addr({var})".to_string());
         templates.insert("fn_returns_raw_pointer".to_string(), "/* WARNING: Function returns raw pointer */".to_string());
@@ -136,7 +136,7 @@ fn validate_morphology(expr_unsafe: &ExprUnsafe, pattern_kind: &str) -> bool {
 /// Extrae elementos dinámicos del bloque unsafe basado en el tipo de patrón
 fn extract_dynamic_elements(expr_unsafe: &ExprUnsafe, pattern_kind: &str) -> HashMap<String, String> {
     let mut elements = HashMap::new();
-    let block = &expr_unsafe.block;
+    let block = &expr_unsafe.block; 
 
     match pattern_kind {
         "deref_expr" => {
@@ -235,7 +235,7 @@ impl<'a> VisitMut for PatternBasedModifier<'a> {
             if let Some(pattern) = self.find_matching_pattern(expr_unsafe) {
                 // Validación adicional: verifica que la morfología sea correcta
                 if !validate_morphology(expr_unsafe, &pattern.kind) {
-                    return; // No procesa si la morfología no coincide
+                    return; // No procesa si la morfología no coincide - deja el unsafe intacto
                 }
 
                 if let Some(template) = self.templates.get_template(&pattern.kind) {
@@ -286,14 +286,16 @@ impl<'a> VisitMut for PatternBasedModifier<'a> {
                         }
                     } else if !statements.is_empty() {
                         let block = expr_unsafe.block.clone();
-                        *node = syn::parse_quote!({
-                            #block
-                        });
+                        *node = Expr::Unsafe(expr_unsafe.clone());
+                        // *node = syn::parse_quote!({
+                        //     #block
+                        // });
                     } else {
                         *node = syn::parse_quote!(());
                     }
                 }
             }
+            // Si NO encuentra un patrón coincidente, deja el bloque unsafe intacto
         }
     }
 }
@@ -323,15 +325,9 @@ pub fn replace_unsafe_code(
         .into_iter()
         .filter_map(|e| e.ok())
         .filter(|e| e.path().is_file())
-        .filter(|e| {
-            e.path()
-                .extension()
-                .and_then(|ext| ext.to_str())
-                .map(|ext| ext == "rs")
-                .unwrap_or(false)
-        })
     {
         let input_file_path = entry.path();
+        print!("\nProcessing file: {} ... ", input_file_path.display());
 
         // Calcula la ruta relativa desde el directorio de entrada
         let relative_path = match input_file_path.strip_prefix(input_dir) {
@@ -356,56 +352,76 @@ pub fn replace_unsafe_code(
             }
         };
 
-        let mut ast = match parse_file(&source_code) {
-            Ok(ast) => ast,
-            Err(e) => {
-                error_count += 1;
-                eprintln!("\x1b[91m✗ Error parsing\x1b[0m {}: {}", input_file_path.display(), e);
-                continue;
-            }
-        };
+        let mut patterns: Vec<PatternInfo> = Vec::new();
 
-        // Detecta patrones
-        let mut detector = PatternDetector::new(
-            input_file_path
+        if entry.path().extension().and_then(|f| f.to_str()) == Some("rs") {
+            
+            let mut ast = match parse_file(&source_code) {
+                Ok(ast) => ast,
+                Err(e) => {
+                    error_count += 1;
+                    eprintln!("\x1b[91m✗ Error parsing\x1b[0m {}: {}", input_file_path.display(), e);
+                    continue;
+                }
+            };
+
+            // Detecta patrones
+            let mut detector = PatternDetector::new(
+                input_file_path
                 .file_stem()
                 .and_then(|s| s.to_str())
                 .unwrap_or("file"),
-        );
-        detector.visit_file(&ast);
-        let patterns = detector.into_patterns();
-
-        // Agrupa patrones por tipo (solo si se requiere reporte)
-        if patterns_dir.is_some() {
-            for pattern in &patterns {
-                all_patterns
+            );
+            detector.visit_file(&ast);
+            patterns = detector.into_patterns();
+            
+            // Agrupa patrones por tipo (solo si se requiere reporte)
+            if patterns_dir.is_some() {
+                for pattern in &patterns {
+                    all_patterns
                     .entry(pattern.kind.clone())
                     .or_insert_with(Vec::new)
                     .push(pattern.clone());
+                }
             }
-        }
-
-        // Aplica transformaciones
-        let mut modifier = PatternBasedModifier::new(&templates, &patterns);
-        modifier.visit_file_mut(&mut ast);
-
-        // Escribe el resultado formateado
-        let modified_code = prettyplease::unparse(&ast);
-
-        if let Some(parent) = output_file_path.parent() {
-            if let Err(e) = fs::create_dir_all(parent) {
+    
+            // Aplica transformaciones
+            let mut modifier = PatternBasedModifier::new(&templates, &patterns);
+            modifier.visit_file_mut(&mut ast);
+            
+            // Escribe el resultado formateado
+            let modified_code = prettyplease::unparse(&ast);
+            
+            if let Some(parent) = output_file_path.parent() {
+                if let Err(e) = fs::create_dir_all(parent) {
+                    error_count += 1;
+                    eprintln!("\x1b[91m✗ Error creating directory\x1b[0m {}: {}", parent.display(), e);
+                    continue;
+                }
+            }
+            
+            if let Err(e) = fs::write(&output_file_path, modified_code) {
                 error_count += 1;
-                eprintln!("\x1b[91m✗ Error creating directory\x1b[0m {}: {}", parent.display(), e);
+                eprintln!("\x1b[91m✗ Error writing\x1b[0m {}: {}", output_file_path.display(), e);
+                continue;
+            }
+        
+        } else {
+            // Si no es un archivo .rs, simplemente cópialo
+            if let Some(parent) = output_file_path.parent() {
+                if let Err(e) = fs::create_dir_all(parent) {
+                    error_count += 1;
+                    eprintln!("\x1b[91m✗ Error creating directory\x1b[0m {}: {}", parent.display(), e);
+                    continue;
+                }
+            }
+
+            if let Err(e) = fs::copy(&input_file_path, &output_file_path) {
+                error_count += 1;
+                eprintln!("\x1b[91m✗ Error copying\x1b[0m {}: {}", input_file_path.display(), e);
                 continue;
             }
         }
-
-        if let Err(e) = fs::write(&output_file_path, modified_code) {
-            error_count += 1;
-            eprintln!("\x1b[91m✗ Error writing\x1b[0m {}: {}", output_file_path.display(), e);
-            continue;
-        }
-
         processed_count += 1;
         println!(
             "\x1b[92m✓ Processed:\x1b[0m {} ({} patterns)",
