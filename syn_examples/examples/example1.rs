@@ -18,4 +18,8 @@ fn main() {
         println!("Third element: {}", *ptr);
     }
     println!("y = {}", y);
+
+unsafe{
+    *y;
+}
 }

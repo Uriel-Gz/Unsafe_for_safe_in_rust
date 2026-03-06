@@ -6,11 +6,12 @@ use std::fs;
 use std::path::Path;
 use syn::visit::Visit;
 use syn::spanned::Spanned;
-use serde_json;
+use serde_json; 
 use syn::{Expr, ExprAssign, ExprUnsafe, ItemFn, Type, ExprUnary, UnOp};
 
 #[derive(Serialize)]
 #[derive(Clone)]
+#[derive(PartialEq)]
 pub struct PatternInfo {
     pub file: String,
     pub kind: String,
@@ -122,9 +123,51 @@ impl PatternDetector {
         Ok(())
     }
 
-    /// Consume detector and return collected patterns
-    pub fn into_patterns(self) -> Vec<PatternInfo> {
+    /// Consume detector and return collected patterns, removing duplicates/nested ones
+    pub fn into_patterns(mut self) -> Vec<PatternInfo> {
+        self.patterns = self.filter_nested_patterns();
         self.patterns
+    }
+
+    /// Filtra patrones anidados o duplicados en la misma línea
+    /// Mantiene los patrones más amplios y elimina los que están contenidos dentro
+    fn filter_nested_patterns(&self) -> Vec<PatternInfo> {
+        let mut filtered = Vec::new();
+
+        for pattern in &self.patterns {
+            let mut should_add = true; 
+
+            // Verifica si este patrón está contenido dentro de otro existente en la misma línea
+            for other in &self.patterns {
+                if pattern.line != other.line && pattern == other {
+                    continue;
+                }
+
+                // Si el snippet de 'other' contiene el de 'pattern' y están en la misma línea,
+                // el patrón más pequeño es redundante
+                if other.snippet.contains(&pattern.snippet) && other.snippet.len() > pattern.snippet.len() || 
+                   pattern.snippet.contains(&other.snippet) && pattern.snippet.len() > other.snippet.len(){
+                    should_add = false;
+                    break;
+                }
+            }
+
+            if should_add {
+                // También verifica que no esté duplicado en el resultado filtrado
+                let is_duplicate = filtered.iter().any(|p: &PatternInfo| {
+                    p.line == pattern.line 
+                        || p.column == pattern.column 
+                        && p.kind == pattern.kind
+                        && p.snippet == pattern.snippet
+                });
+
+                if !is_duplicate {
+                    filtered.push(pattern.clone());
+                }
+            }
+        }
+
+        filtered
     }
 
     pub fn save_html(&self, out_path: &Path, path: &Path) -> Result<()> {
@@ -170,9 +213,18 @@ impl PatternDetector {
 
 impl<'ast> Visit<'ast> for PatternDetector {
     fn visit_expr_unsafe(&mut self, node: &'ast ExprUnsafe) {
-        let tok = node.to_token_stream().to_string();
-        self.push("unsafe_block", node.unsafe_token.span(), tok);
+        // Guarda el contador actual antes de visitar el contenido del bloque
+        let patterns_before = self.patterns.len();
+        
+        // Continúa visitando el contenido del bloque unsafe
         syn::visit::visit_expr_unsafe(self, node);
+        
+        // Si no se detectaron patrones específicos dentro del bloque,
+        // registra el "unsafe_block" genérico
+        if self.patterns.len() == patterns_before {
+            let tok = node.to_token_stream().to_string();
+            self.push("unsafe_block", node.unsafe_token.span(), tok);
+        }
     }
 
     fn visit_item_fn(&mut self, node: &'ast ItemFn) {
@@ -264,4 +316,5 @@ impl<'ast> Visit<'ast> for PatternDetector {
         }
         syn::visit::visit_expr_binary(self, node);
     }
+
 }
