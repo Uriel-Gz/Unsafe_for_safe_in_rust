@@ -94,6 +94,69 @@ ideas:
 
 [25/11/2025] - [30/11/2025] Genero una version en rust del extractor, con algunas modificaciones y extras.
 
+[06/12/2025] Comienzo un analisis de la estructura del ast de rust con la finalidad e poder usarlo para realizar los reemplazos de codigo.
+
+[05/01/2026] Pasos para etapa de reemplazo:
+
+- generar todas las agrupaciones de tipos de codigo unsafe 
+
+- investigar como y donde puedo aplicar los cambios que se pueden detectar atraves del extractor
+
+- completar el archivo modifier
+
+
+
+
+## Ventajas sobre `modifier.py`
+
+| Aspecto | Python | Rust |
+|---------|--------|------|
+| Parseador | Token-based | AST-based (syn) |
+| Type Safety | No | Sí |
+| Performance | Interpretado | Compilado nativo |
+| Detección de patrones | Manual | Automática |
+| Templates | No | Dinámicos con placeholders |
+| Reportes | No | JSON + estadísticas |
+| Extensibilidad | Difícil | Fácil (agregar templates) |
+
+
+
+## 🔄 Flujo de Datos
+
+```
+┌─────────────────────────────────────┐
+│ Directorio de entrada (archivos .rs) │
+└────────┬────────────────────────────┘
+         │
+         ↓
+┌────────────────────────────────────┐
+│ replace_unsafe_code() [MAIN]        │
+│                                     │
+│ ┌──────────────────────────────┐   │
+│ │ Para cada archivo .rs:       │   │
+│ │                              │   │
+│ │ 1. Leer contenido            │   │
+│ │ 2. Parsear → AST             │   │
+│ │ 3. Detectar patrones         │   │
+│ │ 4. Aplicar transformaciones  │   │
+│ │ 5. Formatear                 │   │
+│ │ 6. Escribir resultado        │   │
+│ │                              │   │
+│ └──────────────────────────────┘   │
+│                                     │
+│ ┌──────────────────────────────┐   │
+│ │ Si patterns_dir.is_some():   │   │
+│ │ → Generar summary.json       │   │
+│ └──────────────────────────────┘   │
+└────────┬────────────────────────────┘
+         │
+         ├──→ Directorio de salida (código transformado)
+         └──→ patterns/summary.json (estadísticas, opcional)
+```
+
+
+
+
 ## Casos de uso de codigo unsafe
 
 ### Asiganciones

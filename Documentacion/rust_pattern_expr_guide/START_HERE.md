@@ -53,7 +53,7 @@ Empieza aquí:
 1. [RESUMEN_EJECUTIVO.md](RESUMEN_EJECUTIVO.md) (5 min)
 2. [EJEMPLOS_EXTRACT_DYNAMIC.md#ejemplo-1](EJEMPLOS_EXTRACT_DYNAMIC.md#ejemplo-1-deref-simple) (10 min)
 3. [EJEMPLOS_EXTRACT_DYNAMIC.md#ejemplo-2](EJEMPLOS_EXTRACT_DYNAMIC.md#ejemplo-2-asignación-a-puntero) (10 min)
-4. [src/extract_helpers.rs](src/extract_helpers.rs) - ojear funciones (5 min)
+4. [./extract_helpers.rs](./extract_helpers.rs) - ojear funciones (5 min)
 
 **Al final sabrás:** Cómo funciona con ejemplos concretos
 
