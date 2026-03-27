@@ -10,6 +10,7 @@ use syn::visit::Visit;
 use syn::visit_mut::VisitMut;
 use syn::{Expr, ExprUnsafe, ExprUnary, ExprPath, File, parse_file, UnOp};
 use walkdir::WalkDir;
+use crate::config::INTO_UNSAFE_BLOCKS;
 
 /// Gestor de templates para reemplazos seguros
 struct TemplateManager {
@@ -21,14 +22,11 @@ impl TemplateManager {
         let mut templates = HashMap::new();
         
         // Templates para patrones específicos
-        templates.insert("deref_expr".to_string(), "mem::replace({var})".to_string());
-        templates.insert("assign_to_deref".to_string(), "safe_assign({var}, {expr})".to_string());
+        templates.insert("deref_expr".to_string(), "Box::new({var});".to_string());
+        templates.insert("assign_to_deref".to_string(), "mem::replace({var}, {expr});".to_string());
         templates.insert("raw_addr_expr".to_string(), "safe_raw_addr({var})".to_string());
-        templates.insert("fn_returns_raw_pointer".to_string(), "/* WARNING: Function returns raw pointer */".to_string());
-        templates.insert("raw_pointer_type".to_string(), "{var}".to_string());
-        templates.insert("binary_arith_expr".to_string(), "safe_pointer_arithmetic({expr})".to_string());
-        templates.insert("array_index_expr".to_string(), "safe_index({expr})".to_string());
-        templates.insert("mutable_ref_expr".to_string(), "safe_mut_ref({var})".to_string());
+        templates.insert("mutable_ref_expr".to_string(), "&mut *{var}.as_mut_ptr()".to_string());
+        templates.insert("unsafe_block".to_string(), "{expr}".to_string());
         
         Self { templates }
     }
@@ -174,6 +172,26 @@ fn extract_dynamic_elements(expr_unsafe: &ExprUnsafe, pattern_kind: &str) -> Has
                 }
             }
         }
+        "mutable_ref_expr" => {
+            // Para &mut *ptr, extrae 'ptr'
+            for stmt in &block.stmts {
+                if let syn::Stmt::Expr(Expr::Reference(expr_ref), _) = stmt {
+                    if expr_ref.mutability.is_some() {
+                        if let Expr::Unary(ExprUnary { op: UnOp::Deref(_), expr, .. }) = &*expr_ref.expr {
+                            if let Expr::Paren(expr_paren) = &**expr {
+                                if let Expr::Cast(cast_expr) = &*expr_paren.expr {
+                                    if let Expr::Path(ExprPath { path, .. }) = &*cast_expr.expr {
+                                        if let Some(ident) = path.get_ident() {
+                                            elements.insert("var".to_string(), ident.to_string());
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         _ => {
             // Para otros patrones, intenta extraer el contenido del bloque
             if !block.stmts.is_empty() {
@@ -301,11 +319,7 @@ impl<'a> VisitMut for PatternBasedModifier<'a> {
 }
 
 /// Función principal que procesa archivos Rust transformando código unsafe basado en patrones
-pub fn replace_unsafe_code(
-    input_dir: &Path,
-    output_dir: &Path,
-    patterns_dir: Option<&Path>,
-) -> Result<()> {
+pub fn replace_unsafe_code(input_dir: &Path, output_dir: &Path, patterns_dir: Option<&Path>) -> Result<()> {
     // Verifica que el directorio de entrada exista
     if !input_dir.is_dir() {
         anyhow::bail!("Input directory does not exist: {}", input_dir.display());
@@ -327,7 +341,6 @@ pub fn replace_unsafe_code(
         .filter(|e| e.path().is_file())
     {
         let input_file_path = entry.path();
-        print!("\nProcessing file: {} ... ", input_file_path.display());
 
         // Calcula la ruta relativa desde el directorio de entrada
         let relative_path = match input_file_path.strip_prefix(input_dir) {

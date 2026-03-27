@@ -14,6 +14,7 @@ use std::collections::HashMap;
 use walkdir::WalkDir;
 mod extractor;
 mod modifier;
+mod config;
 use modifier::replace_unsafe_code;
 use extractor::{process_file, extract_unsafe_blocks};
 
@@ -61,19 +62,17 @@ pub fn get_file_path(prompt: &str) -> String {
 /// Main event loop
 fn main() -> Result<()> {
     show_init();
-
+    
     let out_dir = PathBuf::from("result");
-    let out_dir_ch = PathBuf::from("result_changed");
     let report = PathBuf::from("report");
-    fs::create_dir_all(&out_dir)?;
-    fs::create_dir_all(&out_dir_ch)?;
-    fs::create_dir_all(&report)?;
-
+    let out_dir_ch = PathBuf::from("result_changed");
+    
     loop {
         let choice = display_menu();
-
+        
         match choice.as_str() {
             "1" => {
+                fs::create_dir_all(&out_dir)?;
                 let path = get_file_path("Ingrese la ruta del archivo Rust: ");
                 if Path::new(&path).exists() {
                     println!("\n\x1b[92m✓ Extrayendo código unsafe...\x1b[0m");
@@ -85,6 +84,8 @@ fn main() -> Result<()> {
                 }
             }
             "2" => {
+                fs::create_dir_all(&report)?;
+                fs::create_dir_all(&out_dir_ch)?;
                 let path = get_file_path("Ingrese la ruta del archivo Rust: ");
                 if Path::new(&path).exists() {
                     println!("\n\x1b[92m✓ Reemplazando código unsafe...\x1b[0m");

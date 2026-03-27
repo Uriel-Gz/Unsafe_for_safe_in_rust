@@ -13,7 +13,7 @@ fn main() {
     let mut v = 10;
     let p = v.as_mut_ptr();
     unsafe {
-        *p.add(1) = 42;
+        *p = 42;
     }
 
     unsafe {

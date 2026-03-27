@@ -11,8 +11,18 @@ use std::collections::HashMap;
 use walkdir::WalkDir;
 use crate::pattern_detector;
 use pattern_detector::PatternDetector;
+use crate::config::INTO_UNSAFE_BLOCKS;
 
-/// Visitor that collects all `unsafe { ... }` expression token streams.
+
+#[derive(Serialize)]
+struct UnsafeMeta<'a> {
+    file: &'a str,
+    index: usize,
+    line: usize,
+    column: usize,
+    tokens: &'a str,
+}
+
 struct UnsafeCollector {
     // store tokenstream plus the span of the `unsafe` token for location info
     blocks: Vec<(TokenStream, Span)>,
@@ -45,14 +55,15 @@ pub fn process_file(path: &Path, out_dir: &Path) -> Result<Vec<pattern_detector:
         }
     };
 
-
     // Collect all unsafe blocks for batch analysis and write them separately
     let mut collector = UnsafeCollector::new();
     collector.visit_file(&ast);
+
     if !collector.blocks.is_empty() {
         let stem = path.file_stem().and_then(|s| s.to_str()).unwrap_or("file");
         let unsafe_dir = out_dir.join("unsafe_blocks").join(path).join(stem);
         let unsafe_ast_dir = out_dir.join("unsafe_ast").join(path).join(stem);
+
         fs::create_dir_all(&unsafe_dir)?;
         fs::create_dir_all(&unsafe_ast_dir)?;
 
@@ -64,16 +75,7 @@ pub fn process_file(path: &Path, out_dir: &Path) -> Result<Vec<pattern_detector:
             fs::write(&fpath, &content).with_context(|| format!("writing {}", fpath.display()))?;
             println!("Extracted unsafe block to {}", fpath.display());
 
-            // Write a small metadata JSON file with span/location and the token stream
-            #[derive(Serialize)]
-            struct UnsafeMeta<'a> {
-                file: &'a str,
-                index: usize,
-                line: usize,
-                column: usize,
-                tokens: &'a str,
-            }
-
+            // Write a small metadata with relevant info
             let meta = {
                 let loc = span.start();
                 UnsafeMeta {
@@ -88,22 +90,27 @@ pub fn process_file(path: &Path, out_dir: &Path) -> Result<Vec<pattern_detector:
             let meta_json = serde_json::to_string_pretty(&meta)?;
             let meta_fname = format!("{}_unsafe_{}.meta.json", stem, i + 1);
             let meta_path = unsafe_ast_dir.join(&meta_fname);
+
             fs::write(&meta_path, meta_json).with_context(|| format!("writing {}", meta_path.display()))?;
-            // println!("Wrote unsafe AST metadata to {}", meta_path.display());
         }
     }
 
     // Detect patterns using pattern_detector and return patterns
-    let mut detector = PatternDetector::new(path.file_stem().and_then(|s| s.to_str()).unwrap_or("file"));
+    let mut detector = PatternDetector::new(path.file_stem()
+                                                                            .and_then(|s| s.to_str())
+                                                                            .unwrap_or("file"));
     detector.visit_file(&ast);
-    let _ = detector.save_to(out_dir)?; // optional: save per-file patterns
+    let _ = detector.filter_nested_patterns()?;
+
+    let _ = detector.save_to(out_dir)?; // optional: save per-file patterns in JSON
     let _ = detector.save_html(out_dir, path)?; // save HTML representation
+
     let patterns = detector.into_patterns();
     Ok(patterns)
 }
 
 pub fn extract_unsafe_blocks(directory: &Path, out_dir: &Path) -> Result<()> {
-       // collector for all patterns across files; we'll aggregate by kind at the end
+    // collector for all patterns across files; we'll aggregate by kind at the end
     let mut all_patterns: Vec<pattern_detector::PatternInfo> = Vec::new();
 
     for entry in WalkDir::new(directory).into_iter().filter_map(|e| e.ok()) {
@@ -124,9 +131,10 @@ pub fn extract_unsafe_blocks(directory: &Path, out_dir: &Path) -> Result<()> {
     // write aggregated file
     let patterns_dir = out_dir.join("patterns");
     fs::create_dir_all(&patterns_dir)?;
+    
     let agg_path = patterns_dir.join("aggregated_by_kind.json");
     let agg_json = serde_json::to_string_pretty(&by_kind)?;
+
     fs::write(&agg_path, agg_json)?;
-    // println!("Wrote aggregated patterns to {}", agg_path.display());
     Ok(())
 }
