@@ -7,7 +7,7 @@ use std::path::Path;
 use syn::visit::Visit;
 use syn::spanned::Spanned;
 use serde_json; 
-use syn::{Expr, ExprAssign, ExprBlock, ExprReference, ExprUnary, ExprUnsafe, ItemFn, Type, UnOp};
+use syn::{Expr, ExprAssign, ExprBlock, ExprReference, ExprUnary, ExprUnsafe, ItemFn, Type, UnOp, ExprCast};
 use crate::config::INTO_UNSAFE_BLOCKS;
 
 #[derive(Serialize)]
@@ -20,6 +20,7 @@ pub struct PatternInfo {
     pub line: usize,
     pub column: usize,
     pub snippet: String,
+    pub localblock: String,
 }
 
 #[derive(Clone)]
@@ -110,7 +111,18 @@ impl PatternDetector {
             line: loc.line,
             column: loc.column,
             snippet: tok,
+            localblock: String::new(),
         });
+    }
+
+    fn push_block(&mut self, block: String) {
+        for i in (0..self.patterns.len()).rev() {
+            if self.patterns[i].localblock.is_empty() {
+                self.patterns[i].localblock = block.clone();
+            } else {
+                break; // Asumimos que los bloques están anidados, así que si encontramos uno con bloque ya asignado, los anteriores también lo tendrán
+            }
+        }
     }
 
     pub fn save_to(&self, out_dir: &Path) -> Result<()> {
@@ -228,6 +240,9 @@ impl<'ast> Visit<'ast> for PatternDetector {
                 let tok = node.to_token_stream().to_string();
                 self.push("unsafe_block", node.unsafe_token.span(), tok);
             }
+
+            self.push_block(node.block.to_token_stream().to_string());
+
             INTO_UNSAFE_BLOCKS = false;
         }
     }
@@ -286,7 +301,7 @@ impl<'ast> Visit<'ast> for PatternDetector {
         }
         syn::visit::visit_expr_reference(self, node);
     }
-
+    
     //* Verifica operaciones binarias, como aritmética de punteros
-
+    
 }

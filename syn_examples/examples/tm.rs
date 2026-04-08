@@ -13,10 +13,12 @@ fn main() {
     let mut v = 10;
     let p = v.as_mut_ptr();
     unsafe {
+        let s = 2 + 2;
         *p = 42;
     }
 
     unsafe {
+        let t = 2 + 2;
         *v;
     }
 

@@ -4,11 +4,12 @@ use proc_macro2::TokenStream;
 use quote::{quote, ToTokens};
 use std::collections::HashMap;
 use std::fs;
+use std::ops::Add;
 use std::path::{Path, PathBuf};
 use syn::spanned::Spanned;
 use syn::visit::Visit;
 use syn::visit_mut::VisitMut;
-use syn::{Expr, ExprUnsafe, ExprUnary, ExprPath, File, parse_file, UnOp};
+use syn::{Expr, ExprBlock, ExprPath, ExprUnary, ExprUnsafe, File, UnOp, parse_file};
 use walkdir::WalkDir;
 use crate::config::INTO_UNSAFE_BLOCKS;
 
@@ -22,10 +23,10 @@ impl TemplateManager {
         let mut templates = HashMap::new();
         
         // Templates para patrones específicos
-        templates.insert("deref_expr".to_string(), "Box::new({var});".to_string());
-        templates.insert("assign_to_deref".to_string(), "mem::replace({var}, {expr});".to_string());
-        templates.insert("raw_addr_expr".to_string(), "safe_raw_addr({var})".to_string());
-        templates.insert("mutable_ref_expr".to_string(), "&mut *{var}.as_mut_ptr()".to_string());
+        templates.insert("deref_expr".to_string(), "Box::new(var)".to_string());
+        templates.insert("assign_to_deref".to_string(), "mem::replace(var, expr);".to_string());
+        templates.insert("raw_addr_expr".to_string(), "safe_raw_addr(var)".to_string());
+        // templates.insert("mutable_ref_expr".to_string(), "&mut *{var}.as_mut_ptr()".to_string());
         templates.insert("unsafe_block".to_string(), "{expr}".to_string());
         
         Self { templates }
@@ -47,64 +48,27 @@ fn validate_morphology(expr_unsafe: &ExprUnsafe, pattern_kind: &str) -> bool {
     match pattern_kind {
         "deref_expr" => {
             // Morfología: bloque con expresión de dereference (*var)
-            if block.stmts.len() != 1 {
-                return false;
-            }
-            if let syn::Stmt::Expr(Expr::Unary(ExprUnary { op: UnOp::Deref(_), .. }), _) = &block.stmts[0] {
+           
+            if let syn::Stmt::Expr(Expr::Unary(ExprUnary { op: UnOp::Deref(_), .. }), _) = &block.stmts[block.stmts.len()-1] {
                 return true;
             }
             false
         }
         "assign_to_deref" => {
             // Morfología: bloque con asignación a dereference (*ptr = value)
-            if block.stmts.len() != 1 {
-                return false;
+            for stmt in &block.stmts {
+                 if let syn::Stmt::Expr(Expr::Assign(assign), _) = stmt {
+                    if let Expr::Unary(ExprUnary { op: UnOp::Deref(_), .. }) = &*assign.left {
+                        return true;
+                    }
+                }
             }
-            if let syn::Stmt::Expr(Expr::Assign(assign), _) = &block.stmts[0] {
-                matches!(&*assign.left, Expr::Unary(ExprUnary { op: UnOp::Deref(_), .. }))
-            } else {
-                false
-            }
+            return false;
         }
         "raw_addr_expr" => {
             // Morfología: bloque con expresión de dirección bruta (&raw const/mut var)
-            if block.stmts.len() != 1 {
-                return false;
-            }
+            
             if let syn::Stmt::Expr(Expr::RawAddr(_), _) = &block.stmts[0] {
-                return true;
-            }
-            false
-        }
-        "raw_pointer_type" => {
-            // Morfología: bloque con un identificador de tipo puntero bruto (*const T / *mut T)
-            if block.stmts.is_empty() {
-                return false;
-            }
-            // Verifica que contenga al menos una expresión de tipo
-            for stmt in &block.stmts {
-                if let syn::Stmt::Expr(Expr::Path(_), _) = stmt {
-                    return true;
-                }
-            }
-            false
-        }
-        "binary_arith_expr" => {
-            // Morfología: bloque con operación aritmética binaria
-            if block.stmts.len() != 1 {
-                return false;
-            }
-            if let syn::Stmt::Expr(Expr::Binary(_), _) = &block.stmts[0] {
-                return true;
-            }
-            false
-        }
-        "array_index_expr" => {
-            // Morfología: bloque con indexación de array [idx]
-            if block.stmts.len() != 1 {
-                return false;
-            }
-            if let syn::Stmt::Expr(Expr::Index(_), _) = &block.stmts[0] {
                 return true;
             }
             false
@@ -147,7 +111,7 @@ fn extract_dynamic_elements(expr_unsafe: &ExprUnsafe, pattern_kind: &str) -> Has
                         }
                     }
                 }
-            }
+            }   
         }
         "assign_to_deref" => {
             // Para asignaciones como *ptr = value, extrae 'ptr' y 'value'
@@ -251,25 +215,24 @@ impl<'a> VisitMut for PatternBasedModifier<'a> {
 
         if let Expr::Unsafe(expr_unsafe) = node {
             if let Some(pattern) = self.find_matching_pattern(expr_unsafe) {
-                // Validación adicional: verifica que la morfología sea correcta
-                if !validate_morphology(expr_unsafe, &pattern.kind) {
-                    return; // No procesa si la morfología no coincide - deja el unsafe intacto
-                }
 
                 if let Some(template) = self.templates.get_template(&pattern.kind) {
                     // Extrae elementos dinámicos
                     let elements = extract_dynamic_elements(expr_unsafe, &pattern.kind);
 
+                    println!("Applying pattern '{}'", pattern.kind);
+                    println!("elements: {:?}", elements);
                     // Reemplaza placeholders en el template
                     let mut replacement_code = template.clone();
                     for (key, value) in &elements {
                         replacement_code =
-                            replacement_code.replace(&format!("{{{}}}", key), value);
+                            replacement_code.replace(key, value);   
                     }
 
                     // Si el patrón es "unsafe_block" y no hay template específico,
                     // preserva el contenido
                     if pattern.kind == "unsafe_block" && replacement_code.contains('{') {
+                        println!("UB");
                         // Extrae las sentencias del bloque
                         let statements = &expr_unsafe.block.stmts;
 
@@ -285,16 +248,34 @@ impl<'a> VisitMut for PatternBasedModifier<'a> {
                         } else {
                             *node = syn::parse_quote!(());
                         }
-                    } else if let Ok(new_expr) = syn::parse_str::<Expr>(&replacement_code) {
-                        *node = new_expr;
+                    } else if let Ok(new_expr) = syn::parse_str::<syn::Stmt>(&replacement_code){
+
+                        let mut real_snip = pattern.snippet.clone();
+                        real_snip.push_str(" ;");
+
+                        let new_block = pattern.localblock.replace( &real_snip, &replacement_code);
+                        
+                        if let Ok(block) = syn::parse_str::<syn::ExprBlock>(&new_block) {
+                            *node = Expr::Block(block);
+                        }
+                    } else if let Ok(new_expr) = syn::parse_str::<syn::Expr>(&replacement_code){
+                        println!("funco");
+
+                        let mut real_snip = pattern.snippet.clone();
+
+                        let new_block = pattern.localblock.replace( &real_snip, &replacement_code);
+                        
+                        if let Ok(block) = syn::parse_str::<syn::ExprBlock>(&new_block) {
+                            *node = Expr::Block(block);
+                        }
                     } else {
+                        println!("no funco");
                         // Fallback: preserva el bloque si no puede parsear el reemplazo
                         let block = expr_unsafe.block.clone();
-                        *node = syn::parse_quote!({
-                            #block
-                        });
+                        *node = Expr::Unsafe(expr_unsafe.clone());
                     }
                 } else {
+                    println!("no template");
                     // Sin template para este patrón, preserva el contenido
                     let statements = &expr_unsafe.block.stmts;
 
@@ -321,7 +302,7 @@ impl<'a> VisitMut for PatternBasedModifier<'a> {
 /// Función principal que procesa archivos Rust transformando código unsafe basado en patrones
 pub fn replace_unsafe_code(input_dir: &Path, output_dir: &Path, patterns_dir: Option<&Path>) -> Result<()> {
     // Verifica que el directorio de entrada exista
-    if !input_dir.is_dir() {
+    if !input_dir.exists() {
         anyhow::bail!("Input directory does not exist: {}", input_dir.display());
     }
 
