@@ -2,9 +2,10 @@ use anyhow::{Ok, Result};
 use proc_macro2::Span;
 use quote::ToTokens;
 use serde::Serialize;
+use std::collections::HashMap;
 use std::fs;
 use std::path::Path;
-use syn::visit::Visit;
+use syn::{ExprCall, visit::Visit};
 use syn::spanned::Spanned;
 use serde_json; 
 use syn::{Expr, ExprAssign, ExprBlock, ExprReference, ExprUnary, ExprUnsafe, ItemFn, Type, UnOp, ExprCast};
@@ -181,44 +182,25 @@ impl PatternDetector {
         self.patterns
     }
 
-    // Filtra patrones anidados o duplicados en la misma línea
+    // Filtra patrones anidados o duplicados en la misma línea, dejando el patrón más largo (más externo) por línea
     pub fn filter_nested_patterns(&mut self) -> Result<()> {
-        let mut filtered: Vec<PatternInfo> = Vec::new();
-        let mut is_neded = false;
-        for i in (0..self.patterns.len()) {
-           if filtered.is_empty() {
-                filtered.push(self.patterns[i].clone());
-            } else {
-                for j in (0..filtered.len()) {
-                    if self.patterns[i].line == filtered[j].line {
-                        // comparar snippets
-                        let new_snippet = self.patterns[i].snippet.chars().filter(|c| !c.is_whitespace()).collect::<String>();
-                        let filtered_snippet = filtered[j].snippet.chars().filter(|c| !c.is_whitespace()).collect::<String>();
+        use std::collections::HashMap;
+        let mut line_to_pattern: HashMap<usize, PatternInfo> = HashMap::new();
 
-                        if new_snippet.contains(&filtered_snippet) {
-                            filtered[j] = self.patterns[i].clone();
-                            is_neded = false;
-                        } else if self.patterns[i].column != filtered[j].column {
-                            //* si el patron en el mismo nivel no es parte del patron anterior, se agrega a la lista de filtrados
-                            if !filtered_snippet.contains(&new_snippet) {
-                                filtered.push(self.patterns[i].clone());
-                                is_neded = false;
-                            }
-                        } else {
-                            is_neded = false;
-                        }
-                    }else{
-                        is_neded = true;
-                    }
+        for pat in &self.patterns {
+            let clean_snippet = pat.snippet.chars().filter(|c| !c.is_whitespace()).collect::<String>();
+            if let Some(existing) = line_to_pattern.get(&pat.line) {
+                let existing_clean = existing.snippet.chars().filter(|c| !c.is_whitespace()).collect::<String>();
+                if clean_snippet.len() > existing_clean.len() {
+                    line_to_pattern.insert(pat.line, pat.clone());
                 }
-                if is_neded{
-                    filtered.push(self.patterns[i].clone());
-                    is_neded = false;
-                }
-            }   
+                // Si el nuevo es más corto o igual, se ignora (se queda el existente)
+            } else {
+                line_to_pattern.insert(pat.line, pat.clone());
+            }
         }
-        self.patterns.clear();
-        self.patterns.append(&mut filtered);
+
+        self.patterns = line_to_pattern.into_iter().map(|(_, p)| p).collect();
         Ok(())
     }
 
@@ -251,11 +233,9 @@ impl<'ast> Visit<'ast> for PatternDetector {
         // Detecta expresiones de dereferencia, como *p o *(expr)
         if let Expr::Unary(ExprUnary { op: UnOp::Deref(_), expr: inner, .. }) = &node {
             if let Expr::Path(_) = inner.as_ref() {
-                // println!("path");
                 let tok = node.to_token_stream().to_string();
                 self.push("deref_expr", node.span(), tok);
             } else if let Expr::Paren(_) = inner.as_ref() {
-                // println!("paren");
                 let tok = node.to_token_stream().to_string();
                 self.push("deref_expr", node.span(), tok);
             } 
@@ -283,6 +263,21 @@ impl<'ast> Visit<'ast> for PatternDetector {
     }
 
     //* Verifica llamadas a funciones, potencialmente unsafe
+    fn visit_expr_call(&mut self, i: &'ast syn::ExprCall) {
+        unsafe {
+            if INTO_UNSAFE_BLOCKS {
+                if let Expr::Path(syn::ExprPath {attrs: _,qself: _, path }) = &*i.func {
+                    for ph in &path.segments {
+                        if ph.ident == "Some" {
+                            let tok = i.to_token_stream().to_string();
+                            self.push("matching_call_omission", i.span(), tok);
+                        }
+                    }
+                }
+            }
+        }
+        syn::visit::visit_expr_call(self, i);
+    }
 
     //* Verifica indexaciones de arrays o slices
 

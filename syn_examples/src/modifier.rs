@@ -24,9 +24,9 @@ impl TemplateManager {
         
         // Templates para patrones específicos
         templates.insert("deref_expr".to_string(), "Box::new(var)".to_string());
-        templates.insert("assign_to_deref".to_string(), "mem::replace(var, expr);".to_string());
+        templates.insert("assign_to_deref".to_string(), "mem::replace(var, expr)".to_string());
         templates.insert("raw_addr_expr".to_string(), "safe_raw_addr(var)".to_string());
-        // templates.insert("mutable_ref_expr".to_string(), "&mut *{var}.as_mut_ptr()".to_string());
+        templates.insert("matching_call_omission".to_string(), "match var { Ok(val) => Some(val),\n None => None }".to_string());
         templates.insert("unsafe_block".to_string(), "{expr}".to_string());
         
         Self { templates }
@@ -156,6 +156,25 @@ fn extract_dynamic_elements(expr_unsafe: &ExprUnsafe, pattern_kind: &str) -> Has
                 }
             }
         }
+        "matching_call_omission" => {
+            for stmt in &block.stmts {
+                if let syn::Stmt::Expr(Expr::Call(call_expr), _) = stmt {
+                    if let Expr::Path(ExprPath { path, .. }) = &*call_expr.func {
+                        if path.is_ident("Some") {
+                            if let Some(arg) = call_expr.args.first() {
+                                if let Expr::Unary(ExprUnary { op: UnOp::Deref(_), expr, .. }) = arg {
+                                    if let Expr::Path(ExprPath { path, .. }) = &**expr {
+                                        if let Some(ident) = path.get_ident() {
+                                            elements.insert("var".to_string(), ident.to_string());
+                                        }
+                                    }
+                                }                            
+                            }
+                        }
+                    }
+                }
+            }
+        }
         _ => {
             // Para otros patrones, intenta extraer el contenido del bloque
             if !block.stmts.is_empty() {
@@ -220,8 +239,8 @@ impl<'a> VisitMut for PatternBasedModifier<'a> {
                     // Extrae elementos dinámicos
                     let elements = extract_dynamic_elements(expr_unsafe, &pattern.kind);
 
-                    println!("Applying pattern '{}'", pattern.kind);
-                    println!("elements: {:?}", elements);
+                    // println!("Applying pattern '{}'", pattern.kind);
+                    // println!("elements: {:?}", elements);
                     // Reemplaza placeholders en el template
                     let mut replacement_code = template.clone();
                     for (key, value) in &elements {
@@ -232,7 +251,6 @@ impl<'a> VisitMut for PatternBasedModifier<'a> {
                     // Si el patrón es "unsafe_block" y no hay template específico,
                     // preserva el contenido
                     if pattern.kind == "unsafe_block" && replacement_code.contains('{') {
-                        println!("UB");
                         // Extrae las sentencias del bloque
                         let statements = &expr_unsafe.block.stmts;
 
@@ -251,15 +269,13 @@ impl<'a> VisitMut for PatternBasedModifier<'a> {
                     } else if let Ok(new_expr) = syn::parse_str::<syn::Stmt>(&replacement_code){
 
                         let mut real_snip = pattern.snippet.clone();
-                        real_snip.push_str(" ;");
 
                         let new_block = pattern.localblock.replace( &real_snip, &replacement_code);
-                        
+
                         if let Ok(block) = syn::parse_str::<syn::ExprBlock>(&new_block) {
-                            *node = Expr::Block(block);
+                            *node = block.into();
                         }
                     } else if let Ok(new_expr) = syn::parse_str::<syn::Expr>(&replacement_code){
-                        println!("funco");
 
                         let mut real_snip = pattern.snippet.clone();
 
@@ -269,7 +285,6 @@ impl<'a> VisitMut for PatternBasedModifier<'a> {
                             *node = Expr::Block(block);
                         }
                     } else {
-                        println!("no funco");
                         // Fallback: preserva el bloque si no puede parsear el reemplazo
                         let block = expr_unsafe.block.clone();
                         *node = Expr::Unsafe(expr_unsafe.clone());
@@ -286,9 +301,6 @@ impl<'a> VisitMut for PatternBasedModifier<'a> {
                     } else if !statements.is_empty() {
                         let block = expr_unsafe.block.clone();
                         *node = Expr::Unsafe(expr_unsafe.clone());
-                        // *node = syn::parse_quote!({
-                        //     #block
-                        // });
                     } else {
                         *node = syn::parse_quote!(());
                     }

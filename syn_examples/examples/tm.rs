@@ -22,6 +22,10 @@ fn main() {
         *v;
     }
 
-    let c = x();
+    
+    unsafe {
+        let c = x();
+        Some(*c);
+    }
 
 }
