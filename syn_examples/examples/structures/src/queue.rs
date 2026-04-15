@@ -1,56 +1,65 @@
+// queue.rs
+pub struct Nodo<T> {
+    pub valor: T,
+    pub siguiente: *mut Nodo<T>,
+}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
-    <style>
-        a:hover{
-            cursor: pointer;
+pub struct Queue<T> {
+    cabeza: *mut Nodo<T>,
+    queue: *mut Nodo<T>,
+}
+
+impl<T> Queue<T> {
+    pub fn nueva() -> Self {
+        Queue {
+            cabeza: std::ptr::null_mut(),
+            queue: std::ptr::null_mut(),
         }
-    </style>
-</head>
-<body>
-<pre>
-<h3>In the repository (subfolder/s) st</h3>
-In the file: <a onclick="cargarArchivo('st/src/queue.rs','unsafe_src/queue_3','38')"><em>queue.rs</em></a> linea 38 columna 8
-<code class="rust" style="border-radius: 10px;">
-unsafe { if self . cabeza . is_null () { return None ; } let cabeza_nodo = Box :: from_raw (self . cabeza) ; self . cabeza = cabeza_nodo . siguiente ; if self . cabeza . is_null () { self . queue = std :: ptr :: null_mut () ; } Some (cabeza_nodo . valor) }</code>
-<code class="rust" id="unsafe_src/queue_3" style="overflow: auto; height: 150px; display: none;"></code>
+    }
 
-</pre>
-    <script>
-        let f = false;
-        function cargarArchivo(archivo, id, line) {
-            if (!f) {
-                f = true;
-                fetch(archivo)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Error al cargar el archivo');
-                        }
-                        return response.text();
-                    })
-                    .then(data => {
-                        const bloque = document.getElementById(id);
-                        bloque.innerText = data;
-                        bloque.style.display = 'block'; // Mostrar el contenido
-                        bloque.scrollTop = parseInt(line, 10) * 15; // Mostrar el contenido
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-                }else{
-                    f = false;
-                    const bloque = document.getElementById(id);
-                    bloque.innerText = '';
-                    bloque.style.display = 'none'; // Mostrar el contenido
-                }
+    pub fn enqueuer(&mut self, valor: T) {
+        unsafe {
+            let nuevo_nodo = Box::into_raw(Box::new(Nodo {
+                valor,
+                siguiente: std::ptr::null_mut(),
+            }));
+
+            if self.queue.is_null() {
+                self.cabeza = nuevo_nodo;
+                self.queue = nuevo_nodo;
+            } else {
+                (*self.queue).siguiente = nuevo_nodo;
+                self.queue = nuevo_nodo;
             }
-    </script>
-</body>
-</html>
+        }
+    }
+
+    pub fn desenqueuer(&mut self) -> Option<T> {
+        unsafe {
+            if self.cabeza.is_null() {
+                return None;
+            }
+
+            let cabeza_nodo = Box::from_raw(self.cabeza);
+            self.cabeza = cabeza_nodo.siguiente;
+
+            if self.cabeza.is_null() {
+                self.queue = std::ptr::null_mut();
+            }
+
+            Some(cabeza_nodo.valor)
+        }
+    }
+
+    pub fn es_vacia(&self) -> bool {
+        self.cabeza.is_null()
+    }
+}
+
+impl<T> Drop for Queue<T> {
+    fn drop(&mut self) {
+        while !self.es_vacia() {
+            self.desenqueuer();
+        }
+    }
+}

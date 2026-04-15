@@ -1,56 +1,91 @@
+use std::ptr;
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
-    <style>
-        a:hover{
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-<pre>
-<h3>In the repository (subfolder/s) st</h3>
-In the file: <a onclick="cargarArchivo('st/src/stack.rs','unsafe_src/stack_6','80')"><em>stack.rs</em></a> linea 80 columna 8
-<code class="rust" style="border-radius: 10px;">
-unsafe { for i in 0 .. self . tamano { let direccion = self . elementos . add (i) ; ptr :: drop_in_place (direccion) ; } std :: alloc :: dealloc (self . elementos as * mut u8 , std :: alloc :: Layout :: array :: &lt; T &gt; (self . capacidad) . expect ("REASON") ,) ; }</code>
-<code class="rust" id="unsafe_src/stack_6" style="overflow: auto; height: 150px; display: none;"></code>
+pub struct Stack<T> {
+    capacidad: usize,
+    tamano: usize,
+    elementos: *mut T, // Puntero a los datos
+}
 
-</pre>
-    <script>
-        let f = false;
-        function cargarArchivo(archivo, id, line) {
-            if (!f) {
-                f = true;
-                fetch(archivo)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Error al cargar el archivo');
-                        }
-                        return response.text();
-                    })
-                    .then(data => {
-                        const bloque = document.getElementById(id);
-                        bloque.innerText = data;
-                        bloque.style.display = 'block'; // Mostrar el contenido
-                        bloque.scrollTop = parseInt(line, 10) * 15; // Mostrar el contenido
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-                }else{
-                    f = false;
-                    const bloque = document.getElementById(id);
-                    bloque.innerText = '';
-                    bloque.style.display = 'none'; // Mostrar el contenido
-                }
+impl<T> Stack<T> {
+    pub fn nueva(capacidad: usize) -> Self {
+        let elementos = unsafe {
+            let ptr = std::alloc::alloc_zeroed(std::alloc::Layout::array::<T>(capacidad).expect("REASON"));
+            if ptr.is_null() {
+                panic!("Fallo al asignar memoria");
             }
-    </script>
-</body>
-</html>
+            ptr as *mut T
+        };
+
+        Stack {
+            capacidad,
+            tamano: 0,
+            elementos,
+        }
+    }
+
+    pub fn empujar(&mut self, elemento: T) {
+        if self.tamano == self.capacidad {
+            panic!("La Stack está llena");
+        }
+        unsafe {
+            let direccion = self.elementos.add(self.tamano);
+            ptr::write(direccion, elemento);
+        }
+        self.tamano += 1;
+    }
+
+    pub fn capacidad(&self) -> usize {
+        self.capacidad
+    }
+
+    pub fn sacar(&mut self) -> Option<T> {
+        if self.tamano == 0 {
+            return None;
+        }
+        let elemento = unsafe {
+            let direccion = self.elementos.add(self.tamano - 1);
+            Some(ptr::read(direccion))
+        };
+        self.tamano -= 1;
+        elemento
+    }
+
+    pub fn tope(&self) -> Option<&T> {
+        if self.tamano == 0 {
+            return None;
+        }
+        unsafe {
+            let direccion = self.elementos.add(self.tamano - 1);
+            Some(&*direccion)
+        }
+    }
+
+    pub fn vaciar(&mut self) {
+        while self.tamano > 0 {
+            self.sacar();
+        }
+    }
+
+    pub fn tamano(&self) -> usize {
+        self.tamano
+    }
+
+    pub fn es_vacia(&self) -> bool {
+        self.tamano == 0
+    }
+}
+
+impl<T> Drop for Stack<T> {
+    fn drop(&mut self) {
+        unsafe {
+            for i in 0..self.tamano {
+                let direccion = self.elementos.add(i);
+                ptr::drop_in_place(direccion);
+            }
+            std::alloc::dealloc(
+                self.elementos as *mut u8,
+                std::alloc::Layout::array::<T>(self.capacidad).expect("REASON"),
+            );
+        }
+    }
+}

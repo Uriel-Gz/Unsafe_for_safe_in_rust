@@ -121,7 +121,9 @@ impl PatternDetector {
             if self.patterns[i].localblock.is_empty() {
                 self.patterns[i].localblock = block.clone();
             } else {
-                break; // Asumimos que los bloques están anidados, así que si encontramos uno con bloque ya asignado, los anteriores también lo tendrán
+                // Asumimos que los bloques están anidados, así que si encontramos uno con bloque ya asignado,
+                // los anteriores también lo tendrán
+                break; 
             }
         }
     }
@@ -177,7 +179,6 @@ impl PatternDetector {
         Ok(())
     }
 
-    /// Consume detector and return collected patterns, removing duplicates/nested ones
     pub fn into_patterns(mut self) -> Vec<PatternInfo> {
         self.patterns
     }
@@ -208,12 +209,10 @@ impl PatternDetector {
 
 impl<'ast> Visit<'ast> for PatternDetector {
     fn visit_expr_unsafe(&mut self, node: &'ast ExprUnsafe) {
-        // Guarda el contador actual antes de visitar el contenido del bloque
         unsafe {
             INTO_UNSAFE_BLOCKS = true;
             let patterns_before = self.patterns.len();
             
-            // Continúa visitando el contenido del bloque unsafe
             syn::visit::visit_expr_unsafe(self, node);
             
             // Si no se detectaron patrones específicos dentro del bloque,
@@ -243,6 +242,7 @@ impl<'ast> Visit<'ast> for PatternDetector {
         syn::visit::visit_expr(self, node);
     }
 
+    // Detecta asignaciones a punteros dereferenciados, como *p = x
     fn visit_expr_assign(&mut self, node: &'ast ExprAssign) {
         // left side can be a unary deref: *p = x
         if let Expr::Unary(ExprUnary { op: UnOp::Deref(_), expr: _, .. }) = &*node.left {
@@ -251,10 +251,6 @@ impl<'ast> Visit<'ast> for PatternDetector {
         syn::visit::visit_expr_assign(self, node);
     }
 
-    //* Verifica expresiones unarias como negación o dereferencia adicional
-
-    //* Verifica tipos puntero raw en declaraciones
-
     //TODO Verifica expresiones de dirección raw (&raw const o &raw mut)
     fn visit_expr_raw_addr(&mut self, node: &'ast syn::ExprRawAddr) {
         let tok = node.to_token_stream().to_string();
@@ -262,7 +258,7 @@ impl<'ast> Visit<'ast> for PatternDetector {
         syn::visit::visit_expr_raw_addr(self, node);
     }
 
-    //* Verifica llamadas a funciones, potencialmente unsafe
+    //* Verifica llamadas a funciones, potencialmente unsafe (usada en el ejemplo de Some())
     fn visit_expr_call(&mut self, i: &'ast syn::ExprCall) {
         unsafe {
             if INTO_UNSAFE_BLOCKS {
@@ -279,9 +275,7 @@ impl<'ast> Visit<'ast> for PatternDetector {
         syn::visit::visit_expr_call(self, i);
     }
 
-    //* Verifica indexaciones de arrays o slices
-
-    // Verifica expresiones de referencia (& o &mut)
+    //! Verifica expresiones de referencia (& o &mut)
     fn visit_expr_reference(&mut self, node: &'ast syn::ExprReference) {
         // Ejemplo: detectar referencias mutables a datos sensibles
         unsafe {
@@ -296,7 +290,5 @@ impl<'ast> Visit<'ast> for PatternDetector {
         }
         syn::visit::visit_expr_reference(self, node);
     }
-    
-    //* Verifica operaciones binarias, como aritmética de punteros
-    
+        
 }
