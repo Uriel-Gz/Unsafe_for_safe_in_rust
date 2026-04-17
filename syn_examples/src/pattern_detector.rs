@@ -275,7 +275,7 @@ impl<'ast> Visit<'ast> for PatternDetector {
         syn::visit::visit_expr_call(self, i);
     }
 
-    //! Verifica expresiones de referencia (& o &mut)
+    //< Verifica expresiones de referencia (& o &mut)
     fn visit_expr_reference(&mut self, node: &'ast syn::ExprReference) {
         // Ejemplo: detectar referencias mutables a datos sensibles
         unsafe {

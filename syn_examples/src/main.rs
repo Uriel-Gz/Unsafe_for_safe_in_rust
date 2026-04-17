@@ -15,6 +15,8 @@ use walkdir::WalkDir;
 mod extractor;
 mod modifier;
 mod config;
+mod suggestions;
+use suggestions::generate_suggestions;
 use modifier::replace_unsafe_code;
 use extractor::{process_file, extract_unsafe_blocks};
 
@@ -23,8 +25,9 @@ pub fn display_menu() -> String {
     println!("\n{}Seleccione una opción:{}", "\x1b[0m", "\x1b[0m\n");
     println!("{}(1) {}\x1b[0mExtraer código unsafe", "\x1b[33m", "\x1b[0m");
     println!("{}(2) {}\x1b[0mReemplazar código unsafe", "\x1b[93m", "\x1b[0m");
-    println!("{}(3) \x1b[0mSalir\n", "\x1b[91m");
-
+    println!("{}(3) {}\x1b[0mObtener sugerencias de código seguro", "\x1b[91m", "\x1b[0m");
+    println!("{}(4) {}\x1b[0mSalir\n", "\x1b[34m", "\x1b[0m");
+    
     print!("Ingrese su elección: ");
     io::stdout().flush().unwrap();
 
@@ -97,6 +100,19 @@ fn main() -> Result<()> {
                 }
             }
             "3" => {
+                let path = get_file_path("Ingrese la ruta del archivo o directorio Rust: ");
+                let path_buf = PathBuf::from(path.clone());
+                if path_buf.exists() {
+                    println!("\n\x1b[92m✓ Analizando código para generar sugerencias...\x1b[0m");
+                    match generate_suggestions(&path_buf) {
+                        Ok(generator) => generator.display_suggestions(),
+                        Err(e) => println!("\x1b[91m✗ Error: {}\x1b[0m", e),
+                    }
+                } else {
+                    println!("\x1b[91m✗ El archivo o directorio no existe\x1b[0m");
+                }
+            }
+            "4" => {
                 println!("\nSaliendo del programa.");
                 break;
             }
