@@ -68,16 +68,16 @@ impl SuggestionGenerator {
     fn add_suggestion_for_pattern(&mut self, pattern: &PatternInfo) {
         let suggestion_text = match pattern.kind.as_str() {
             "deref_expr" => {
-                "Considere usar iteradores o métodos seguros de std::ptr \n\x1b[96m  <> Es posible modificar con la herramienta\x1b[0m".to_string()
+                "Considere usar iteradores o métodos seguros de std::ptr \n\x1b[1;32m  <> Es posible modificar con la herramienta\x1b[0m".to_string()
             }
             "assign_to_deref" => {
-                "Evite asignaciones directas a memoria dereferenciada \n\x1b[96m  <> Es posible modificar con la herramienta\x1b[0m".to_string()
+                "Evite asignaciones directas a memoria dereferenciada \n\x1b[1;32m  <> Es posible modificar con la herramienta\x1b[0m".to_string()
             }
             "raw_addr_expr" => {
-                "Las expresiones &raw son de bajo nivel. \nPrefiera referencias seguras (&T) o (&mut T) cuando sea posible.".to_string()
+                "Las expresiones &raw son de bajo nivel. \nConsidere referencias seguras (&T) o (&mut T) cuando sea posible.".to_string()
             }
             "matching_call_omission" => {
-                "Considere usar match explícito en lugar de Some(x?) \n\x1b[96m  <> Es posible modificar con la herramienta\x1b[0m".to_string()
+                "Considere usar match explícito en lugar de Some(x?) \n\x1b[1;32m  <> Es posible modificar con la herramienta\x1b[0m".to_string()
             }
             "mutable_ref_expr" => {
                 "Verifique si Cell<T> o RefCell<T> podrían ser utiles a su necesidad \n\x1b[91m  >> No es posible modificar con la herramienta\x1b[0m".to_string()
@@ -129,14 +129,12 @@ impl SuggestionGenerator {
                 println!("\n\x1b[1;32m  [{}/{}] Archivo: {}, Línea {}, Columna {}\x1b[0m", 
                     idx + 1, suggestions.len(), s.file, s.line, s.column);
                 println!("  \x1b[90mCódigo:\x1b[0m {}", truncate_code(&s.code_snippet, 60));
-                println!("  \x1b[96m→ Sugerencia:\x1b[0m {}", s.suggestion_text);
             }
+            println!("  \x1b[96m→ Sugerencia:\x1b[0m {}", suggestions[0].suggestion_text);
             println!();
         }
 
-        // Resumen
         println!("{}", "─".repeat(50));
-        println!("\x1b[1;32mTotal de sugerencias: {}\x1b[0m\n", self.suggestions.len());
     }
 
     /// Exporta las sugerencias a un archivo JSON

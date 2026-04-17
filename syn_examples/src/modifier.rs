@@ -336,7 +336,10 @@ pub fn replace_unsafe_code(input_dir: &Path, output_dir: &Path, patterns_dir: Op
         let input_file_path = entry.path();
 
         // Calcula la ruta relativa desde el directorio de entrada
-        let relative_path = match input_file_path.strip_prefix(input_dir) {
+        let relative_path = match input_file_path.strip_prefix(input_dir.is_file()
+            .then(|| input_dir.parent()
+            .unwrap_or(input_dir))
+            .unwrap_or(input_dir)) {
             Ok(path) => path,
             Err(_) => {
                 error_count += 1;

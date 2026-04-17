@@ -113,7 +113,9 @@ pub fn extract_unsafe_blocks(directory: &Path, out_dir: &Path) -> Result<()> {
     // collector for all patterns across files; we'll aggregate by kind at the end
     let mut all_patterns: Vec<pattern_detector::PatternInfo> = Vec::new();
 
-    for entry in WalkDir::new(directory).into_iter().filter_map(|e| e.ok()) {
+    for entry in WalkDir::new(directory)
+        .into_iter()
+        .filter_map(|e| e.ok()) {
         let path = entry.path();
         if path.is_file() && path.extension().and_then(|s| s.to_str()) == Some("rs") {
             // let file_path = path;
