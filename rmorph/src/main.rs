@@ -16,6 +16,7 @@ mod extractor;
 mod modifier;
 mod config;
 mod suggestions;
+mod modifier_utils;
 use suggestions::generate_suggestions;
 use modifier::replace_unsafe_code;
 use extractor::{process_file, extract_unsafe_blocks};
