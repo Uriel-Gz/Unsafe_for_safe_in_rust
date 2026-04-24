@@ -22,16 +22,16 @@ pub fn calc_relative_path<'a>(input_file_path: &'a Path, input_dir: &'a Path, er
 }
 
 pub fn show_sumary(processed_count: usize, error_count: usize, patterns_by_kind: &HashMap<String, Vec<PatternInfo>>) {
-    println!("\n=== Processing Summary ===");
+    println!("\n\x1b[93m_____ Processing Summary _____\x1b[0m\n");
     println!("\x1b[92mFiles processed successfully\x1b[0m: {}", processed_count);
     println!("\x1b[91mFiles with errors\x1b[0m: {}", error_count);
 
     if !patterns_by_kind.is_empty() {
         println!(
-            "Total patterns by kind: {}",
+            "\x1b[30mTotal patterns by kind\x1b[0m: {}",
             patterns_by_kind
                 .iter()
-                .map(|(k, v)| format!("{}: {}", k, v.len()))
+                .map(|(k, v)| format!("\x1b[33m{}:\x1b[0m {}", k, v.len()))
                 .collect::<Vec<_>>()
                 .join(", ")
         );

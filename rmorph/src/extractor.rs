@@ -24,7 +24,6 @@ struct UnsafeMeta<'a> {
 }
 
 struct UnsafeCollector {
-    // store tokenstream plus the span of the `unsafe` token for location info
     blocks: Vec<(TokenStream, Span)>,
 }
 
@@ -39,7 +38,6 @@ impl<'ast> Visit<'ast> for UnsafeCollector {
     fn visit_expr_unsafe(&mut self, node: &'ast ExprUnsafe) {
         // Save the token stream (includes the `unsafe` keyword and braces) and span
         self.blocks.push((node.to_token_stream(), node.unsafe_token.span()));
-        // Continue traversal
         syn::visit::visit_expr_unsafe(self, node);
     }
 }
@@ -50,7 +48,7 @@ pub fn process_file(path: &Path, out_dir: &Path) -> Result<Vec<pattern_detector:
     let mut ast = match syn::parse_file(&src) {
         Ok(f) => f,
         Err(e) => {
-            eprintln!("warning: skipping {} (parse error: {})", path.display(), e);
+            eprintln!("\x1b[91m warning!:\x1b[0m skipping {} \x1b[91m(parse error: {})\x1b[0m", path.display(), e);
             return Ok(Vec::new());
         }
     };
@@ -68,14 +66,11 @@ pub fn process_file(path: &Path, out_dir: &Path) -> Result<Vec<pattern_detector:
         fs::create_dir_all(&unsafe_ast_dir)?;
 
         for (i, (blk, span)) in collector.blocks.into_iter().enumerate() {
-            // Convert tokenstream to string. This preserves the `unsafe { ... }` text.
             let content = blk.to_string();
             let fname = format!("{}_unsafe_{}.rs", stem, i + 1);
             let fpath = unsafe_dir.join(&fname);
             fs::write(&fpath, &content).with_context(|| format!("writing {}", fpath.display()))?;
-            println!("Extracted unsafe block to {}", fpath.display());
 
-            // Write a small metadata with relevant info
             let meta = {
                 let loc = span.start();
                 UnsafeMeta {

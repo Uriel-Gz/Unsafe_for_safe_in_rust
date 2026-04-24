@@ -135,7 +135,7 @@ impl PatternDetector {
         let path = dir.join(fname);
         let json = serde_json::to_string_pretty(&self.patterns)?;
         fs::write(&path, json)?;
-        println!("Wrote patterns to {}", path.display());
+        println!("_\x1b[34m Writing JSON\x1b[0m patterns info to: {} ", path.display());
         Ok(())
     }
 
@@ -144,20 +144,20 @@ impl PatternDetector {
         fs::create_dir_all(&dir)?;
         let fname = format!("{}_patterns.html", self.file_stem);
         let path_to = dir.join(fname);
-        //  bloque html con la información requerida
 
         let mut safe_content = String::new();
         for (i, pat) in self.patterns.clone().iter().enumerate() {
             let filename = format!("{}", self.file_stem);
-            let file_path = path.display(); // f]or JS compatibility
+            let file_path = path.display();
             let unsafe_id = format!("unsafe_block_{}_{}", self.file_stem, pat.index);
             let path_to_file = path.parent()
                                                     .and_then(|p| p.to_str())
                                                     .unwrap_or("")
-                                                    .replace("\\", "/"); // for JS compatibility
+                                                    .replace("\\", "/");
 
             let pre_content: String = format!(
-                "<h3>In the repository (subfolder/s) {}</h3>\nIn the file: <a onclick=\"cargarArchivo('../../{}','{}','{}')\"><em>{}</em></a> linea {} columna {}\n<code class=\"rust\" style=\"border-radius: 10px;\">\n",
+                "<h3>In the repository (subfolder/s) {}</h3>\nIn the file: <a onclick=\"cargarArchivo('../../{}','{}','{}')\">\
+                <em>{}</em></a> linea {} columna {}\n<code class=\"rust\" style=\"border-radius: 10px;\">\n",
                 path_to_file, file_path, unsafe_id, pat.line, filename , pat.line, pat.column
             );
             let pos_content: String = format!(
@@ -175,7 +175,7 @@ impl PatternDetector {
         res.push_str(FOOTER);
 
         fs::write(&path_to, res)?;
-        println!("Wrote patterns to {}", path_to.display());
+        println!("_\x1b[34m Writing HTML\x1b[0m patterns info to: {} ", path_to.display());
         Ok(())
     }
 

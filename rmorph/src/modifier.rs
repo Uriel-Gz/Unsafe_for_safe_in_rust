@@ -326,7 +326,12 @@ pub fn replace_unsafe_code(input_dir: &Path, output_dir: &Path, patterns_dir: Op
         }
     }
 
-    show_sumary(processed_count, error_count, &all_patterns);
+    println!("\nDesea crear un resumen de los patrones detectados? (s/n)");
+    let mut input = String::new();
+    std::io::stdin().read_line(&mut input).unwrap();
+    if input.trim().eq_ignore_ascii_case("s") {
+        show_sumary(processed_count, error_count, &all_patterns);
+    }
 
     if error_count > 0 {
         anyhow::bail!("Processing completed with {} errors", error_count);
