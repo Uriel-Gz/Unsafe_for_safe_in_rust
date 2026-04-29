@@ -59,8 +59,8 @@ pub fn process_file(path: &Path, out_dir: &Path) -> Result<Vec<pattern_detector:
 
     if !collector.blocks.is_empty() {
         let stem = path.file_stem().and_then(|s| s.to_str()).unwrap_or("file");
-        let unsafe_dir = out_dir.join("unsafe_blocks").join(path).join(stem);
-        let unsafe_ast_dir = out_dir.join("unsafe_ast").join(path).join(stem);
+        let unsafe_dir = out_dir.join("unsafe_blocks").join(path.parent().unwrap());
+        let unsafe_ast_dir = out_dir.join("unsafe_ast").join(path.parent().unwrap());
 
         fs::create_dir_all(&unsafe_dir)?;
         fs::create_dir_all(&unsafe_ast_dir)?;

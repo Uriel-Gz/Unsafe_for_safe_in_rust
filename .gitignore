@@ -128,6 +128,7 @@ workflows/
 # Ignorar carpeta de resultados
 result/
 result_changed/
+report/
 
 # Ignorar caché y archivos compilados de Python
 __pycache__/

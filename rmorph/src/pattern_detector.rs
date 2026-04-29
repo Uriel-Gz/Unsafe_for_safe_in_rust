@@ -9,7 +9,7 @@ use syn::{ExprCall, visit::Visit};
 use syn::spanned::Spanned;
 use serde_json; 
 use syn::{Expr, ExprAssign, ExprBlock, ExprReference, ExprUnary, ExprUnsafe, ItemFn, Type, UnOp, ExprCast};
-use crate::config::INTO_UNSAFE_BLOCKS;
+use crate::config::{INTO_UNSAFE_BLOCKS, CANT_BLOCKS};
 
 #[derive(Serialize)]
 #[derive(Clone)]
@@ -140,8 +140,9 @@ impl PatternDetector {
     }
 
     pub fn save_html(&self, out_path: &Path, path: &Path) -> Result<()> {
-        let dir = out_path.join("html_patterns");
+        let dir = out_path.join("html_patterns").join(path.parent().unwrap());
         fs::create_dir_all(&dir)?;
+
         let fname = format!("{}_patterns.html", self.file_stem);
         let path_to = dir.join(fname);
 
@@ -211,6 +212,7 @@ impl<'ast> Visit<'ast> for PatternDetector {
     fn visit_expr_unsafe(&mut self, node: &'ast ExprUnsafe) {
         unsafe {
             INTO_UNSAFE_BLOCKS = true;
+            CANT_BLOCKS += 1;
             let patterns_before = self.patterns.len();
             
             syn::visit::visit_expr_unsafe(self, node);
