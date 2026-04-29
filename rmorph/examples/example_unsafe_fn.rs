@@ -1,9 +1,0 @@
-unsafe fn dangerous() {
-    // unsafe function body
-    let a = 10 as *const i32;
-    let _ = unsafe { *a };
-}
-
-fn main() {
-    unsafe { dangerous() }
-}
