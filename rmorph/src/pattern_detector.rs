@@ -1,13 +1,15 @@
-use anyhow::{Ok, Result};
+use anyhow::{Result};
 use proc_macro2::Span;
 use quote::ToTokens;
 use serde::Serialize;
 use std::collections::HashMap;
 use std::fs;
 use std::path::Path;
+use std::result::{Result::Ok};
 use syn::{ExprCall, visit::Visit};
 use syn::spanned::Spanned;
 use serde_json; 
+use prettyplease::unparse;
 use syn::{Expr, ExprAssign, ExprBlock, ExprReference, ExprUnary, ExprUnsafe, ItemFn, Type, UnOp, ExprCast};
 use crate::config::{INTO_UNSAFE_BLOCKS, CANT_BLOCKS};
 
@@ -135,7 +137,7 @@ impl PatternDetector {
         let path = dir.join(fname);
         let json = serde_json::to_string_pretty(&self.patterns)?;
         fs::write(&path, json)?;
-        println!("_\x1b[34m Writing JSON\x1b[0m patterns info to: {} ", path.display());
+        // println!("_\x1b[34m Writing JSON\x1b[0m patterns info to: {} ", path.display());
         Ok(())
     }
 
@@ -166,7 +168,7 @@ impl PatternDetector {
                 unsafe_id
             );
             safe_content.push_str(&pre_content);
-            safe_content.push_str(&pat.snippet);
+            safe_content.push_str(&pat.localblock);
             safe_content.push_str(&pos_content);
         }
 
@@ -176,7 +178,7 @@ impl PatternDetector {
         res.push_str(FOOTER);
 
         fs::write(&path_to, res)?;
-        println!("_\x1b[34m Writing HTML\x1b[0m patterns info to: {} ", path_to.display());
+        // println!("_\x1b[34m Writing HTML\x1b[0m patterns info to: {} ", path_to.display());
         Ok(())
     }
 

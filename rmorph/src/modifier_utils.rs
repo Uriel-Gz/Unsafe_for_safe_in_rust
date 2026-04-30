@@ -21,41 +21,6 @@ pub fn calc_relative_path<'a>(input_file_path: &'a Path, input_dir: &'a Path, er
     Some(relative_path)
 }
 
-pub fn show_sumary(processed_count: usize, error_count: usize, patterns_by_kind: &HashMap<String, Vec<PatternInfo>>) {
-    println!("\n\x1b[93m_____ Processing Summary _____\x1b[0m\n");
-    println!("\x1b[92mFiles processed successfully\x1b[0m: {}", processed_count);
-    println!("\x1b[91mFiles with errors\x1b[0m: {}", error_count);
-
-    if !patterns_by_kind.is_empty() {
-        println!(
-            "\x1b[30mTotal patterns by kind\x1b[0m: {}",
-            patterns_by_kind
-                .iter()
-                .map(|(k, v)| format!("\x1b[33m{}:\x1b[0m {}", k, v.len()))
-                .collect::<Vec<_>>()
-                .join(", ")
-        );
-    }
-}
-
-pub fn create_sumary_file(patterns_by_kind: &HashMap<String, Vec<PatternInfo>>, patterns_out: &Path) -> Result<(), Box<dyn std::error::Error>>{
-    let summary = serde_json::json!({
-            "patterns_by_kind": patterns_by_kind.iter()
-                .map(|(kind, patterns)| {
-                    (kind.clone(), patterns.len())
-                })
-                .collect::<HashMap<String, usize>>(),
-            "total_patterns": patterns_by_kind.values().map(|v| v.len()).sum::<usize>(),
-        });
-    let summary_path = patterns_out.join("summary.json");
-    if let Err(e) = fs::write(&summary_path, serde_json::to_string_pretty(&summary)?) {
-        eprintln!("\x1b[33m⚠ Warning:\x1b[0m Could not write patterns summary: {}", e);
-    } else {
-        println!("Wrote patterns summary to {}", summary_path.display());
-    }
-    Ok(())
-}
-
 /// ============================================================================
 /// VALIDACIÓN DE MORFOLOGÍA - Análisis y verificación de estructura sintáctica
 /// ============================================================================

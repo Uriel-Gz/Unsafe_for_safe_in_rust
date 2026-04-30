@@ -13,6 +13,7 @@ use serde_json::{self, to_string};
 use walkdir::WalkDir;
 
 mod pattern_detector;
+mod extractor_utils;
 mod modifier_utils;
 mod suggestions;
 mod extractor;
@@ -69,7 +70,6 @@ fn get_file_path(prompt: &str) -> String {
 /// Execute the selected option
 fn execute_option(op: &str) -> Result<()> {
     let out_dir = PathBuf::from("result");
-    let report = PathBuf::from("report");
     let out_dir_ch = PathBuf::from("result_changed");
     
     let path = get_file_path("Ingrese la ruta del archivo/directorio Rust: ");
@@ -84,10 +84,9 @@ fn execute_option(op: &str) -> Result<()> {
                 println!("\n\x1b[92m Extracción completada\x1b[0m");
             }
             "2" => {
-                fs::create_dir_all(&report)?;
                 fs::create_dir_all(&out_dir_ch)?;
                 println!("\n\x1b[92m Reemplazando código unsafe...\x1b[0m\n");
-                modifier::replace_unsafe_code(&path_to, &out_dir_ch, Some(&report))?;
+                modifier::replace_unsafe_code(&path_to, &out_dir_ch)?;
                 println!("\n\x1b[92m Reemplazo completado\x1b[0m");
             }
             "3" => {

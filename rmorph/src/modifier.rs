@@ -10,7 +10,7 @@ use syn::visit_mut::VisitMut;
 use syn::{Expr, ExprBlock, ExprPath, ExprUnary, ExprUnsafe, File, UnOp, parse_file};
 use walkdir::WalkDir;
 use crate::pattern_detector::{PatternDetector, PatternInfo};
-use crate::modifier_utils::{calc_relative_path, show_sumary, create_sumary_file, validate_morphology};
+use crate::modifier_utils::{calc_relative_path, validate_morphology};
 use crate::config::INTO_UNSAFE_BLOCKS;
 
 /// Gestor de templates para reemplazos seguros
@@ -217,7 +217,7 @@ impl<'a> VisitMut for PatternBasedModifier<'a> {
 }
 
 // Función principal que procesa archivos Rust transformando código unsafe basado en patrones
-pub fn replace_unsafe_code(input_dir: &Path, output_dir: &Path, patterns_dir: Option<&Path>) -> Result<()> {
+pub fn replace_unsafe_code(input_dir: &Path, output_dir: &Path) -> Result<()> {
 
     if !input_dir.exists() {
         anyhow::bail!("Input directory does not exist: {}", input_dir.display());
@@ -226,7 +226,6 @@ pub fn replace_unsafe_code(input_dir: &Path, output_dir: &Path, patterns_dir: Op
     fs::create_dir_all(output_dir)
         .with_context(|| format!("creating output directory: {}", output_dir.display()))?;
 
-    let mut all_patterns: HashMap<String, Vec<PatternInfo>> = HashMap::new();
     let templates = TemplateManager::new();
     let mut processed_count = 0;
     let mut error_count = 0;
@@ -272,17 +271,7 @@ pub fn replace_unsafe_code(input_dir: &Path, output_dir: &Path, patterns_dir: Op
             );
             detector.visit_file(&ast);
             patterns = detector.into_patterns();
-            
-            // Agrupa patrones por tipo 
-            if patterns_dir.is_some() {
-                for pattern in &patterns {
-                    all_patterns
-                    .entry(pattern.kind.clone())
-                    .or_insert_with(Vec::new)
-                    .push(pattern.clone());
-                }
-            }
-    
+                
             // Aplica las modificaciones basadas en patrones detectados
             let mut modifier = PatternBasedModifier::new(&templates, &patterns);
             modifier.visit_file_mut(&mut ast);
@@ -311,26 +300,6 @@ pub fn replace_unsafe_code(input_dir: &Path, output_dir: &Path, patterns_dir: Op
             input_file_path.display(),
             patterns.len()
         );
-    }
-
-    // Opcionalmente, guarda los patrones detectados
-    if let Some(patterns_out) = patterns_dir {
-        if let Err(e) = fs::create_dir_all(patterns_out) {
-            eprintln!(
-                "\x1b[33m⚠ Warning:\x1b[0m Could not create patterns directory {}: {}",
-                patterns_out.display(),
-                e
-            );
-        } else {
-            create_sumary_file(&all_patterns, patterns_out);
-        }
-    }
-
-    println!("\nDesea crear un resumen de los patrones detectados? (s/n)");
-    let mut input = String::new();
-    std::io::stdin().read_line(&mut input).unwrap();
-    if input.trim().eq_ignore_ascii_case("s") {
-        show_sumary(processed_count, error_count, &all_patterns);
     }
 
     if error_count > 0 {

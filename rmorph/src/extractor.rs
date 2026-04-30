@@ -1,4 +1,5 @@
 use std::fs;
+use std::io::{self, Write};
 use std::path::{Path, PathBuf};
 use anyhow::{Context, Result};
 use syn::{visit_mut::VisitMut, visit::Visit, File, ExprUnsafe, Expr};
@@ -9,9 +10,10 @@ use serde::Serialize;
 use serde_json::{self, to_string};
 use std::collections::HashMap;
 use walkdir::WalkDir;
-use crate::pattern_detector;
 use pattern_detector::PatternDetector;
-use crate::config::INTO_UNSAFE_BLOCKS;
+use crate::extractor_utils::{create_sumary_file, create_grouped_by_kind_file};
+use crate::pattern_detector;
+use crate::config::CANT_BLOCKS;
 
 
 #[derive(Serialize)]
@@ -53,7 +55,6 @@ pub fn process_file(path: &Path, out_dir: &Path) -> Result<Vec<pattern_detector:
         }
     };
 
-    // Collect all unsafe blocks for batch analysis and write them separately
     let mut collector = UnsafeCollector::new();
     collector.visit_file(&ast);
 
@@ -105,33 +106,41 @@ pub fn process_file(path: &Path, out_dir: &Path) -> Result<Vec<pattern_detector:
 }
 
 pub fn extract_unsafe_blocks(directory: &Path, out_dir: &Path) -> Result<()> {
-    // collector for all patterns across files; we'll aggregate by kind at the end
     let mut all_patterns: Vec<pattern_detector::PatternInfo> = Vec::new();
+    let mut all_kinds: HashMap<String, Vec<pattern_detector::PatternInfo>> = HashMap::new();
 
     for entry in WalkDir::new(directory)
         .into_iter()
         .filter_map(|e| e.ok()) {
         let path = entry.path();
         if path.is_file() && path.extension().and_then(|s| s.to_str()) == Some("rs") {
-            // let file_path = path;
             let mut pats = process_file(&path, &out_dir)?;
+
+            for pattern in &pats {
+                all_kinds
+                .entry(pattern.kind.clone())
+                .or_insert_with(Vec::new)
+                .push(pattern.clone());
+            }
+
             all_patterns.append(&mut pats);
         }
     }
 
-    // aggregate by kind
-    let mut by_kind: HashMap<String, Vec<pattern_detector::PatternInfo>> = HashMap::new();
-    for p in all_patterns {
-        by_kind.entry(p.kind.clone()).or_default().push(p);
+    print!("\nDesea crear un resumen de los tipos de patrones detectados? (s/n): ");
+    io::stdout().flush().unwrap();
+
+    let mut input = String::new();
+    io::stdin().read_line(&mut input).unwrap();
+    if input.trim().to_string() == "s" {
+        create_sumary_file(&all_kinds, out_dir);
+    }
+    unsafe {
+        println!("\nTotal de bloques `unsafe` encontrados: {}", CANT_BLOCKS);
+        CANT_BLOCKS = 0; // reset counter for next run
     }
 
-    // write aggregated file
-    let patterns_dir = out_dir.join("patterns");
-    fs::create_dir_all(&patterns_dir)?;
-    
-    let agg_path = patterns_dir.join("aggregated_by_kind.json");
-    let agg_json = serde_json::to_string_pretty(&by_kind)?;
+    create_grouped_by_kind_file(&all_kinds, out_dir);
 
-    fs::write(&agg_path, agg_json)?;
     Ok(())
 }
