@@ -73,25 +73,25 @@ fn extract_dynamic_elements(expr_unsafe: &ExprUnsafe, pattern_kind: &str) -> Has
                 }
             }
         }
-        "mutable_ref_expr" => {
-            for stmt in &block.stmts {
-                if let syn::Stmt::Expr(Expr::Reference(expr_ref), _) = stmt {
-                    if expr_ref.mutability.is_some() {
-                        if let Expr::Unary(ExprUnary { op: UnOp::Deref(_), expr, .. }) = &*expr_ref.expr {
-                            if let Expr::Paren(expr_paren) = &**expr {
-                                if let Expr::Cast(cast_expr) = &*expr_paren.expr {
-                                    if let Expr::Path(ExprPath { path, .. }) = &*cast_expr.expr {
-                                        if let Some(ident) = path.get_ident() {
-                                            elements.insert("var".to_string(), ident.to_string());
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        // "mutable_ref_expr" => {
+        //     for stmt in &block.stmts {
+        //         if let syn::Stmt::Expr(Expr::Reference(expr_ref), _) = stmt {
+        //             if expr_ref.mutability.is_some() {
+        //                 if let Expr::Unary(ExprUnary { op: UnOp::Deref(_), expr, .. }) = &*expr_ref.expr {
+        //                     if let Expr::Paren(expr_paren) = &**expr {
+        //                         if let Expr::Cast(cast_expr) = &*expr_paren.expr {
+        //                             if let Expr::Path(ExprPath { path, .. }) = &*cast_expr.expr {
+        //                                 if let Some(ident) = path.get_ident() {
+        //                                     elements.insert("var".to_string(), ident.to_string());
+        //                                 }
+        //                             }
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
         "matching_call_omission" => {
             for stmt in &block.stmts {
                 if let syn::Stmt::Expr(Expr::Call(call_expr), _) = stmt {
@@ -178,6 +178,11 @@ impl<'a> VisitMut for PatternBasedModifier<'a> {
         if let Expr::Unsafe(expr_unsafe) = node {
             if let Some(pattern) = self.find_matching_pattern(expr_unsafe) {
 
+                // No modificar bloques `unsafe` genéricos detectados sin patrón específico
+                if pattern.kind == "unsafe_block" {
+                    return;
+                }
+
                 if let Some(template) = self.templates.get_template(&pattern.kind) {
                     let elements = extract_dynamic_elements(expr_unsafe, &pattern.kind);
 
@@ -198,18 +203,7 @@ impl<'a> VisitMut for PatternBasedModifier<'a> {
                         *node = Expr::Unsafe(expr_unsafe.clone());
                     }
                 } else {
-                    let statements = &expr_unsafe.block.stmts;
-
-                    if !statements.is_empty() && statements.len() == 1 {
-                        if let syn::Stmt::Expr(expr, _) = &statements[0] {
-                            *node = expr.clone();
-                        }
-                    } else {
-                        let block = expr_unsafe.block.clone();
-                        *node = syn::parse_quote!({
-                            #block
-                        });
-                    }
+                    return;
                 }
             }
         }

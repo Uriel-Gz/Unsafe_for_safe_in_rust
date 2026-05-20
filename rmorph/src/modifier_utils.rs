@@ -57,16 +57,16 @@ pub fn validate_morphology(expr_unsafe: &ExprUnsafe, pattern_kind: &str) -> bool
             }
             false
         }
-        "mutable_ref_expr" => {
-            if block.stmts.len() != 1 {
-                return false;
-            }
-            if let syn::Stmt::Expr(Expr::Reference(expr_ref), _) = &block.stmts[0] {
-                expr_ref.mutability.is_some()
-            } else {
-                false
-            }
-        }
+        // "mutable_ref_expr" => {
+        //     if block.stmts.len() != 1 {
+        //         return false;
+        //     }
+        //     if let syn::Stmt::Expr(Expr::Reference(expr_ref), _) = &block.stmts[0] {
+        //         expr_ref.mutability.is_some()
+        //     } else {
+        //         false
+        //     }
+        // }
         "unsafe_block" => {
             !block.stmts.is_empty()
         }
