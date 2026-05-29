@@ -2,7 +2,7 @@ use anyhow::Result;
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::collections::HashMap;
-use syn::{Expr, ExprUnary, ExprUnsafe, File, UnOp};
+use syn::{Expr, ExprUnary, ExprUnsafe, File, UnOp, ExprPath};
 use crate::pattern_detector::PatternInfo;
 
 
@@ -69,6 +69,21 @@ pub fn validate_morphology(expr_unsafe: &ExprUnsafe, pattern_kind: &str) -> bool
         // }
         "unsafe_block" => {
             !block.stmts.is_empty()
+        }
+        "matching_call_omission" => {
+            // Verifica si dentro del bloque unsafe hay una llamada a `Some(...)`
+            for stmt in &block.stmts {
+                if let syn::Stmt::Expr(Expr::Call(call), _) = stmt {
+                    if let Expr::Path(ExprPath { path, .. }) = &*call.func {
+                        for seg in &path.segments {
+                            if seg.ident == "Some" {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            false
         }
         _ => false
     }
