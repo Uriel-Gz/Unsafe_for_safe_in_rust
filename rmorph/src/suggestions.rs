@@ -74,7 +74,7 @@ impl SuggestionGenerator {
                 "Evite asignaciones directas a memoria dereferenciada \n\x1b[1;32m  <> Es posible modificar con la herramienta\x1b[0m".to_string()
             }
             "raw_addr_expr" => {
-                "Las expresiones &raw son de bajo nivel. \nConsidere referencias seguras (&T) o (&mut T) cuando sea posible.".to_string()
+                "Las expresiones &raw son de bajo nivel. \nConsidere referencias seguras (&T) o (&mut T) cuando sea posible. \n\x1b[91m  >> No es posible modificar con la herramienta\x1b[0m".to_string()
             }
             "matching_call_omission" => {
                 "Considere usar match explícito en lugar de Some(x?) \n\x1b[1;32m  <> Es posible modificar con la herramienta\x1b[0m".to_string()
