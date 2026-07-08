@@ -91,7 +91,7 @@ fn execute_option(op: &str) -> Result<()> {
             }
             "3" => {
                 println!("\n\x1b[92m Analizando código para generar sugerencias...\x1b[0m");
-                match generate_suggestions(&path_to) {
+                match suggestions::generate_suggestions(&path_to) {
                     Ok(generator) => generator.display_suggestions(),
                     Err(e) => println!("\x1b[91m✗ Error: {}\x1b[0m", e),
                 }
