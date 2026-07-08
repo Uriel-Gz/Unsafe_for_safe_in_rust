@@ -11,7 +11,7 @@ use syn::{Expr, ExprBlock, ExprPath, ExprUnary, ExprUnsafe, File, UnOp, parse_fi
 use walkdir::WalkDir;
 use crate::pattern_detector::{PatternDetector, PatternInfo};
 use crate::modifier_utils::{calc_relative_path, validate_morphology};
-use crate::config::INTO_UNSAFE_BLOCKS;
+use crate::config::{CANT_BLOCKS_MODIFIED, CANT_BLOCKS, CANT_BLOCKS_NOT_MODIFIED};
 
 /// Gestor de templates para reemplazos seguros
 struct TemplateManager {
@@ -193,12 +193,20 @@ impl<'a> VisitMut for PatternBasedModifier<'a> {
                             replacement_code.replace(key, value);   
                     }
 
-                    if let Ok(new_expr) = syn::parse_str::<syn::Stmt>(&replacement_code){
+                    
+                    if syn::parse_str::<syn::Stmt>(&replacement_code).is_ok()
+                        || syn::parse_str::<syn::Expr>(&replacement_code).is_ok()
+                    {
                         PatternBasedModifier::<'a>::modify_unsafe_block(node, &replacement_code, &pattern);
-                    } else if let Ok(new_expr) = syn::parse_str::<syn::Expr>(&replacement_code){
-                        PatternBasedModifier::<'a>::modify_unsafe_block(node, &replacement_code, &pattern);
+                        unsafe {
+                            CANT_BLOCKS_MODIFIED += 1;
+                        }
                     }else{
                         // preserva el bloque en caso de no poder parsear el código de reemplazo
+                        unsafe {
+                            CANT_BLOCKS_NOT_MODIFIED += 1;
+                            LIST_P.push(pattern.clone());
+                        }
                         let block = expr_unsafe.block.clone();
                         *node = Expr::Unsafe(expr_unsafe.clone());
                     }
@@ -209,6 +217,9 @@ impl<'a> VisitMut for PatternBasedModifier<'a> {
         }
     }
 }
+
+//lista de casos que no se pudieron procesar
+static mut LIST_P: Vec<PatternInfo> = Vec::new();
 
 // Función principal que procesa archivos Rust transformando código unsafe basado en patrones
 pub fn replace_unsafe_code(input_dir: &Path, output_dir: &Path) -> Result<()> {
@@ -294,6 +305,19 @@ pub fn replace_unsafe_code(input_dir: &Path, output_dir: &Path) -> Result<()> {
             input_file_path.display(),
             patterns.len()
         );
+    }
+
+    unsafe {
+        let rejected_pattterns = LIST_P.iter()
+                                .map(|p| format!("file: {}\n kind: {} \n line: {} \n snippet: {}\n",
+                                                                 p.file, p.kind, p.line, p.snippet))
+                                .collect::<Vec<_>>().join("\n");
+
+        fs::write(
+            output_dir.join("modification_info.txt"),
+            format!("blocks {}, modified blocks: {}, not modified blocks: {}\n Patterns:{}",
+             CANT_BLOCKS, CANT_BLOCKS_MODIFIED, CANT_BLOCKS_NOT_MODIFIED, rejected_pattterns),
+        )?;
     }
 
     if error_count > 0 {
