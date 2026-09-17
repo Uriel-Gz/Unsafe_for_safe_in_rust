@@ -53,9 +53,9 @@ def generate_coverage_scalar_report(bloques_totales, bloques_modificados, bloque
         f.write("Tasas sobre totales:\n")
         f.write(f"- Modificados: {pct_mod:.2f} %\n" if np.isfinite(pct_mod) else "- Modificados: NaN\n")
         f.write(f"- No modificados: {pct_no_mod:.2f} %\n" if np.isfinite(pct_no_mod) else "- No modificados: NaN\n")
-        f.write(f"-Unsafe genericos: {pct_free:.2f} %\n" if np.isfinite(pct_free) else "Unsafe genericos: NaN\n")
+        f.write(f"- Unsafe genericos: {pct_free:.2f} %\n" if np.isfinite(pct_free) else "Unsafe genericos: NaN\n")
 
-    labels = ["Modificados", "No modificados (no se pudo)", "Unsafe generic"]
+    labels = ["Modificados", "No modificados ", "Unsafe genericos"]
     values = [mod, not_mod, free]
     colors = ["#2ca02c", "#d62728", "#1f77b4"]
 

@@ -41,6 +41,7 @@ impl SuggestionGenerator {
 
         let mut detector = PatternDetector::new(file_stem);
         detector.visit_file(&ast);
+        detector.filter_nested_patterns();
         let patterns = detector.into_patterns();
 
         for pattern in patterns {
@@ -128,7 +129,6 @@ impl SuggestionGenerator {
             for (idx, s) in suggestions.iter().enumerate() {
                 println!("\n\x1b[1;32m  [{}/{}] Archivo: {}, Línea {}, Columna {}\x1b[0m", 
                     idx + 1, suggestions.len(), s.file, s.line, s.column);
-                println!("  \x1b[90mCódigo:\x1b[0m {}", truncate_code(&s.code_snippet, 60));
             }
             println!("  \x1b[96m→ Sugerencia:\x1b[0m {}", suggestions[0].suggestion_text);
             println!();
@@ -146,15 +146,6 @@ impl SuggestionGenerator {
     }
 }
 
-/// Acorta el código para mostrar en una línea
-fn truncate_code(code: &str, max_len: usize) -> String {
-    let cleaned = code.replace('\n', " ").replace("  ", " ");
-    if cleaned.len() > max_len {
-        format!("{}...", &cleaned[..max_len])
-    } else {
-        cleaned
-    }
-}
 
 /// Función principal para generar sugerencias desde una ruta
 pub fn generate_suggestions(path: &Path) -> Result<SuggestionGenerator> {

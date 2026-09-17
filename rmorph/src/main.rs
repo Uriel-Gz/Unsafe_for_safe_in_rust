@@ -24,6 +24,7 @@ use pattern_detector::PatternDetector;
 use suggestions::generate_suggestions;
 use modifier::replace_unsafe_code;
 use extractor::{process_file, extract_unsafe_blocks};
+use config::DIR_NAME;
 
 /// Display the main menu and return user's choice
 fn display_menu() -> String {
@@ -73,6 +74,9 @@ fn execute_option(op: &str) -> Result<()> {
     let out_dir_ch = PathBuf::from("result_changed");
     
     let path = get_file_path("Ingrese la ruta del archivo/directorio Rust: ");
+    unsafe {
+        config::DIR_NAME = path.clone();
+    }
     if Path::new(&path).exists() {
         let path_to = PathBuf::from(path.clone());
         

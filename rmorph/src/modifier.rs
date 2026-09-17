@@ -1,7 +1,9 @@
 use anyhow::{Context, Result};
 use proc_macro2::TokenStream;
 use quote::{quote, ToTokens};
-use std::fs;
+use std::fmt::write;
+use std::fs::{self, OpenOptions};
+use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::collections::HashMap;
 use syn::visit::Visit;
@@ -11,7 +13,7 @@ use syn::{Expr, ExprBlock, ExprPath, ExprUnary, ExprUnsafe, File, UnOp, parse_fi
 use walkdir::WalkDir;
 use crate::pattern_detector::{PatternDetector, PatternInfo};
 use crate::modifier_utils::{calc_relative_path, validate_morphology};
-use crate::config::{CANT_BLOCKS_MODIFIED, CANT_BLOCKS, CANT_BLOCKS_NOT_MODIFIED};
+use crate::config::{CANT_BLOCKS_MODIFIED, CANT_BLOCKS, CANT_BLOCKS_NOT_MODIFIED, DIR_NAME};
 
 /// Gestor de templates para reemplazos seguros
 struct TemplateManager {
@@ -313,10 +315,15 @@ pub fn replace_unsafe_code(input_dir: &Path, output_dir: &Path) -> Result<()> {
                                                                  p.file, p.kind, p.line, p.snippet))
                                 .collect::<Vec<_>>().join("\n");
 
-        fs::write(
-            output_dir.join("modification_info.txt"),
-            format!("blocks {}, modified blocks: {}, not modified blocks: {}\n Patterns:{}",
-             CANT_BLOCKS, CANT_BLOCKS_MODIFIED, CANT_BLOCKS_NOT_MODIFIED, rejected_pattterns),
+        let mut file = OpenOptions::new()
+            .create(true)
+            .append(true)
+            .open(output_dir.join("modification_info.txt"))?;
+        
+        writeln!(
+            file, "{}",
+            format!("{}\n blocks {}, modified blocks: {}, not modified blocks: {}\nPatterns:\n{}",
+             DIR_NAME, CANT_BLOCKS, CANT_BLOCKS_MODIFIED, CANT_BLOCKS_NOT_MODIFIED, rejected_pattterns),
         )?;
     }
 
