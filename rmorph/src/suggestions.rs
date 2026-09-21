@@ -1,15 +1,14 @@
 use anyhow::Result;
 use serde::Serialize;
-use std::path::{Path, PathBuf};
 use std::fs;
-use syn::{parse_file, File, visit::Visit};
+use std::path::Path;
+use syn::{parse_file, visit::Visit};
 use walkdir::WalkDir;
 
 use crate::pattern_detector::{PatternDetector, PatternInfo};
 
 /// Estructura para almacenar sugerencias de mejora
-#[derive(Debug, Clone)]
-#[derive(Serialize)]
+#[derive(Debug, Clone, Serialize)]
 pub struct Suggestion {
     pub pattern_kind: String,
     pub code_snippet: String,
@@ -26,14 +25,16 @@ pub struct SuggestionGenerator {
 
 impl SuggestionGenerator {
     pub fn new() -> Self {
-        Self { suggestions: Vec::new() }
+        Self {
+            suggestions: Vec::new(),
+        }
     }
 
     /// Analiza un archivo y genera sugerencias
     pub fn analyze_file(&mut self, file_path: &Path) -> Result<()> {
         let source_code = fs::read_to_string(file_path)?;
         let ast = parse_file(&source_code)?;
-        
+
         let file_stem = file_path
             .file_stem()
             .and_then(|s| s.to_str())
@@ -41,7 +42,7 @@ impl SuggestionGenerator {
 
         let mut detector = PatternDetector::new(file_stem);
         detector.visit_file(&ast);
-        detector.filter_nested_patterns();
+        detector.filter_nested_patterns()?;
         let patterns = detector.into_patterns();
 
         for pattern in patterns {
@@ -59,7 +60,11 @@ impl SuggestionGenerator {
             .filter(|e| e.path().extension().and_then(|f| f.to_str()) == Some("rs"))
         {
             if let Err(e) = self.analyze_file(entry.path()) {
-                eprintln!("Warning: Could not analyze {}: {}", entry.path().display(), e);
+                eprintln!(
+                    "Warning: Could not analyze {}: {}",
+                    entry.path().display(),
+                    e
+                );
             }
         }
         Ok(())
@@ -111,26 +116,39 @@ impl SuggestionGenerator {
         println!("{}\n", "═".repeat(70));
 
         // Agrupar por tipo de patrón
-        let mut by_kind: std::collections::HashMap<String, Vec<&Suggestion>> = 
+        let mut by_kind: std::collections::HashMap<String, Vec<&Suggestion>> =
             std::collections::HashMap::new();
-        
+
         for suggestion in &self.suggestions {
             by_kind
                 .entry(suggestion.pattern_kind.clone())
-                .or_insert_with(Vec::new)
+                .or_default()
                 .push(suggestion);
         }
 
         // Mostrar sugerencias por grupo
         for (kind, suggestions) in by_kind.iter() {
-            println!("\n\x1b[1;33m┌─ {} ({})\x1b[0m", kind.to_uppercase(), suggestions.len());
+            println!(
+                "\n\x1b[1;33m┌─ {} ({})\x1b[0m",
+                kind.to_uppercase(),
+                suggestions.len()
+            );
             println!("{}", "─".repeat(50));
 
             for (idx, s) in suggestions.iter().enumerate() {
-                println!("\n\x1b[1;32m  [{}/{}] Archivo: {}, Línea {}, Columna {}\x1b[0m", 
-                    idx + 1, suggestions.len(), s.file, s.line, s.column);
+                println!(
+                    "\n\x1b[1;32m  [{}/{}] Archivo: {}, Línea {}, Columna {}\x1b[0m",
+                    idx + 1,
+                    suggestions.len(),
+                    s.file,
+                    s.line,
+                    s.column
+                );
             }
-            println!("  \x1b[96m→ Sugerencia:\x1b[0m {}", suggestions[0].suggestion_text);
+            println!(
+                "  \x1b[96m→ Sugerencia:\x1b[0m {}",
+                suggestions[0].suggestion_text
+            );
             println!();
         }
 
@@ -141,11 +159,19 @@ impl SuggestionGenerator {
     pub fn export_json(&self, output_path: &Path) -> Result<()> {
         let json = serde_json::to_string_pretty(&self.suggestions)?;
         fs::write(output_path, json)?;
-        println!("\x1b[92m✓ Sugerencias exportadas a: {}\x1b[0m", output_path.display());
+        println!(
+            "\x1b[92m✓ Sugerencias exportadas a: {}\x1b[0m",
+            output_path.display()
+        );
         Ok(())
     }
 }
 
+impl Default for SuggestionGenerator {
+    fn default() -> Self {
+        Self::new()
+    }
+}
 
 /// Función principal para generar sugerencias desde una ruta
 pub fn generate_suggestions(path: &Path) -> Result<SuggestionGenerator> {

@@ -1,19 +1,17 @@
+use crate::config::{CANT_BLOCKS, CANT_BLOCKS_MODIFIED, CANT_BLOCKS_NOT_MODIFIED, DIR_NAME};
+use crate::modifier_utils::{calc_relative_path, validate_morphology};
+use crate::pattern_detector::{PatternDetector, PatternInfo};
 use anyhow::{Context, Result};
-use proc_macro2::TokenStream;
-use quote::{quote, ToTokens};
-use std::fmt::write;
+use quote::ToTokens;
+use std::collections::HashMap;
 use std::fs::{self, OpenOptions};
 use std::io::Write;
-use std::path::{Path, PathBuf};
-use std::collections::HashMap;
-use syn::visit::Visit;
+use std::path::Path;
 use syn::spanned::Spanned;
+use syn::visit::Visit;
 use syn::visit_mut::VisitMut;
-use syn::{Expr, ExprBlock, ExprPath, ExprUnary, ExprUnsafe, File, UnOp, parse_file};
+use syn::{parse_file, Expr, ExprPath, ExprUnary, ExprUnsafe, UnOp};
 use walkdir::WalkDir;
-use crate::pattern_detector::{PatternDetector, PatternInfo};
-use crate::modifier_utils::{calc_relative_path, validate_morphology};
-use crate::config::{CANT_BLOCKS_MODIFIED, CANT_BLOCKS, CANT_BLOCKS_NOT_MODIFIED, DIR_NAME};
 
 /// Gestor de templates para reemplazos seguros
 struct TemplateManager {
@@ -23,12 +21,21 @@ struct TemplateManager {
 impl TemplateManager {
     fn new() -> Self {
         let mut templates = HashMap::new();
-        
+
         templates.insert("deref_expr".to_string(), "Box::new(var)".to_string());
-        templates.insert("assign_to_deref".to_string(), "mem::replace(var, expr)".to_string());
-        templates.insert("raw_addr_expr".to_string(), "safe_raw_addr(var)".to_string());
-        templates.insert("matching_call_omission".to_string(), "match var { Ok(val) => Some(val),\n None => None }".to_string());
-        
+        templates.insert(
+            "assign_to_deref".to_string(),
+            "mem::replace(var, expr)".to_string(),
+        );
+        templates.insert(
+            "raw_addr_expr".to_string(),
+            "safe_raw_addr(var)".to_string(),
+        );
+        templates.insert(
+            "matching_call_omission".to_string(),
+            "match var { Ok(val) => Some(val),\n None => None }".to_string(),
+        );
+
         Self { templates }
     }
 
@@ -38,40 +45,62 @@ impl TemplateManager {
 }
 
 /// Extrae elementos dinámicos del bloque unsafe basado en el tipo de patrón
-fn extract_dynamic_elements(expr_unsafe: &ExprUnsafe, pattern_kind: &str) -> HashMap<String, String> {
+fn extract_dynamic_elements(
+    expr_unsafe: &ExprUnsafe,
+    pattern_kind: &str,
+) -> HashMap<String, String> {
     let mut elements = HashMap::new();
-    let block = &expr_unsafe.block; 
+    let block = &expr_unsafe.block;
 
     match pattern_kind {
         "deref_expr" => {
             for stmt in &block.stmts {
-                if let syn::Stmt::Expr(Expr::Unary(ExprUnary { op: UnOp::Deref(_), expr, .. }), _) = stmt {
+                if let syn::Stmt::Expr(
+                    Expr::Unary(ExprUnary {
+                        op: UnOp::Deref(_),
+                        expr,
+                        ..
+                    }),
+                    _,
+                ) = stmt
+                {
                     if let Expr::Path(ExprPath { path, .. }) = &**expr {
                         if let Some(ident) = path.get_ident() {
                             elements.insert("var".to_string(), ident.to_string());
                         }
                     }
                 }
-            }   
+            }
         }
         "assign_to_deref" => {
             for stmt in &block.stmts {
                 if let syn::Stmt::Expr(Expr::Assign(assign), _) = stmt {
-                    if let Expr::Unary(ExprUnary { op: UnOp::Deref(_), expr, .. }) = &*assign.left {
+                    if let Expr::Unary(ExprUnary {
+                        op: UnOp::Deref(_),
+                        expr,
+                        ..
+                    }) = &*assign.left
+                    {
                         if let Expr::Path(ExprPath { path, .. }) = &**expr {
                             if let Some(ident) = path.get_ident() {
                                 elements.insert("var".to_string(), ident.to_string());
                             }
                         }
                     }
-                    elements.insert("expr".to_string(), assign.right.to_token_stream().to_string());
+                    elements.insert(
+                        "expr".to_string(),
+                        assign.right.to_token_stream().to_string(),
+                    );
                 }
             }
         }
         "raw_addr_expr" => {
             for stmt in &block.stmts {
                 if let syn::Stmt::Expr(Expr::RawAddr(raw_addr), _) = stmt {
-                    elements.insert("var".to_string(), raw_addr.expr.to_token_stream().to_string());
+                    elements.insert(
+                        "var".to_string(),
+                        raw_addr.expr.to_token_stream().to_string(),
+                    );
                 }
             }
         }
@@ -99,14 +128,17 @@ fn extract_dynamic_elements(expr_unsafe: &ExprUnsafe, pattern_kind: &str) -> Has
                 if let syn::Stmt::Expr(Expr::Call(call_expr), _) = stmt {
                     if let Expr::Path(ExprPath { path, .. }) = &*call_expr.func {
                         if path.is_ident("Some") {
-                            if let Some(arg) = call_expr.args.first() {
-                                if let Expr::Unary(ExprUnary { op: UnOp::Deref(_), expr, .. }) = arg {
-                                    if let Expr::Path(ExprPath { path, .. }) = &**expr {
-                                        if let Some(ident) = path.get_ident() {
-                                            elements.insert("var".to_string(), ident.to_string());
-                                        }
+                            if let Some(Expr::Unary(ExprUnary {
+                                op: UnOp::Deref(_),
+                                expr,
+                                ..
+                            })) = call_expr.args.first()
+                            {
+                                if let Expr::Path(ExprPath { path, .. }) = &**expr {
+                                    if let Some(ident) = path.get_ident() {
+                                        elements.insert("var".to_string(), ident.to_string());
                                     }
-                                }                            
+                                }
                             }
                         }
                     }
@@ -130,11 +162,26 @@ fn extract_dynamic_elements(expr_unsafe: &ExprUnsafe, pattern_kind: &str) -> Has
 struct PatternBasedModifier<'a> {
     templates: &'a TemplateManager,
     patterns: &'a [PatternInfo],
+    modified: bool,
+    replacements: Vec<(usize, usize, usize, usize, String)>,
 }
 
 impl<'a> PatternBasedModifier<'a> {
     fn new(templates: &'a TemplateManager, patterns: &'a [PatternInfo]) -> Self {
-        Self { templates, patterns }
+        Self {
+            templates,
+            patterns,
+            modified: false,
+            replacements: Vec::new(),
+        }
+    }
+
+    fn was_modified(&self) -> bool {
+        self.modified
+    }
+
+    fn replacements(&self) -> &[(usize, usize, usize, usize, String)] {
+        &self.replacements
     }
 
     /// Encuentra el patrón correspondiente a una expresión unsafe
@@ -146,7 +193,8 @@ impl<'a> PatternBasedModifier<'a> {
         let unsafe_str = expr_unsafe.to_token_stream().to_string();
 
         // Busca por línea y columna primero, validando morfología
-        if let Some(pattern) = self.patterns
+        if let Some(pattern) = self
+            .patterns
             .iter()
             .find(|p| p.line == line && p.column == column)
         {
@@ -156,20 +204,21 @@ impl<'a> PatternBasedModifier<'a> {
         }
 
         // Si no encuentra por posición, busca por contenido, validando morfología
-        self.patterns
-            .iter()
-            .find(|p| {
-                validate_morphology(expr_unsafe, &p.kind)
-                    && (p.snippet.contains(&unsafe_str) || unsafe_str.contains(&p.snippet))
-            })
+        self.patterns.iter().find(|p| {
+            validate_morphology(expr_unsafe, &p.kind)
+                && (p.snippet.contains(&unsafe_str) || unsafe_str.contains(&p.snippet))
+        })
     }
-    
-    fn modify_unsafe_block(expr: &mut Expr, replacement_code: &str, pattern: &PatternInfo) -> () {
-        let mut real_snip = pattern.snippet.clone();
-        let new_block = pattern.localblock.replace( &real_snip, &replacement_code);
+
+    fn modify_unsafe_block(expr: &mut Expr, replacement_code: &str, pattern: &PatternInfo) -> bool {
+        let real_snip = pattern.snippet.clone();
+        let new_block = pattern.localblock.replace(&real_snip, replacement_code);
         if let Ok(block) = syn::parse_str::<syn::ExprBlock>(&new_block) {
             *expr = block.into();
-        } else {}
+            true
+        } else {
+            false
+        }
     }
 }
 
@@ -179,45 +228,105 @@ impl<'a> VisitMut for PatternBasedModifier<'a> {
 
         if let Expr::Unsafe(expr_unsafe) = node {
             if let Some(pattern) = self.find_matching_pattern(expr_unsafe) {
-
                 // No modificar bloques `unsafe` genéricos detectados sin patrón específico
-                if pattern.kind == "unsafe_block" {
-                    return;
-                }
+                if pattern.kind != "unsafe_block" {
+                    if let Some(template) = self.templates.get_template(&pattern.kind) {
+                        let original_span = expr_unsafe.span();
+                        let elements = extract_dynamic_elements(expr_unsafe, &pattern.kind);
 
-                if let Some(template) = self.templates.get_template(&pattern.kind) {
-                    let elements = extract_dynamic_elements(expr_unsafe, &pattern.kind);
-
-                    // Reemplaza placeholders en el template
-                    let mut replacement_code = template.clone();
-                    for (key, value) in &elements {
-                        replacement_code =
-                            replacement_code.replace(key, value);   
-                    }
-
-                    
-                    if syn::parse_str::<syn::Stmt>(&replacement_code).is_ok()
-                        || syn::parse_str::<syn::Expr>(&replacement_code).is_ok()
-                    {
-                        PatternBasedModifier::<'a>::modify_unsafe_block(node, &replacement_code, &pattern);
-                        unsafe {
-                            CANT_BLOCKS_MODIFIED += 1;
+                        // Reemplaza placeholders en el template
+                        let mut replacement_code = template.clone();
+                        for (key, value) in &elements {
+                            replacement_code = replacement_code.replace(key, value);
                         }
-                    }else{
-                        // preserva el bloque en caso de no poder parsear el código de reemplazo
-                        unsafe {
-                            CANT_BLOCKS_NOT_MODIFIED += 1;
-                            LIST_P.push(pattern.clone());
+
+                        if syn::parse_str::<syn::Stmt>(&replacement_code).is_ok()
+                            || syn::parse_str::<syn::Expr>(&replacement_code).is_ok()
+                        {
+                            if PatternBasedModifier::<'a>::modify_unsafe_block(
+                                node,
+                                &replacement_code,
+                                pattern,
+                            ) {
+                                self.modified = true;
+                                let replacement = node.to_token_stream().to_string();
+                                self.replacements.push((
+                                    original_span.start().line,
+                                    original_span.start().column,
+                                    original_span.end().line,
+                                    original_span.end().column,
+                                    replacement,
+                                ));
+                                unsafe {
+                                    CANT_BLOCKS_MODIFIED += 1;
+                                }
+                            } else {
+                                unsafe {
+                                    CANT_BLOCKS_NOT_MODIFIED += 1;
+                                    LIST_P.push(pattern.clone());
+                                }
+                            }
+                        } else {
+                            // preserva el bloque en caso de no poder parsear el código de reemplazo
+                            unsafe {
+                                CANT_BLOCKS_NOT_MODIFIED += 1;
+                                LIST_P.push(pattern.clone());
+                            }
                         }
-                        let block = expr_unsafe.block.clone();
-                        *node = Expr::Unsafe(expr_unsafe.clone());
                     }
-                } else {
-                    return;
                 }
             }
         }
     }
+}
+
+fn source_offset(source: &str, line: usize, column: usize) -> Option<usize> {
+    if line == 0 {
+        return None;
+    }
+
+    let mut current_line = 1;
+    let mut line_start: usize = 0;
+    for segment in source.split_inclusive('\n') {
+        if current_line == line {
+            let offset = line_start.checked_add(column)?;
+            return source.get(offset..offset).map(|_| offset);
+        }
+        line_start += segment.len();
+        current_line += 1;
+    }
+
+    if current_line == line {
+        let offset = line_start.checked_add(column)?;
+        return source.get(offset..offset).map(|_| offset);
+    }
+
+    None
+}
+
+fn apply_source_replacements(
+    source: &str,
+    replacements: &[(usize, usize, usize, usize, String)],
+) -> String {
+    let mut ranges = replacements
+        .iter()
+        .filter_map(
+            |(start_line, start_column, end_line, end_column, replacement)| {
+                let start = source_offset(source, *start_line, *start_column)?;
+                let end = source_offset(source, *end_line, *end_column)?;
+                (start <= end).then(|| (start, end, replacement.clone()))
+            },
+        )
+        .collect::<Vec<_>>();
+    ranges.sort_by(|left, right| right.0.cmp(&left.0));
+
+    let mut result = source.to_string();
+    for (start, end, replacement) in ranges {
+        if result.get(start..end).is_some() {
+            result.replace_range(start..end, &replacement);
+        }
+    }
+    result
 }
 
 //lista de casos que no se pudieron procesar
@@ -225,7 +334,6 @@ static mut LIST_P: Vec<PatternInfo> = Vec::new();
 
 // Función principal que procesa archivos Rust transformando código unsafe basado en patrones
 pub fn replace_unsafe_code(input_dir: &Path, output_dir: &Path) -> Result<()> {
-
     if !input_dir.exists() {
         anyhow::bail!("Input directory does not exist: {}", input_dir.display());
     }
@@ -234,7 +342,6 @@ pub fn replace_unsafe_code(input_dir: &Path, output_dir: &Path) -> Result<()> {
         .with_context(|| format!("creating output directory: {}", output_dir.display()))?;
 
     let templates = TemplateManager::new();
-    let mut processed_count = 0;
     let mut error_count = 0;
 
     for entry in WalkDir::new(input_dir)
@@ -243,14 +350,19 @@ pub fn replace_unsafe_code(input_dir: &Path, output_dir: &Path) -> Result<()> {
         .filter(|e| e.path().is_file())
     {
         let input_file_path = entry.path();
-        let relative_pth = calc_relative_path(input_file_path, input_dir, &mut error_count).unwrap();
+        let relative_pth =
+            calc_relative_path(input_file_path, input_dir, &mut error_count).unwrap();
         let output_file_path = output_dir.join(relative_pth);
 
         let source_code = match fs::read_to_string(input_file_path) {
             Ok(code) => code,
             Err(e) => {
                 error_count += 1;
-                eprintln!("\x1b[91m✗ Error reading\x1b[0m {}: {}", input_file_path.display(), e);
+                eprintln!(
+                    "\x1b[91m✗ Error reading\x1b[0m {}: {}",
+                    input_file_path.display(),
+                    e
+                );
                 continue;
             }
         };
@@ -264,7 +376,11 @@ pub fn replace_unsafe_code(input_dir: &Path, output_dir: &Path) -> Result<()> {
                 Ok(ast) => ast,
                 Err(e) => {
                     error_count += 1;
-                    eprintln!("\x1b[91m✗ Error parsing\x1b[0m {}: {}", input_file_path.display(), e);
+                    eprintln!(
+                        "\x1b[91m✗ Error parsing\x1b[0m {}: {}",
+                        input_file_path.display(),
+                        e
+                    );
                     continue;
                 }
             };
@@ -272,36 +388,45 @@ pub fn replace_unsafe_code(input_dir: &Path, output_dir: &Path) -> Result<()> {
             // Detecta patrones
             let mut detector = PatternDetector::new(
                 input_file_path
-                .file_stem()
-                .and_then(|s| s.to_str())
-                .unwrap_or("file"),
+                    .file_stem()
+                    .and_then(|s| s.to_str())
+                    .unwrap_or("file"),
             );
             detector.visit_file(&ast);
             patterns = detector.into_patterns();
-                
+
             // Aplica las modificaciones basadas en patrones detectados
             let mut modifier = PatternBasedModifier::new(&templates, &patterns);
             modifier.visit_file_mut(&mut ast);
-            
+
             // formatea el código modificado
-            final_code = prettyplease::unparse(&ast);
+            if modifier.was_modified() {
+                final_code = apply_source_replacements(&source_code, modifier.replacements());
+            }
         }
-            
+
         if let Some(parent) = output_file_path.parent() {
             if let Err(e) = fs::create_dir_all(parent) {
                 error_count += 1;
-                eprintln!("\x1b[91m✗ Error creating directory\x1b[0m {}: {}", parent.display(), e);
+                eprintln!(
+                    "\x1b[91m✗ Error creating directory\x1b[0m {}: {}",
+                    parent.display(),
+                    e
+                );
                 continue;
             }
         }
-        
+
         if let Err(e) = fs::write(&output_file_path, final_code) {
             error_count += 1;
-            eprintln!("\x1b[91m✗ Error writing\x1b[0m {}: {}", output_file_path.display(), e);
+            eprintln!(
+                "\x1b[91m✗ Error writing\x1b[0m {}: {}",
+                output_file_path.display(),
+                e
+            );
             continue;
         }
 
-        processed_count += 1;
         println!(
             "\x1b[92m✓ Processed:\x1b[0m {} ({} patterns)",
             input_file_path.display(),
@@ -310,20 +435,30 @@ pub fn replace_unsafe_code(input_dir: &Path, output_dir: &Path) -> Result<()> {
     }
 
     unsafe {
-        let rejected_pattterns = LIST_P.iter()
-                                .map(|p| format!("file: {}\n kind: {} \n line: {} \n snippet: {}\n",
-                                                                 p.file, p.kind, p.line, p.snippet))
-                                .collect::<Vec<_>>().join("\n");
+        let rejected_pattterns = LIST_P
+            .iter()
+            .map(|p| {
+                format!(
+                    "file: {}\n kind: {} \n line: {} \n snippet: {}\n",
+                    p.file, p.kind, p.line, p.snippet
+                )
+            })
+            .collect::<Vec<_>>()
+            .join("\n");
 
         let mut file = OpenOptions::new()
             .create(true)
             .append(true)
             .open(output_dir.join("modification_info.txt"))?;
-        
+
         writeln!(
-            file, "{}",
-            format!("{}\n blocks {}, modified blocks: {}, not modified blocks: {}\nPatterns:\n{}",
-             DIR_NAME, CANT_BLOCKS, CANT_BLOCKS_MODIFIED, CANT_BLOCKS_NOT_MODIFIED, rejected_pattterns),
+            file,
+            "{}\n blocks {}, modified blocks: {}, not modified blocks: {}\nPatterns:\n{}",
+            DIR_NAME,
+            CANT_BLOCKS,
+            CANT_BLOCKS_MODIFIED,
+            CANT_BLOCKS_NOT_MODIFIED,
+            rejected_pattterns
         )?;
     }
 

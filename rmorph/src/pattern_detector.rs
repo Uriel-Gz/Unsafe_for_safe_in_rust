@@ -1,21 +1,16 @@
-use anyhow::{Result};
+use crate::config::{CANT_BLOCKS, INTO_UNSAFE_BLOCKS};
+use anyhow::Result;
 use proc_macro2::Span;
 use quote::ToTokens;
 use serde::Serialize;
-use std::collections::HashMap;
+use serde_json;
 use std::fs;
 use std::path::Path;
-use std::result::{Result::Ok};
-use syn::{ExprCall, visit::Visit};
 use syn::spanned::Spanned;
-use serde_json; 
-use prettyplease::unparse;
-use syn::{Expr, ExprAssign, ExprBlock, ExprReference, ExprUnary, ExprUnsafe, ItemFn, Type, UnOp, ExprCast};
-use crate::config::{INTO_UNSAFE_BLOCKS, CANT_BLOCKS};
+use syn::visit::Visit;
+use syn::{Expr, ExprAssign, ExprUnary, ExprUnsafe, UnOp};
 
-#[derive(Serialize)]
-#[derive(Clone)]
-#[derive(PartialEq)]
+#[derive(Serialize, Clone, PartialEq)]
 pub struct PatternInfo {
     pub file: String,
     pub kind: String,
@@ -91,17 +86,12 @@ const FOOTER: &str = r#"
 "#;
 
 impl PatternDetector {
-
-    pub fn clone(&self) -> Self {
-        Self {
-            patterns: self.patterns.clone(),
-            file_stem: self.file_stem.clone(),
-            counter: self.counter,
-        }
-    }
-
     pub fn new(file_stem: &str) -> Self {
-        Self { patterns: Vec::new(), file_stem: file_stem.to_string(), counter: 0 }
+        Self {
+            patterns: Vec::new(),
+            file_stem: file_stem.to_string(),
+            counter: 0,
+        }
     }
 
     fn push(&mut self, kind: &str, span: Span, tok: String) {
@@ -125,7 +115,7 @@ impl PatternDetector {
             } else {
                 // Asumimos que los bloques están anidados, así que si encontramos uno con bloque ya asignado,
                 // los anteriores también lo tendrán
-                break; 
+                break;
             }
         }
     }
@@ -149,14 +139,15 @@ impl PatternDetector {
         let path_to = dir.join(fname);
 
         let mut safe_content = String::new();
-        for (i, pat) in self.patterns.clone().iter().enumerate() {
-            let filename = format!("{}", self.file_stem);
+        for pat in self.patterns.clone().iter() {
+            let filename = self.file_stem.to_string();
             let file_path = path.display();
             let unsafe_id = format!("unsafe_block_{}_{}", self.file_stem, pat.index);
-            let path_to_file = path.parent()
-                                                    .and_then(|p| p.to_str())
-                                                    .unwrap_or("")
-                                                    .replace("\\", "/");
+            let path_to_file = path
+                .parent()
+                .and_then(|p| p.to_str())
+                .unwrap_or("")
+                .replace("\\", "/");
 
             let pre_content: String = format!(
                 "<h3>In the repository (subfolder/s) {}</h3>\nIn the file: <a onclick=\"cargarArchivo('../../{}','{}','{}')\">\
@@ -182,7 +173,7 @@ impl PatternDetector {
         Ok(())
     }
 
-    pub fn into_patterns(mut self) -> Vec<PatternInfo> {
+    pub fn into_patterns(self) -> Vec<PatternInfo> {
         self.patterns
     }
 
@@ -192,9 +183,17 @@ impl PatternDetector {
         let mut line_to_pattern: HashMap<usize, PatternInfo> = HashMap::new();
 
         for pat in &self.patterns {
-            let clean_snippet = pat.snippet.chars().filter(|c| !c.is_whitespace()).collect::<String>();
+            let clean_snippet = pat
+                .snippet
+                .chars()
+                .filter(|c| !c.is_whitespace())
+                .collect::<String>();
             if let Some(existing) = line_to_pattern.get(&pat.line) {
-                let existing_clean = existing.snippet.chars().filter(|c| !c.is_whitespace()).collect::<String>();
+                let existing_clean = existing
+                    .snippet
+                    .chars()
+                    .filter(|c| !c.is_whitespace())
+                    .collect::<String>();
                 if clean_snippet.len() > existing_clean.len() {
                     line_to_pattern.insert(pat.line, pat.clone());
                 }
@@ -204,10 +203,9 @@ impl PatternDetector {
             }
         }
 
-        self.patterns = line_to_pattern.into_iter().map(|(_, p)| p).collect();
+        self.patterns = line_to_pattern.into_values().collect();
         Ok(())
     }
-
 }
 
 impl<'ast> Visit<'ast> for PatternDetector {
@@ -216,9 +214,9 @@ impl<'ast> Visit<'ast> for PatternDetector {
             INTO_UNSAFE_BLOCKS = true;
             CANT_BLOCKS += 1;
             let patterns_before = self.patterns.len();
-            
+
             syn::visit::visit_expr_unsafe(self, node);
-            
+
             // Si no se detectaron patrones específicos dentro del bloque,
             // registra el "unsafe_block" genérico
             if self.patterns.len() == patterns_before {
@@ -234,14 +232,19 @@ impl<'ast> Visit<'ast> for PatternDetector {
 
     fn visit_expr(&mut self, node: &'ast Expr) {
         // Detecta expresiones de dereferencia, como *p o *(expr)
-        if let Expr::Unary(ExprUnary { op: UnOp::Deref(_), expr: inner, .. }) = &node {
+        if let Expr::Unary(ExprUnary {
+            op: UnOp::Deref(_),
+            expr: inner,
+            ..
+        }) = &node
+        {
             if let Expr::Path(_) = inner.as_ref() {
                 let tok = node.to_token_stream().to_string();
                 self.push("deref_expr", node.span(), tok);
             } else if let Expr::Paren(_) = inner.as_ref() {
                 let tok = node.to_token_stream().to_string();
                 self.push("deref_expr", node.span(), tok);
-            } 
+            }
         }
         syn::visit::visit_expr(self, node);
     }
@@ -249,8 +252,17 @@ impl<'ast> Visit<'ast> for PatternDetector {
     // Detecta asignaciones a punteros dereferenciados, como *p = x
     fn visit_expr_assign(&mut self, node: &'ast ExprAssign) {
         // left side can be a unary deref: *p = x
-        if let Expr::Unary(ExprUnary { op: UnOp::Deref(_), expr: _, .. }) = &*node.left {
-            self.push("assign_to_deref", node.span(), node.to_token_stream().to_string());
+        if let Expr::Unary(ExprUnary {
+            op: UnOp::Deref(_),
+            expr: _,
+            ..
+        }) = &*node.left
+        {
+            self.push(
+                "assign_to_deref",
+                node.span(),
+                node.to_token_stream().to_string(),
+            );
         }
         syn::visit::visit_expr_assign(self, node);
     }
@@ -266,7 +278,12 @@ impl<'ast> Visit<'ast> for PatternDetector {
     fn visit_expr_call(&mut self, i: &'ast syn::ExprCall) {
         unsafe {
             if INTO_UNSAFE_BLOCKS {
-                if let Expr::Path(syn::ExprPath {attrs: _,qself: _, path }) = &*i.func {
+                if let Expr::Path(syn::ExprPath {
+                    attrs: _,
+                    qself: _,
+                    path,
+                }) = &*i.func
+                {
                     for ph in &path.segments {
                         if ph.ident == "Some" {
                             let tok = i.to_token_stream().to_string();
@@ -283,16 +300,53 @@ impl<'ast> Visit<'ast> for PatternDetector {
     fn visit_expr_reference(&mut self, node: &'ast syn::ExprReference) {
         // Ejemplo: detectar referencias mutables a datos sensibles
         unsafe {
-            if INTO_UNSAFE_BLOCKS {
-                if let syn::ExprReference { attrs: _, and_token: _, mutability, expr: _ } = &node {
-                    if node.mutability.is_some() {
-                        let tok = node.to_token_stream().to_string();
-                        self.push("mutable_ref_expr", node.span(), tok);
-                    }
-                }
+            if INTO_UNSAFE_BLOCKS && node.mutability.is_some() {
+                let tok = node.to_token_stream().to_string();
+                self.push("mutable_ref_expr", node.span(), tok);
             }
         }
         syn::visit::visit_expr_reference(self, node);
     }
-        
+}
+
+#[cfg(test)]
+mod tests {
+    use super::PatternDetector;
+    use syn::{parse_file, visit::Visit};
+
+    #[test]
+    fn detects_deref_and_assignment_patterns_inside_unsafe() {
+        let file = parse_file(
+            "fn main() { let p = std::ptr::null_mut::<i32>(); unsafe { *p = 1; let _x = *p; } }",
+        )
+        .unwrap();
+        let mut detector = PatternDetector::new("sample");
+
+        detector.visit_file(&file);
+
+        let patterns = detector.into_patterns();
+        assert!(patterns
+            .iter()
+            .any(|pattern| pattern.kind == "assign_to_deref"));
+        assert!(patterns.iter().any(|pattern| pattern.kind == "deref_expr"));
+    }
+
+    #[test]
+    fn detects_raw_address_and_mutable_reference_patterns() {
+        let file = parse_file(
+            "fn main() { let mut value = 1; unsafe { let _ptr = &raw mut value; let _ref = &mut value; } }",
+        )
+        .unwrap();
+        let mut detector = PatternDetector::new("sample");
+
+        detector.visit_file(&file);
+
+        let patterns = detector.into_patterns();
+        assert!(patterns
+            .iter()
+            .any(|pattern| pattern.kind == "raw_addr_expr"));
+        assert!(patterns
+            .iter()
+            .any(|pattern| pattern.kind == "mutable_ref_expr"));
+    }
 }

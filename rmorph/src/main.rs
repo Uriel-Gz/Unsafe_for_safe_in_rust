@@ -1,39 +1,17 @@
+use anyhow::Result;
+use rmorph::{config, extractor, modifier, suggestions};
 use std::fs;
 use std::io::{self, Write};
-use std::collections::HashMap;
 use std::path::{Path, PathBuf};
-use std::result::Result::Ok;
-use syn::spanned::Spanned;
-use syn::{visit_mut::VisitMut, visit::Visit, File, Expr, ExprUnsafe};
-use anyhow::Result;
-use proc_macro2::{TokenTree, TokenStream, Span};
-use quote::ToTokens;
-use serde::Serialize;
-use serde_json::{self, to_string};
-use walkdir::WalkDir;
-
-mod pattern_detector;
-mod extractor_utils;
-mod modifier_utils;
-mod suggestions;
-mod extractor;
-mod modifier;
-mod config;
-
-use pattern_detector::PatternDetector;
-use suggestions::generate_suggestions;
-use modifier::replace_unsafe_code;
-use extractor::{process_file, extract_unsafe_blocks};
-use config::DIR_NAME;
 
 /// Display the main menu and return user's choice
 fn display_menu() -> String {
-    println!("\n{}Seleccione una opción:{}", "\x1b[0m", "\x1b[0m\n");
-    println!("{}(1) {}\x1b[0mExtraer código unsafe", "\x1b[33m", "\x1b[0m");
-    println!("{}(2) {}\x1b[0mReemplazar código unsafe", "\x1b[93m", "\x1b[0m");
-    println!("{}(3) {}\x1b[0mObtener sugerencias de código seguro", "\x1b[91m", "\x1b[0m");
-    println!("{}(4) {}\x1b[0mSalir\n", "\x1b[34m", "\x1b[0m");
-    
+    println!("\n\x1b[0mSeleccione una opción:\x1b[0m\n");
+    println!("\x1b[33m(1) \x1b[0mExtraer código unsafe");
+    println!("\x1b[93m(2) \x1b[0mReemplazar código unsafe");
+    println!("\x1b[91m(3) \x1b[0mObtener sugerencias de código seguro");
+    println!("\x1b[34m(4) \x1b[0mSalir\n");
+
     print!("Ingrese su elección: ");
     io::stdout().flush().unwrap();
 
@@ -47,7 +25,7 @@ fn show_init() {
     // Clear terminal
     print!("\x1B[2J\x1B[1;1H");
 
-    println!("{}\x1b[94m             ================================================== \x1b[0m", "");
+    println!("\x1b[94m             ================================================== \x1b[0m");
     println!("\x1b[94m         ====\x1b[91m    #### \x1b[92m #    #                           \x1b[94m       ====           \x1b[0m");
     println!("\x1b[94m     ====\x1b[91m        #   #\x1b[92m ##  ##  ###  #####  ####  #       \x1b[94m          ====       \x1b[0m");
     println!("\x1b[94m ====\x1b[91m            #### \x1b[92m # ## # #   #  #   # #   # ####   \x1b[94m               ====   \x1b[0m");
@@ -72,14 +50,14 @@ fn get_file_path(prompt: &str) -> String {
 fn execute_option(op: &str) -> Result<()> {
     let out_dir = PathBuf::from("result");
     let out_dir_ch = PathBuf::from("result_changed");
-    
+
     let path = get_file_path("Ingrese la ruta del archivo/directorio Rust: ");
     unsafe {
         config::DIR_NAME = path.clone();
     }
     if Path::new(&path).exists() {
         let path_to = PathBuf::from(path.clone());
-        
+
         match op {
             "1" => {
                 fs::create_dir_all(&out_dir)?;
@@ -112,10 +90,10 @@ fn execute_option(op: &str) -> Result<()> {
 
 fn main() -> Result<()> {
     show_init();
-    
+
     loop {
         let choice = display_menu();
-        
+
         match choice.as_str() {
             "4" => {
                 println!("\nSaliendo del programa.");
