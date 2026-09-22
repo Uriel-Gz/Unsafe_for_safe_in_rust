@@ -1,43 +1,63 @@
 # Quick Start — Uso rápido (Rust)
 
-Guía mínima para ejecutar el flujo principal con la implementación en Rust (`rmorph`).
+Guía mínima para la versión actual de `rmorph`.
 
-Requisitos mínimos
-- Rust toolchain (`rustc`, `cargo`) instalado y en `PATH`.
+## Requisitos
+- Rust toolchain (`rustc`, `cargo`) instalado y disponible en `PATH`.
+- Un proyecto Rust o un archivo Rust para analizar.
 
-Pasos rápidos
-1. Clonar el repositorio y situarse en la raíz:
+## 1) Clonar y entrar al repositorio
 
 ```bash
 git clone <URL-del-repo>
-cd Unsafe_for_safe_in_rust
+cd <carpeta-del-repo>
 ```
 
-2. Compilar y ejecutar (modo interactivo):
+## 2) Compilar
 
 ```bash
-# Compilar
 cargo build --manifest-path rmorph/Cargo.toml
+```
 
-# Ejecutar (menu interactivo)
+## 3) Ejecutar la herramienta
+
+```bash
 cargo run --manifest-path rmorph/Cargo.toml
 ```
 
-3. En el menú seleccione:
-- `1` para extraer bloques `unsafe` (genera `result/` con `unsafe_blocks`, `unsafe_ast`, `patterns`, `html_patterns`, ...)
-- `2` para intentar reemplazos automáticos (genera `result_changed/`)
-- `3` para generar sugerencias de código seguro
+Al iniciarse, el programa muestra un menú interactivo:
 
-4. Ejecutar sobre una carpeta de ejemplo (opcional):
+- `1` — Extraer código `unsafe`
+- `2` — Reemplazar código `unsafe`
+- `3` — Obtener sugerencias de código seguro
+- `4` — Salir
+
+## 4) Probar con ejemplos incluidos
 
 ```bash
-# use la opción 1 y luego ingrese: rmorph/examples
+cargo run --manifest-path rmorph/Cargo.toml
 ```
 
-Notas rápidas
-- Los scripts Python en `code_src/` están obsoletos: prefiera `rmorph/`.
-- Para producción, compile en release: `cargo build --release --manifest-path rmorph/Cargo.toml`.
+Luego elige la opción `1` e ingresa una ruta como:
 
-Contacto y versión
-- Autor: Uriel Gz — https://github.com/Uriel-Gz
-- Versión del quick start: 2026-06-03
+```text
+rmorph/examples
+```
+
+o un archivo concreto como:
+
+```text
+rmorph/examples/assign_to_deref/simple.rs
+```
+
+## 5) Salida esperada
+
+La extracción genera carpetas como `result/` y, en algunos flujos, `result_changed/` según la opción elegida.
+
+## Notas
+- Los scripts legacy en `code_src/` quedan como referencia histórica; el flujo principal y mantenido es `rmorph/`.
+- Para una compilación optimizada:
+
+```bash
+cargo build --release --manifest-path rmorph/Cargo.toml
+```
